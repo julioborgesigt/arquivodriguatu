@@ -275,8 +275,8 @@ app.post('/resetSenha', (req, res) => {
     }
 });
 
-// Rota para servir a página do administrador
-app.get('/administrador', (req, res) => {
+// Servir a página administrador.html
+app.get('/administrador.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'administrador.html'));
 });
 
