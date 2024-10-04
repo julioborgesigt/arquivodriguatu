@@ -159,7 +159,7 @@ tbody tr:hover {
 #admin-btn {
     background-color: #4CAF50; /* Cor verde do botão */
     color: white; /* Texto branco */
-    padding: 10px 20px; /* Espaçamento interno */
+    padding: 10px 10px; /* Espaçamento interno */
     font-size: 16px; /* Tamanho da fonte */
     border: none; /* Remover borda */
     border-radius: 5px; /* Cantos arredondados */
@@ -183,10 +183,10 @@ tbody tr:hover {
 
 
 /* Estilo para o botão logout */
-#admin-logout {
+#botao-logout {
     background-color: #d32525; /* Cor verde do botão */
     color: white; /* Texto branco */
-    padding: 10px 20px; /* Espaçamento interno */
+    padding: 10px 10px; /* Espaçamento interno */
     font-size: 16px; /* Tamanho da fonte */
     border: none; /* Remover borda */
     border-radius: 5px; /* Cantos arredondados */
@@ -195,13 +195,13 @@ tbody tr:hover {
     margin-top: 20px; /* Espaço acima do botão */
 }
 
-#admin-btn:hover {
+#botao-logout:hover {
     background-color: #f30808; /* Cor mais escura ao passar o mouse */
 }
 
 /* Responsividade para garantir que o botão se ajuste em telas menores */
 @media (max-width: 768px) {
-    #admin-btn {
+    #botao-logout {
         width: 100%; /* O botão ocupa 100% da largura da tela em dispositivos móveis */
         padding: 15px 0; /* Ajustar o padding */
         font-size: 18px; /* Aumentar um pouco o tamanho da fonte para mobile */
