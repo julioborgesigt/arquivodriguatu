@@ -10,6 +10,17 @@
 
     <!-- Arquivo JS do administrador -->
     <script src="/script-admin.js" defer></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Verificar se o administrador está logado
+            if (!sessionStorage.getItem('adminLogado')) {
+                alert('Acesso negado. Faça login como administrador.');
+                window.location.href = '/login_admin.html'; // Redirecionar para o login
+            }
+        });
+    </script>
+    
 </head>
 <body>
     <div id="app-container">

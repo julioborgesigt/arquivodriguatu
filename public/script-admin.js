@@ -54,3 +54,32 @@ function resetarSenha() {
         alert('Erro ao resetar a senha. Tente novamente.');
     });
 }
+
+
+// Função para realizar o login de administrador
+function loginAdmin() {
+    const username = document.getElementById('admin-username').value;
+    const password = document.getElementById('admin-password').value;
+
+    fetch('/login-admin', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Login realizado com sucesso!');
+            sessionStorage.setItem('adminLogado', true); // Marcar como logado
+            window.location.href = '/administrador.html'; // Redirecionar
+        } else {
+            alert('Usuário ou senha incorretos.');
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao realizar login:', error);
+        alert('Erro ao realizar login. Tente novamente.');
+    });
+}

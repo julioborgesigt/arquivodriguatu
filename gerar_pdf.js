@@ -279,3 +279,19 @@ app.post('/resetSenha', (req, res) => {
 app.get('/administrador', (req, res) => {
     res.sendFile(path.join(__dirname, 'administrador.html'));
 });
+
+
+// Rota para verificar o login de administrador
+app.post('/login-admin', (req, res) => {
+    const { username, password } = req.body;
+    const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
+
+    // Verificar se o usuário e senha estão corretos
+    const admin = banco.usuarios.find(user => user.username === '00000000' && user.password === '789654321');
+
+    if (username === admin.username && password === admin.password) {
+        res.status(200).json({ success: true, message: "Login realizado com sucesso" });
+    } else {
+        res.status(401).json({ success: false, message: "Usuário ou senha incorretos" });
+    }
+});
