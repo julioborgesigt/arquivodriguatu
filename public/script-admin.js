@@ -83,3 +83,13 @@ function loginAdmin() {
         alert('Erro ao realizar login. Tente novamente.');
     });
 }
+
+
+// Função para realizar logout do administrador
+function logoutAdmin() {
+    // Remover o item de sessionStorage que marca o administrador como logado
+    sessionStorage.removeItem('adminLogado');
+    
+    // Redirecionar para a página de login do administrador
+    window.location.href = '/login_admin.html';
+}
