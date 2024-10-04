@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerar Procedimento e Consultar Movimentação</title>
+
+    <!-- Incluindo bibliotecas jsPDF e QR Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+
+    <!-- Incluindo a biblioteca HTML5 QR Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+
+    <!-- Arquivo de Estilos CSS Externo -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Arquivo JS -->
+    <script src="/script.js" defer></script>
+
+</head>
+<body>
+    <!-- Formulário de Login/Cadastro -->
+    <div id="auth-container">
+        <h2>Login ou Cadastro</h2>
+        <form id="auth-form">
+            <label for="username">Usuário:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="button" onclick="login()">Entrar</button>
+            <button type="button" onclick="register()">Cadastrar</button>
+        </form>
+    </div>
+
+    <!-- Interface após login -->
+    <div id="app-container" style="display: none;">
+        <h1>Bem-vindo, <span id="user-name"></span></h1>
+
+        <!-- Botão de logout -->
+        <button type="button" onclick="logout()">Sair</button>
+
+        <!-- Gerar Procedimento -->
+        <h2>Gerar Procedimento</h2>
+        <form id="formulario">
+            <label for="procedimento">Número do Procedimento:</label>
+            <input type="text" id="procedimento" name="procedimento" placeholder="xxx-xxxxx/xxxx" required>
+            <button type="button" onclick="gerarPDF()">Gerar PDF</button>
+            <button type="button" onclick="window.location.href='/leitor_qrcode.html'">Ler QR Code</button>
+        </form>
+
+        <!-- Consultar Movimentação -->
+        <h2>Consultar Movimentação</h2>
+        <form id="consulta-form">
+            <label for="consulta-procedimento">Número do Procedimento:</label>
+            <input type="text" id="consulta-procedimento" name="consulta-procedimento" placeholder="xxx-xxxxx/xxxx" required>
+            <button type="button" onclick="consultarMovimentacao()">Consultar</button>
+        </form>
+        
+        <div id="resultado-consulta" style="margin-top: 20px;"></div>
+
+        <div id="qr-reader" style="width: 500px; display: none;"></div>
+    </div>
+</body>
+</html>
