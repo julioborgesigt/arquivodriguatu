@@ -295,3 +295,9 @@ app.post('/login-admin', (req, res) => {
         res.status(401).json({ success: false, message: "Usuário ou senha incorretos" });
     }
 });
+
+
+// Servir a página login_admin.html
+app.get('/login_admin.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'login_admin.html'));
+});
