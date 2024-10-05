@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-
 // Função para realizar o login
 function login() {
     const username = document.getElementById('username').value;
