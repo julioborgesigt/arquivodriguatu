@@ -394,3 +394,28 @@ function carregarSolicitacoesPendentes() {
 
 // Carregar as solicitações pendentes ao carregar a página
 document.addEventListener('DOMContentLoaded', carregarSolicitacoesPendentes);
+
+
+
+// Função para aceitar ou recusar a solicitação
+function responderTransferencia(solicitacaoId, acao) {
+    fetch(`/responder-transferencia/${solicitacaoId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ acao })  // "aceitar" ou "recusar"
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Solicitação ' + (acao === 'aceitar' ? 'aceita' : 'recusada') + ' com sucesso!');
+        } else {
+            alert('Erro ao processar solicitação: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao processar solicitação:', error);
+        alert('Erro ao processar solicitação. Tente novamente.');
+    });
+}
