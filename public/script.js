@@ -406,7 +406,7 @@ function carregarSolicitacoesPendentes() {
 function responderTransferencia(solicitacaoId, acao, botao) {
     // Desabilitar o botão para evitar múltiplos cliques
     botao.disabled = true;
-    
+
     fetch(`/responder-transferencia/${solicitacaoId}`, {
         method: 'POST',
         headers: {
