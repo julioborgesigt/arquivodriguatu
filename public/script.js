@@ -1,3 +1,8 @@
+// Carregar as solicitações pendentes ao carregar a página
+document.addEventListener('DOMContentLoaded', carregarSolicitacoesPendentes);
+
+
+
 // Função para verificar se o usuário já está logado
 document.addEventListener('DOMContentLoaded', () => {
     const usuarioAtivo = localStorage.getItem('usuarioAtivo');
@@ -375,11 +380,12 @@ function carregarSolicitacoesPendentes() {
             if (solicitacoes.length > 0) {
                 solicitacoes.forEach((solicitacao, index) => {
                     const div = document.createElement('div');
+                    div.id = `solicitacao-${index}`;  // Adicionar um ID para remover facilmente
                     div.innerHTML = `
                         <p><strong>Processo:</strong> ${solicitacao.numeroProcedimento}</p>
                         <p><strong>De:</strong> ${solicitacao.loginRemetente}</p>
-                        <button onclick="responderTransferencia(${index}, 'aceitar')">Aceitar</button>
-                        <button onclick="responderTransferencia(${index}, 'recusar')">Recusar</button>
+                        <button onclick="responderTransferencia(${index}, 'aceitar', this)">Aceitar</button>
+                        <button onclick="responderTransferencia(${index}, 'recusar', this)">Recusar</button>
                     `;
                     solicitacoesDiv.appendChild(div);
                 });
@@ -392,13 +398,16 @@ function carregarSolicitacoesPendentes() {
         });
 }
 
-// Carregar as solicitações pendentes ao carregar a página
-document.addEventListener('DOMContentLoaded', carregarSolicitacoesPendentes);
+
+
 
 
 
 // Função para aceitar ou recusar a solicitação
-function responderTransferencia(solicitacaoId, acao) {
+function responderTransferencia(solicitacaoId, acao, botao) {
+    // Desabilitar o botão para evitar múltiplos cliques
+    botao.disabled = true;
+    
     fetch(`/responder-transferencia/${solicitacaoId}`, {
         method: 'POST',
         headers: {
@@ -410,12 +419,25 @@ function responderTransferencia(solicitacaoId, acao) {
     .then(data => {
         if (data.success) {
             alert('Solicitação ' + (acao === 'aceitar' ? 'aceita' : 'recusada') + ' com sucesso!');
+
+            // Remover a solicitação da lista
+            const solicitacaoDiv = document.getElementById(`solicitacao-${solicitacaoId}`);
+            if (solicitacaoDiv) {
+                solicitacaoDiv.remove();
+            }
+
+            // Recarregar a lista de solicitações
+            carregarSolicitacoesPendentes();
         } else {
             alert('Erro ao processar solicitação: ' + data.message);
+            // Reativar o botão em caso de erro
+            botao.disabled = false;
         }
     })
     .catch(error => {
         console.error('Erro ao processar solicitação:', error);
         alert('Erro ao processar solicitação. Tente novamente.');
+        // Reativar o botão em caso de erro
+        botao.disabled = false;
     });
 }
