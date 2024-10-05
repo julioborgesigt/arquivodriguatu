@@ -283,3 +283,44 @@ function lerQRCodePage() {
     window.location.href = "/leitor_qrcode.html";
 }
 
+// Função para pesquisar processos pelo login
+function pesquisarPorLogin() {
+    const loginPesquisa = document.getElementById('login-pesquisa').value;
+    
+    if (!loginPesquisa) {
+        alert('Por favor, insira o número de login para pesquisar.');
+        return;
+    }
+
+    // Buscar os dados no banco.json
+    fetch('/dados')
+        .then(response => response.json())
+        .then(data => {
+            const resultados = data.procedimentos.filter(procedimento => {
+                // Verificar se a última leitura foi feita pelo login informado
+                const ultimaLeitura = procedimento.leituras[procedimento.leituras.length - 1];
+                return ultimaLeitura && ultimaLeitura.usuario === loginPesquisa;
+            });
+
+            // Exibir os resultados
+            const resultadoDiv = document.getElementById('resultado-pesquisa');
+            resultadoDiv.innerHTML = ''; // Limpar resultados anteriores
+
+            if (resultados.length > 0) {
+                resultados.forEach(procedimento => {
+                    const div = document.createElement('div');
+                    div.innerHTML = `
+                        <p><strong>Número do Procedimento:</strong> ${procedimento.numero}</p>
+                        <p><strong>Última Leitura:</strong> ${procedimento.leituras[procedimento.leituras.length - 1].data} às ${procedimento.leituras[procedimento.leituras.length - 1].hora}</p>
+                    `;
+                    resultadoDiv.appendChild(div);
+                });
+            } else {
+                resultadoDiv.innerHTML = '<p>Nenhum processo encontrado para este login.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os dados:', error);
+            alert('Erro ao buscar processos. Tente novamente.');
+        });
+}

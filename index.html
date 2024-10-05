@@ -70,5 +70,19 @@
          <!-- Botão de logout -->
          <button id="botao-logout" type="button" onclick="logout()">Sair</button>
     </div>
+
+        <!-- Campo de pesquisa por login -->
+    <div>
+        <h3>Pesquisar Processos por Login</h3>
+        <label for="login-pesquisa">Número do Login:</label>
+        <input type="text" id="login-pesquisa" placeholder="Digite o número do login">
+        <button type="button" onclick="pesquisarPorLogin()">Pesquisar</button>
+
+        <div id="resultado-pesquisa">
+            <!-- Resultados da pesquisa serão exibidos aqui -->
+        </div>
+    </div>
+
+
 </body>
 </html>
