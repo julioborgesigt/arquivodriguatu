@@ -443,3 +443,50 @@ function responderTransferencia(solicitacaoId, acao, botao) {
         botao.disabled = false;
     });
 }
+
+
+ // Função para testar leitura do banco de dados
+ function testeLeitura() {
+    fetch('/teste-leitura')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Leitura do banco de dados realizada com sucesso!\nDados: ' + JSON.stringify(data.banco, null, 2));
+                console.log('Leitura do banco de dados:', data.banco);
+            } else {
+                alert('Erro ao ler banco de dados: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao testar leitura:', error);
+            alert('Erro ao testar leitura do banco de dados.');
+        });
+}
+
+// Função para testar gravação no banco de dados
+function testeGravacao() {
+    const dadosTeste = {
+        test: "dados de teste"
+    };
+
+    fetch('/teste-gravacao', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dadosTeste)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Gravação no banco de dados realizada com sucesso!');
+            console.log('Gravação no banco de dados realizada.');
+        } else {
+            alert('Erro ao gravar no banco de dados: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao testar gravação:', error);
+        alert('Erro ao testar gravação no banco de dados.');
+    });
+}
