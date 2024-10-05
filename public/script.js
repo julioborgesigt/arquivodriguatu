@@ -445,48 +445,30 @@ function responderTransferencia(solicitacaoId, acao, botao) {
 }
 
 
- // Função para testar leitura do banco de dados
- function testeLeitura() {
-    fetch('/teste-leitura')
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Leitura do banco de dados realizada com sucesso!\nDados: ' + JSON.stringify(data.banco, null, 2));
-                console.log('Leitura do banco de dados:', data.banco);
-            } else {
-                alert('Erro ao ler banco de dados: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao testar leitura:', error);
-            alert('Erro ao testar leitura do banco de dados.');
-        });
-}
+ // Leitura
+app.get('/teste-leitura', (req, res) => {
+    console.log(`Tentando ler o arquivo: ${bancoFilePath}`);
+    try {
+        const banco = JSON.parse(fs.readFileSync(bancoFilePath, 'utf8'));
+        console.log('Banco de dados lido com sucesso:', banco);
+        res.json({ success: true, message: "Banco de dados lido com sucesso!", banco });
+    } catch (error) {
+        console.error('Erro ao ler o banco de dados:', error);
+        res.status(500).json({ success: false, message: "Erro ao ler o banco de dados." });
+    }
+});
 
-// Função para testar gravação no banco de dados
-function testeGravacao() {
-    const dadosTeste = {
-        test: "dados de teste"
-    };
-
-    fetch('/teste-gravacao', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(dadosTeste)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Gravação no banco de dados realizada com sucesso!');
-            console.log('Gravação no banco de dados realizada.');
-        } else {
-            alert('Erro ao gravar no banco de dados: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Erro ao testar gravação:', error);
-        alert('Erro ao testar gravação no banco de dados.');
-    });
-}
+// Gravação
+app.post('/teste-gravacao', (req, res) => {
+    const dados = req.body;
+    
+    console.log(`Tentando gravar no arquivo: ${bancoFilePath}`);
+    try {
+        fs.writeFileSync(bancoFilePath, JSON.stringify(dados, null, 2));
+        console.log('Banco de dados salvo com sucesso!');
+        res.json({ success: true, message: "Banco de dados salvo com sucesso!" });
+    } catch (error) {
+        console.error('Erro ao salvar o banco de dados:', error);
+        res.status(500).json({ success: false, message: "Erro ao salvar o banco de dados." });
+    }
+});
