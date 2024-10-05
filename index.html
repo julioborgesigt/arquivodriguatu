@@ -37,12 +37,6 @@
     <div id="app-container" style="display: none;">
         <h1>Bem-vindo, <span id="user-name"></span></h1>
         
-        
-       
-        
-
-
-
         <!-- Gerar Procedimento -->
         <h2>Gerar Procedimento</h2>
         <form id="formulario">
@@ -64,15 +58,7 @@
 
         <div id="qr-reader" style="width: 500px; display: none;"></div>
 
-
-         <!-- Botão Administrador -->
-         <button id="admin-btn" onclick="window.location.href='/login_admin.html'">Administrador</button>
-         <!-- Botão de logout -->
-         <button id="botao-logout" type="button" onclick="logout()">Sair</button>
-    </div>
-
         <!-- Campo de pesquisa por login -->
-    <div>
         <h3>Pesquisar Processos por Login</h3>
         <label for="login-pesquisa">Número do Login:</label>
         <input type="text" id="login-pesquisa" placeholder="Digite o número do login">
@@ -81,8 +67,15 @@
         <div id="resultado-pesquisa">
             <!-- Resultados da pesquisa serão exibidos aqui -->
         </div>
+
+
+
+         <!-- Botão Administrador -->
+         <button id="admin-btn" onclick="window.location.href='/login_admin.html'">Administrador</button>
+         <!-- Botão de logout -->
+         <button id="botao-logout" type="button" onclick="logout()">Sair</button>
     </div>
 
-
+ 
 </body>
 </html>
