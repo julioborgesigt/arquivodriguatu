@@ -357,7 +357,7 @@ app.post('/responder-transferencia/:id', (req, res) => {
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
     // Encontrar a solicitação
-    const solicitacao = banco.solicitacoes.find((s, index) => index == solicitacaoId);
+    const solicitacao = banco.solicitacoes[solicitacaoId];
 
     if (!solicitacao) {
         return res.status(404).json({ success: false, message: "Solicitação não encontrada." });
@@ -366,17 +366,30 @@ app.post('/responder-transferencia/:id', (req, res) => {
     if (acao === 'aceitar') {
         // Atualizar o status da solicitação para aceita
         solicitacao.status = 'aceita';
+
+        // Encontrar o processo relacionado à solicitação
         const procedimento = banco.procedimentos.find(p => p.numero === solicitacao.numeroProcedimento);
-        procedimento.leituras.push({
-            usuario: solicitacao.loginDestinatario,
-            data: new Date().toISOString().split('T')[0],
-            hora: new Date().toTimeString().split(' ')[0]
-        });
+
+        if (procedimento) {
+            // Remover a leitura do login1 (remetente)
+            procedimento.leituras = procedimento.leituras.filter(leitura => leitura.usuario !== solicitacao.loginRemetente);
+
+            // Adicionar nova leitura para o login2 (destinatário)
+            procedimento.leituras.push({
+                usuario: solicitacao.loginDestinatario,
+                data: new Date().toISOString().split('T')[0], // Data no formato YYYY-MM-DD
+                hora: new Date().toTimeString().split(' ')[0] // Hora no formato HH:MM:SS
+            });
+        }
+
+        // Salvar o banco de dados atualizado
+        fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
+        res.json({ success: true, message: "Solicitação aceita e processo transferido." });
     } else if (acao === 'recusar') {
         // Atualizar o status para recusada
         solicitacao.status = 'recusada';
+        fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
+        res.json({ success: true, message: "Solicitação recusada." });
     }
-
-    fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
-    res.json({ success: true, message: "Solicitação processada com sucesso." });
 });
+

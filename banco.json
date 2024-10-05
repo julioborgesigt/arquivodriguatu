@@ -5,29 +5,45 @@
         "password": "789654321"
       },
       {
-        "username": "usuario2",
-        "password": "senha456"
+        "username": "30109511",
+        "password": "123456"
+      }
+      ,
+      {
+        "username": "30115910",
+        "password": "123456"
       }
     ],
     "procedimentos": [
       {
-        "numero": "123123",
+        "numero": "479-00001/2024",
         "leituras": [
           {
-            "usuario": "usuario1",
+            "usuario": "30115910",
             "data": "2024-09-25",
             "hora": "15:30"
           },
           {
-            "usuario": "usuario2",
+            "usuario": "30115910",
             "data": "2024-09-26",
             "hora": "10:45"
           }
         ]
       },
       {
-        "numero": "456456",
-        "leituras": []
+        "numero": "479-00002/2024",
+        "leituras": [
+          {
+            "usuario": "30109511",
+            "data": "2024-09-25",
+            "hora": "15:30"
+          },
+          {
+            "usuario": "30109511",
+            "data": "2024-09-26",
+            "hora": "10:45"
+          }
+        ]
       }
     ],
     "solicitacoes": [
