@@ -91,5 +91,5 @@ function logoutAdmin() {
     sessionStorage.removeItem('adminLogado');
     
     // Redirecionar para a página de login do administrador
-    window.location.href = '/login_admin.html';
+    window.location.href = '/index.html';
 }

@@ -176,8 +176,8 @@ tbody tr:hover {
 @media (max-width: 768px) {
     #admin-btn {
         width: 100%; /* O botão ocupa 100% da largura da tela em dispositivos móveis */
-        padding: 15px 0; /* Ajustar o padding */
-        font-size: 18px; /* Aumentar um pouco o tamanho da fonte para mobile */
+        padding: 10px 0; /* Ajustar o padding */
+        font-size: 14px; /* Aumentar um pouco o tamanho da fonte para mobile */
     }
 }
 
@@ -203,7 +203,7 @@ tbody tr:hover {
 @media (max-width: 768px) {
     #botao-logout {
         width: 100%; /* O botão ocupa 100% da largura da tela em dispositivos móveis */
-        padding: 15px 0; /* Ajustar o padding */
-        font-size: 18px; /* Aumentar um pouco o tamanho da fonte para mobile */
+        padding: 10px 0; /* Ajustar o padding */
+        font-size: 14px; /* Aumentar um pouco o tamanho da fonte para mobile */
     }
 }
