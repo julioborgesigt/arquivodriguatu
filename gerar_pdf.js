@@ -451,3 +451,33 @@ app.post('/salvar-dados', (req, res) => {
         res.status(500).json({ success: false, message: "Erro ao salvar banco de dados." });
     }
 });
+
+
+
+// Leitura
+app.get('/teste-leitura', (req, res) => {
+    console.log(`Tentando ler o arquivo: ${bancoFilePath}`);
+    try {
+        const banco = JSON.parse(fs.readFileSync(bancoFilePath, 'utf8'));
+        console.log('Banco de dados lido com sucesso:', banco);
+        res.json({ success: true, message: "Banco de dados lido com sucesso!", banco });
+    } catch (error) {
+        console.error('Erro ao ler o banco de dados:', error);
+        res.status(500).json({ success: false, message: "Erro ao ler o banco de dados." });
+    }
+});
+
+// Gravação
+app.post('/teste-gravacao', (req, res) => {
+    const dados = req.body;
+    
+    console.log(`Tentando gravar no arquivo: ${bancoFilePath}`);
+    try {
+        fs.writeFileSync(bancoFilePath, JSON.stringify(dados, null, 2));
+        console.log('Banco de dados salvo com sucesso!');
+        res.json({ success: true, message: "Banco de dados salvo com sucesso!" });
+    } catch (error) {
+        console.error('Erro ao salvar o banco de dados:', error);
+        res.status(500).json({ success: false, message: "Erro ao salvar o banco de dados." });
+    }
+});
