@@ -402,10 +402,12 @@ function carregarSolicitacoesPendentes() {
 
 
 
-// Função para aceitar ou recusar a solicitação
 function responderTransferencia(solicitacaoId, acao, botao) {
     // Desabilitar o botão para evitar múltiplos cliques
     botao.disabled = true;
+
+    console.log(`Processando ação de ${acao} para a solicitação ${solicitacaoId}`);
+    alert(`Processando solicitação ${solicitacaoId}`);
 
     fetch(`/responder-transferencia/${solicitacaoId}`, {
         method: 'POST',
@@ -418,25 +420,26 @@ function responderTransferencia(solicitacaoId, acao, botao) {
     .then(data => {
         if (data.success) {
             alert('Solicitação ' + (acao === 'aceitar' ? 'aceita' : 'recusada') + ' com sucesso!');
+            console.log('Solicitação processada com sucesso!');
 
             // Remover a solicitação da lista
             const solicitacaoDiv = document.getElementById(`solicitacao-${solicitacaoId}`);
             if (solicitacaoDiv) {
                 solicitacaoDiv.remove();
+                console.log(`Solicitação ${solicitacaoId} removida da lista!`);
             }
 
             // Recarregar a lista de solicitações
             carregarSolicitacoesPendentes();
         } else {
             alert('Erro ao processar solicitação: ' + data.message);
-            // Reativar o botão em caso de erro
+            console.error(`Erro ao processar solicitação ${solicitacaoId}:`, data.message);
             botao.disabled = false;
         }
     })
     .catch(error => {
-        console.error('Erro ao processar solicitação:', error);
+        console.error(`Erro ao processar solicitação ${solicitacaoId}:`, error);
         alert('Erro ao processar solicitação. Tente novamente.');
-        // Reativar o botão em caso de erro
         botao.disabled = false;
     });
 }

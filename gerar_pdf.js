@@ -351,7 +351,7 @@ app.post('/solicitar-transferencia', (req, res) => {
 app.post('/responder-transferencia/:id', (req, res) => {
     const { acao } = req.body;
     const solicitacaoId = req.params.id;
-    
+
     // Ler o banco de dados de forma sincronizada
     let banco;
     try {
@@ -359,64 +359,78 @@ app.post('/responder-transferencia/:id', (req, res) => {
         console.log('Banco de dados carregado com sucesso!');
     } catch (error) {
         console.error('Erro ao carregar banco de dados:', error);
+        alert('Erro ao carregar banco de dados!');
         return res.status(500).json({ success: false, message: "Erro ao carregar banco de dados." });
     }
 
     // Verificar se a solicitação existe
     const solicitacao = banco.solicitacoes[solicitacaoId];
-
     if (!solicitacao) {
         console.log(`Solicitação ${solicitacaoId} não encontrada!`);
+        alert('Solicitação não encontrada!');
         return res.status(404).json({ success: false, message: "Solicitação não encontrada." });
     }
 
     console.log(`Processando solicitação de transferência ${solicitacaoId} para o processo ${solicitacao.numeroProcedimento}`);
+    alert(`Solicitação encontrada: Processo ${solicitacao.numeroProcedimento}`);
 
     if (acao === 'aceitar') {
         // Atualizar o status da solicitação para aceita
         solicitacao.status = 'aceita';
+        alert(`Solicitação ${solicitacaoId} aceita!`);
 
         // Encontrar o processo relacionado à solicitação
         const procedimento = banco.procedimentos.find(p => p.numero === solicitacao.numeroProcedimento);
-
-        if (procedimento) {
-            // Adicionar nova leitura para o login2 (destinatário)
-            procedimento.leituras.push({
-                usuario: solicitacao.loginDestinatario,
-                data: new Date().toISOString().split('T')[0], // Data no formato YYYY-MM-DD
-                hora: new Date().toTimeString().split(' ')[0] // Hora no formato HH:MM:SS
-            });
-
-            console.log(`Leitura adicionada para o login ${solicitacao.loginDestinatario}`);
-        } else {
+        if (!procedimento) {
             console.log(`Processo ${solicitacao.numeroProcedimento} não encontrado no banco de dados!`);
+            alert('Processo não encontrado no banco de dados!');
             return res.status(404).json({ success: false, message: "Processo não encontrado." });
         }
+
+        console.log(`Processo ${procedimento.numero} encontrado!`);
+        alert('Processo encontrado!');
+
+        // Adicionar nova leitura para o login2 (destinatário)
+        procedimento.leituras.push({
+            usuario: solicitacao.loginDestinatario,
+            data: new Date().toISOString().split('T')[0], // Data no formato YYYY-MM-DD
+            hora: new Date().toTimeString().split(' ')[0] // Hora no formato HH:MM:SS
+        });
+
+        console.log(`Leitura adicionada para o login ${solicitacao.loginDestinatario}`);
+        alert(`Leitura adicionada para o login ${solicitacao.loginDestinatario}!`);
 
         // Salvar o banco de dados atualizado
         try {
             fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
             console.log('Banco de dados atualizado com sucesso!');
+            alert('Banco de dados salvo com sucesso!');
             res.json({ success: true, message: "Solicitação aceita e processo transferido." });
         } catch (error) {
             console.error('Erro ao salvar banco de dados:', error);
-            res.status(500).json({ success: false, message: "Erro ao salvar banco de dados." });
+            alert('Erro ao salvar o banco de dados!');
+            return res.status(500).json({ success: false, message: "Erro ao salvar banco de dados." });
         }
 
     } else if (acao === 'recusar') {
         // Atualizar o status para recusada
         solicitacao.status = 'recusada';
+        alert(`Solicitação ${solicitacaoId} recusada!`);
 
+        // Salvar o banco de dados atualizado
         try {
             fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
             console.log('Solicitação recusada e banco de dados atualizado com sucesso!');
+            alert('Solicitação recusada e banco de dados atualizado!');
             res.json({ success: true, message: "Solicitação recusada." });
         } catch (error) {
             console.error('Erro ao salvar banco de dados:', error);
-            res.status(500).json({ success: false, message: "Erro ao salvar banco de dados." });
+            alert('Erro ao salvar banco de dados ao recusar solicitação!');
+            return res.status(500).json({ success: false, message: "Erro ao salvar banco de dados." });
         }
     }
 });
+
 
 
 
