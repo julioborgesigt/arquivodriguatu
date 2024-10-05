@@ -348,24 +348,34 @@ app.post('/solicitar-transferencia', (req, res) => {
 });
 
 
-
-
-
 app.post('/responder-transferencia/:id', (req, res) => {
     const { acao } = req.body;
     const solicitacaoId = req.params.id;
-    const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
+    
+    // Ler o banco de dados
+    let banco;
+    try {
+        banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
+        alert('Banco de dados carregado com sucesso!');
+    } catch (error) {
+        console.error('Erro ao carregar banco de dados:', error);
+        return res.status(500).json({ success: false, message: "Erro ao carregar banco de dados." });
+    }
 
     // Encontrar a solicitação
     const solicitacao = banco.solicitacoes[solicitacaoId];
-
+    
     if (!solicitacao) {
+        alert('Solicitação não encontrada!');
         return res.status(404).json({ success: false, message: "Solicitação não encontrada." });
     }
+
+    alert('Solicitação encontrada!');
 
     if (acao === 'aceitar') {
         // Atualizar o status da solicitação para aceita
         solicitacao.status = 'aceita';
+        alert('Solicitação aceita!');
 
         // Encontrar o processo relacionado à solicitação
         const procedimento = banco.procedimentos.find(p => p.numero === solicitacao.numeroProcedimento);
@@ -377,16 +387,35 @@ app.post('/responder-transferencia/:id', (req, res) => {
                 data: new Date().toISOString().split('T')[0], // Data no formato YYYY-MM-DD
                 hora: new Date().toTimeString().split(' ')[0] // Hora no formato HH:MM:SS
             });
+
+            alert('Novo registro de leitura adicionado para o login2!');
+        } else {
+            alert('Processo não encontrado no banco de dados!');
+            return res.status(404).json({ success: false, message: "Processo não encontrado." });
         }
 
-        // Salvar o banco de dados atualizado
-        fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
-        res.json({ success: true, message: "Solicitação aceita e processo transferido." });
+        // Tentar salvar o banco de dados atualizado
+        try {
+            fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
+            alert('Banco de dados atualizado com sucesso!');
+            return res.json({ success: true, message: "Solicitação aceita e processo transferido." });
+        } catch (error) {
+            console.error('Erro ao salvar banco de dados:', error);
+            alert('Erro ao salvar o banco de dados!');
+            return res.status(500).json({ success: false, message: "Erro ao salvar banco de dados." });
+        }
     } else if (acao === 'recusar') {
         // Atualizar o status para recusada
         solicitacao.status = 'recusada';
-        fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
-        res.json({ success: true, message: "Solicitação recusada." });
+        try {
+            fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
+            alert('Solicitação recusada e banco de dados atualizado com sucesso!');
+            return res.json({ success: true, message: "Solicitação recusada." });
+        } catch (error) {
+            console.error('Erro ao salvar banco de dados:', error);
+            alert('Erro ao salvar banco de dados ao recusar solicitação!');
+            return res.status(500).json({ success: false, message: "Erro ao salvar banco de dados." });
+        }
     }
 });
 
