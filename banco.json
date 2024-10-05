@@ -29,6 +29,14 @@
         "numero": "456456",
         "leituras": []
       }
-    ]
+    ],
+    "solicitacoes": [
+    {
+      "loginRemetente": "00000000",
+      "loginDestinatario": "11111111",
+      "numeroProcedimento": "123123",
+      "status": "pendente" 
+    }
+  ]
   }
   

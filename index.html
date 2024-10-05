@@ -70,7 +70,24 @@
             <!-- Resultados da pesquisa serão exibidos aqui -->
         </div>
 
+        <div>
+            <h3>Transferir Processo</h3>
+            <label for="login-transferencia">Número do Login do Destinatário:</label>
+            <input type="text" id="login-transferencia" placeholder="Digite o número de login">
+            <label for="procedimento-transferencia">Número do Processo:</label>
+            <input type="text" id="procedimento-transferencia" placeholder="xxx-xxxxx/xxxx">
+            <button type="button" onclick="solicitarTransferencia()">Solicitar Transferência</button>
+        </div>
 
+
+        <div>
+            <h3>Solicitações de Transferência de Processos</h3>
+            <div id="solicitacoes-pendentes">
+                <!-- As solicitações pendentes serão carregadas aqui -->
+            </div>
+        </div>
+        
+        
 
          <!-- Botão Administrador -->
          <button id="admin-btn" onclick="window.location.href='/login_admin.html'">Administrador</button>

@@ -324,3 +324,73 @@ function pesquisarPorLogin() {
             alert('Erro ao buscar processos. Tente novamente.');
         });
 }
+
+
+// Função para solicitar a transferência de processo para outro login
+function solicitarTransferencia() {
+    const loginDestinatario = document.getElementById('login-transferencia').value;
+    const numeroProcedimento = document.getElementById('procedimento-transferencia').value;
+    const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Usuário logado
+
+    if (!loginDestinatario || !numeroProcedimento) {
+        alert('Por favor, preencha todos os campos.');
+        return;
+    }
+
+    fetch('/solicitar-transferencia', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ loginDestinatario, numeroProcedimento, usuarioAtivo })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Solicitação enviada com sucesso!');
+        } else {
+            alert('Erro ao enviar solicitação: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao solicitar transferência:', error);
+        alert('Erro ao solicitar transferência. Tente novamente.');
+    });
+}
+
+
+
+// Função para carregar as solicitações pendentes para o usuário logado
+function carregarSolicitacoesPendentes() {
+    const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Usuário logado
+
+    fetch('/dados')
+        .then(response => response.json())
+        .then(data => {
+            const solicitacoes = data.solicitacoes.filter(solicitacao => solicitacao.loginDestinatario === usuarioAtivo && solicitacao.status === 'pendente');
+
+            const solicitacoesDiv = document.getElementById('solicitacoes-pendentes');
+            solicitacoesDiv.innerHTML = ''; // Limpar solicitações anteriores
+
+            if (solicitacoes.length > 0) {
+                solicitacoes.forEach((solicitacao, index) => {
+                    const div = document.createElement('div');
+                    div.innerHTML = `
+                        <p><strong>Processo:</strong> ${solicitacao.numeroProcedimento}</p>
+                        <p><strong>De:</strong> ${solicitacao.loginRemetente}</p>
+                        <button onclick="responderTransferencia(${index}, 'aceitar')">Aceitar</button>
+                        <button onclick="responderTransferencia(${index}, 'recusar')">Recusar</button>
+                    `;
+                    solicitacoesDiv.appendChild(div);
+                });
+            } else {
+                solicitacoesDiv.innerHTML = '<p>Nenhuma solicitação pendente.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao carregar as solicitações pendentes:', error);
+        });
+}
+
+// Carregar as solicitações pendentes ao carregar a página
+document.addEventListener('DOMContentLoaded', carregarSolicitacoesPendentes);

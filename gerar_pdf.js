@@ -321,3 +321,83 @@ app.get('/dados', (req, res) => {
         }
     });
 });
+
+
+app.post('/solicitar-transferencia', (req, res) => {
+    const { loginDestinatario, numeroProcedimento, usuarioAtivo } = req.body;
+    const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
+
+    // Verificar se o processo e o login destinatário existem
+    const procedimento = banco.procedimentos.find(p => p.numero === numeroProcedimento);
+    const destinatarioExiste = banco.usuarios.find(user => user.username === loginDestinatario);
+
+    if (!procedimento || !destinatarioExiste) {
+        return res.status(400).json({ success: false, message: "Processo ou login inválido." });
+    }
+
+    // Adicionar solicitação ao banco de dados
+    banco.solicitacoes.push({
+        loginRemetente: usuarioAtivo,
+        loginDestinatario,
+        numeroProcedimento,
+        status: "pendente"
+    });
+
+    fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
+    res.json({ success: true, message: "Solicitação de transferência enviada." });
+});
+
+
+// Função para aceitar ou recusar a solicitação
+function responderTransferencia(solicitacaoId, acao) {
+    fetch(`/responder-transferencia/${solicitacaoId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ acao })  // "aceitar" ou "recusar"
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Solicitação ' + (acao === 'aceitar' ? 'aceita' : 'recusada') + ' com sucesso!');
+        } else {
+            alert('Erro ao processar solicitação: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao processar solicitação:', error);
+        alert('Erro ao processar solicitação. Tente novamente.');
+    });
+}
+
+
+app.post('/responder-transferencia/:id', (req, res) => {
+    const { acao } = req.body;
+    const solicitacaoId = req.params.id;
+    const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
+
+    // Encontrar a solicitação
+    const solicitacao = banco.solicitacoes.find((s, index) => index == solicitacaoId);
+
+    if (!solicitacao) {
+        return res.status(404).json({ success: false, message: "Solicitação não encontrada." });
+    }
+
+    if (acao === 'aceitar') {
+        // Atualizar o status da solicitação para aceita
+        solicitacao.status = 'aceita';
+        const procedimento = banco.procedimentos.find(p => p.numero === solicitacao.numeroProcedimento);
+        procedimento.leituras.push({
+            usuario: solicitacao.loginDestinatario,
+            data: new Date().toISOString().split('T')[0],
+            hora: new Date().toTimeString().split(' ')[0]
+        });
+    } else if (acao === 'recusar') {
+        // Atualizar o status para recusada
+        solicitacao.status = 'recusada';
+    }
+
+    fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
+    res.json({ success: true, message: "Solicitação processada com sucesso." });
+});
