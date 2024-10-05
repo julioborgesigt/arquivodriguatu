@@ -352,15 +352,18 @@ app.post('/responder-transferencia/:id', (req, res) => {
     const { acao } = req.body;
     const solicitacaoId = req.params.id;
     
+
     // Ler o banco de dados
     let banco;
     try {
-        banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
+        banco = JSON.parse(fs.readFileSync(bancoFilePath, 'utf8'));
+        console.log('Banco de dados carregado com sucesso:', banco);
         alert('Banco de dados carregado com sucesso!');
     } catch (error) {
-        console.error('Erro ao carregar banco de dados:', error);
+        console.error('Erro ao carregar banco de dados:', error);  // Verifique este log no console
         return res.status(500).json({ success: false, message: "Erro ao carregar banco de dados." });
     }
+    
 
     // Encontrar a solicitação
     const solicitacao = banco.solicitacoes[solicitacaoId];
