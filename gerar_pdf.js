@@ -301,3 +301,8 @@ app.post('/login-admin', (req, res) => {
 app.get('/login_admin.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'login_admin.html'));
 });
+
+// Servir a página login_admin.html
+app.get('/index.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
