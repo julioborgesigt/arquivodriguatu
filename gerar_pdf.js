@@ -352,6 +352,9 @@ app.post('/responder-transferencia/:id', (req, res) => {
     const { acao } = req.body;
     const solicitacaoId = req.params.id;
 
+    console.log(`Processando solicitação de transferência com ID: ${solicitacaoId} e ação: ${acao}`);
+    alert(`Processando solicitação de transferência com ID: ${solicitacaoId} e ação: ${acao}`);
+
     // Ler o banco de dados de forma sincronizada
     let banco;
     try {
@@ -366,12 +369,12 @@ app.post('/responder-transferencia/:id', (req, res) => {
     // Verificar se a solicitação existe
     const solicitacao = banco.solicitacoes[solicitacaoId];
     if (!solicitacao) {
-        console.log(`Solicitação ${solicitacaoId} não encontrada!`);
+        console.log(`Solicitação com ID: ${solicitacaoId} não encontrada!`);
         alert('Solicitação não encontrada!');
         return res.status(404).json({ success: false, message: "Solicitação não encontrada." });
     }
 
-    console.log(`Processando solicitação de transferência ${solicitacaoId} para o processo ${solicitacao.numeroProcedimento}`);
+    console.log(`Solicitação encontrada: Processo ${solicitacao.numeroProcedimento}`);
     alert(`Solicitação encontrada: Processo ${solicitacao.numeroProcedimento}`);
 
     if (acao === 'aceitar') {
@@ -430,6 +433,7 @@ app.post('/responder-transferencia/:id', (req, res) => {
         }
     }
 });
+
 
 
 
