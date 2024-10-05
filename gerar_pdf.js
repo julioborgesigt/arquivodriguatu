@@ -371,10 +371,7 @@ app.post('/responder-transferencia/:id', (req, res) => {
         const procedimento = banco.procedimentos.find(p => p.numero === solicitacao.numeroProcedimento);
 
         if (procedimento) {
-            // Remover a leitura do login1 (remetente)
-            procedimento.leituras = procedimento.leituras.filter(leitura => leitura.usuario !== solicitacao.loginRemetente);
-
-            // Adicionar nova leitura para o login2 (destinatário)
+            // Adicionar nova leitura para o login2 (destinatário), sem apagar a leitura do login1
             procedimento.leituras.push({
                 usuario: solicitacao.loginDestinatario,
                 data: new Date().toISOString().split('T')[0], // Data no formato YYYY-MM-DD
@@ -392,4 +389,5 @@ app.post('/responder-transferencia/:id', (req, res) => {
         res.json({ success: true, message: "Solicitação recusada." });
     }
 });
+
 
