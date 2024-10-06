@@ -1,58 +1,37 @@
 {
-    "usuarios": [
+  "usuarios": [
       {
-        "username": "00000000",
-        "password": "789654321"
+          "username": "00000000",
+          "password": "789654321"
       },
       {
-        "username": "30109511",
-        "password": "123456"
-      }
-      ,
-      {
-        "username": "30115910",
-        "password": "123456"
-      }
-    ],
-    "procedimentos": [
-      {
-        "numero": "479-00001/2024",
-        "leituras": [
-          {
-            "usuario": "30115910",
-            "data": "2024-09-25",
-            "hora": "15:30"
-          },
-          {
-            "usuario": "30115910",
-            "data": "2024-09-26",
-            "hora": "10:45"
-          }
-        ]
+          "username": "30109511",
+          "password": "123456"
       },
       {
-        "numero": "479-00002/2024",
-        "leituras": [
-          {
-            "usuario": "30109511",
-            "data": "2024-09-25",
-            "hora": "15:30"
-          },
-          {
-            "usuario": "30109511",
-            "data": "2024-09-26",
-            "hora": "10:45"
-          }
-        ]
+          "username": "30115910",
+          "password": "123456"
       }
-    ],
-    "solicitacoes": [
-    {
-      "loginRemetente": "00000000",
-      "loginDestinatario": "11111111",
-      "numeroProcedimento": "123123",
-      "status": "pendente" 
-    }
+  ],
+  "procedimentos": [
+      {
+          "numero": "479-00000/2024",
+          "usuario": "00000000",
+          "leituras": [
+              {
+                  "usuario": "30115910",
+                  "data": "2024-10-06",
+                  "hora": "22:35:06"
+              }
+          ]
+      }
+  ],
+  "solicitacoes": [
+      {
+          "loginRemetente": "00000000",
+          "loginDestinatario": "30109511",
+          "numeroProcedimento": "479-00000/2024",
+          "status": "pendente"
+      }
   ]
-  }
-  
+}
