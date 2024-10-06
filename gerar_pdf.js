@@ -452,10 +452,6 @@ app.post('/responder-transferencia/:id', (req, res) => {
 
 
 
-
-
-
-
 app.post('/salvar-dados', (req, res) => {
     const bancoAtualizado = req.body;
 
@@ -483,13 +479,35 @@ app.get('/teste-leitura', (req, res) => {
     }
 });
 
-// Gravação
+
+
+const fs = require('fs');
+const path = require('path');
+
+// Caminho absoluto para o arquivo banco.json
+const bancoFilePath = path.join(__dirname, 'banco.json');
+
+// Rota para testar gravação no banco de dados
 app.post('/teste-gravacao', (req, res) => {
     const dados = req.body;
     
-    console.log(`Tentando gravar no arquivo: ${bancoFilePath}`);
+    // Ler o banco de dados existente
+    let banco;
     try {
-        fs.writeFileSync(bancoFilePath, JSON.stringify(dados, null, 2));
+        banco = JSON.parse(fs.readFileSync(bancoFilePath, 'utf8'));
+        console.log('Banco de dados lido com sucesso!');
+    } catch (error) {
+        console.error('Erro ao ler o banco de dados:', error);
+        return res.status(500).json({ success: false, message: "Erro ao ler o banco de dados." });
+    }
+
+    // Adicionar os dados de teste ao banco de dados
+    banco.testes = banco.testes || []; // Seção de testes no banco
+    banco.testes.push(dados);
+
+    // Gravar o banco de dados atualizado
+    try {
+        fs.writeFileSync(bancoFilePath, JSON.stringify(banco, null, 2));
         console.log('Banco de dados salvo com sucesso!');
         res.json({ success: true, message: "Banco de dados salvo com sucesso!" });
     } catch (error) {
