@@ -6,8 +6,21 @@ const app = express();
 const PORT = 3000;
 
 
-
-
+// Rota para servir o banco.json
+app.get('/banco.json', (req, res) => {
+    const filePath = path.join(__dirname, 'banco.json');
+    
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if (err) {
+        console.error('Erro ao ler o arquivo banco.json:', err);
+        res.status(500).send('Erro ao ler o banco de dados.');
+        return;
+      }
+      res.setHeader('Content-Type', 'application/json');
+      res.send(data);
+    });
+  });
+  
 
 
 app.use(express.json());
@@ -17,6 +30,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
+
+
+
 
 // Rota de login
 app.post('/login', (req, res) => {
