@@ -364,6 +364,7 @@ function solicitarTransferencia() {
 
 
 
+
 // Função para carregar as solicitações pendentes para o usuário logado
 function carregarSolicitacoesPendentes() {
     const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Usuário logado
@@ -403,46 +404,30 @@ function carregarSolicitacoesPendentes() {
 
 
 function responderTransferencia(solicitacaoId, acao, botao) {
-    // Desabilitar o botão para evitar múltiplos cliques
-    botao.disabled = true;
-
-    console.log(`Processando ação de ${acao} para a solicitação ${solicitacaoId}`);
-    alert(`Processando solicitação ${solicitacaoId}`);
+    botao.disabled = true;  // Evitar múltiplos cliques
 
     fetch(`/responder-transferencia/${solicitacaoId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ acao })  // "aceitar" ou "recusar"
+        body: JSON.stringify({ acao })
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
             alert('Solicitação ' + (acao === 'aceitar' ? 'aceita' : 'recusada') + ' com sucesso!');
-            console.log('Solicitação processada com sucesso!');
-
-            // Remover a solicitação da lista
-            const solicitacaoDiv = document.getElementById(`solicitacao-${solicitacaoId}`);
-            if (solicitacaoDiv) {
-                solicitacaoDiv.remove();
-                console.log(`Solicitação ${solicitacaoId} removida da lista!`);
-            }
-
-            // Recarregar a lista de solicitações
-            carregarSolicitacoesPendentes();
+            document.getElementById(`solicitacao-${solicitacaoId}`).remove();  // Remove da lista
         } else {
             alert('Erro ao processar solicitação: ' + data.message);
-            console.error(`Erro ao processar solicitação ${solicitacaoId}:`, data.message);
-            botao.disabled = false;
         }
     })
     .catch(error => {
         console.error(`Erro ao processar solicitação ${solicitacaoId}:`, error);
-        alert('Erro ao processar solicitação. Tente novamente.');
-        botao.disabled = false;
+        botao.disabled = false;  // Reabilita o botão se houver erro
     });
 }
+
 
 
  // Função para testar leitura do banco de dados
