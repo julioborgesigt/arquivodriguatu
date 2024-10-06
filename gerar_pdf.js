@@ -481,8 +481,6 @@ app.get('/teste-leitura', (req, res) => {
 
 
 
-const fs = require('fs');
-const path = require('path');
 
 // Caminho absoluto para o arquivo banco.json
 const bancoFilePath = path.join(__dirname, 'banco.json');
