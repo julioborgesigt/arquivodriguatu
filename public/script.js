@@ -401,8 +401,6 @@ function carregarSolicitacoesPendentes() {
 
 
 
-
-
 function responderTransferencia(solicitacaoId, acao, botao) {
     botao.disabled = true;  // Evitar múltiplos cliques
 
