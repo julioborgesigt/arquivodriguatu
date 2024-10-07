@@ -28,10 +28,7 @@
   ],
   "solicitacoes": [
       {
-          "loginRemetente": "00000000",
-          "loginDestinatario": "30109511",
-          "numeroProcedimento": "479-00000/2024",
-          "status": "pendente"
+          
       }
   ]
 }
