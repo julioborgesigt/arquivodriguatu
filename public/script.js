@@ -495,15 +495,8 @@ function testeGravacao() {
 
 
 function verificarSolicitacoes() {
-    const timestamp = new Date().getTime();  // Gerar um parâmetro único
-    const url = '/solicitacoes-pendentes?t=' + timestamp;  // Adicionar o timestamp como parâmetro
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            // Processar as solicitações
-        })
-        .catch(error => {
-            console.error('Erro ao verificar solicitações:', error);
-        });
+    
+    // Reutilizar a função de carregar as solicitações pendentes
+    carregarSolicitacoesPendentes();
 }
