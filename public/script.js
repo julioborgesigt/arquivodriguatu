@@ -263,7 +263,7 @@ function lerQRCode() {
     }
 
     function ajustarHoraGMT3(data) {
-        const novaData = new Date(data.getTime() - 3 * 60 * 60 * 1000);
+        const novaData = new Date(data.getTime() - 3 * 60 * 60 * 1000); // Ajuste de 3 horas para GMT -3
         const hora = String(novaData.getHours()).padStart(2, '0');
         const minutos = String(novaData.getMinutes()).padStart(2, '0');
         const segundos = String(novaData.getSeconds()).padStart(2, '0');
@@ -281,7 +281,7 @@ function lerQRCode() {
             if (!leituraEfetuada) {
                 leituraEfetuada = true; // Marca como já lido para evitar múltiplas leituras
 
-                // Pegar a data e hora atuais ajustadas
+                // Pegar a data e hora atuais ajustadas para GMT -3
                 const dataAtual = new Date();
                 const dataFormatada = formatarData(dataAtual);
                 const horaFormatada = ajustarHoraGMT3(dataAtual);
