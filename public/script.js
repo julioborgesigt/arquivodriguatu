@@ -1,5 +1,16 @@
-// Carregar as solicitações pendentes ao carregar a página
-document.addEventListener('DOMContentLoaded', carregarSolicitacoesPendentes);
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Certificar que a div "resultado-pesquisa" esteja limpa
+    const resultadoPesquisa = document.getElementById('resultado-pesquisa');
+    if (resultadoPesquisa) {
+        resultadoPesquisa.innerHTML = '';  // Limpar a div ao carregar a página
+    }
+
+    // Carregar as solicitações pendentes automaticamente ao carregar a página
+    carregarSolicitacoesPendentes();
+});
+
 
 
 

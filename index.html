@@ -18,6 +18,8 @@
     <!-- Arquivo JS -->
     <script src="/script.js" defer></script>
 
+    
+
 </head>
 <body>
     <!-- Formulário de Login/Cadastro -->
@@ -72,16 +74,21 @@
 
         <div>
             <h3>Transferir Processo</h3>
+        <form id="transferencia-form">
             <label for="login-transferencia">Número do Login do Destinatário:</label>
             <input type="text" id="login-transferencia" placeholder="Digite o número de login">
             <label for="procedimento-transferencia">Número do Processo:</label>
             <input type="text" id="procedimento-transferencia" placeholder="xxx-xxxxx/xxxx">
             <button type="button" onclick="solicitarTransferencia()">Solicitar Transferência</button>
+        </form>
         </div>
 
 
         <div>
             <h3>Solicitações de Transferência de Processos</h3>
+            <button id="btn-verificar-solicitacoes" onclick="verificarSolicitacoes()">Verificar Solicitações</button>
+            
+
             <div id="solicitacoes-pendentes">
                 <!-- As solicitações pendentes serão carregadas aqui -->
             </div>
