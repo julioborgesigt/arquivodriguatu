@@ -440,10 +440,15 @@ app.post('/responder-transferencia/:id', (req, res) => {
             return res.status(404).json({ success: false, message: "Processo não encontrado." });
         }
 
+
+        const dataAtual = new Date();
+        const dataFormatada = formatarData(dataAtual);
+        const horaComFuso = dataAtual.toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+
         procedimento.leituras.push({
             usuario: solicitacao.loginDestinatario,
-            data: new Date().toISOString().split('T')[0], // Data no formato YYYY-MM-DD
-            hora: new Date().toTimeString().split(' ')[0] // Hora no formato HH:MM:SS
+            data: dataFormatada, // Data no formato dd/mm/aaaa
+            hora: horaComFuso // Hora ajustada para GMT -3
         });
 
         console.log(`Leitura adicionada para o login ${solicitacao.loginDestinatario}`);
