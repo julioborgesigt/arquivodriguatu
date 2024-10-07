@@ -495,27 +495,7 @@ function testeGravacao() {
 
 
 function verificarSolicitacoes() {
-
     
     // Reutilizar a função de carregar as solicitações pendentes
     carregarSolicitacoesPendentes();
-}
-
-
-function obterDataComFusoHorario() {
-    const dataAtual = new Date();
-    const opcoes = {
-        timeZone: 'America/Sao_Paulo', // Define o fuso horário como GMT -3
-        hour12: false,                 // Não usa o formato AM/PM
-    };
-
-    // Retorna o horário ajustado para GMT -3
-    return dataAtual.toLocaleString('pt-BR', opcoes);
-}
-
-function formatarData(data) {
-    const dia = String(data.getDate()).padStart(2, '0');
-    const mes = String(data.getMonth() + 1).padStart(2, '0'); // Mês começa do 0
-    const ano = data.getFullYear();
-    return `${dia}/${mes}/${ano}`;
 }
