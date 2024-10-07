@@ -114,16 +114,11 @@ app.post('/leitura', (req, res) => {
     const procedimento = banco.procedimentos.find(p => p.numero === numeroProcedimento);
 
     if (procedimento) {
-        // Obter a data e hora atuais com formatação correta
-        const dataAtual = new Date();
-        const dataFormatada = formatarData(dataAtual); // Data no formato dd/mm/aaaa
-        const horaFormatada = ajustarHoraGMT3(dataAtual); // Hora no formato HH:MM:SS com GMT -3
-
         // Adicionar a leitura ao procedimento
         procedimento.leituras.push({
             usuario, // Usar o nome do usuário logado
-            data: dataFormatada, // Data formatada corretamente
-            hora: horaFormatada // Hora ajustada para GMT -3
+            data: new Date().toISOString().split('T')[0], // Data no formato YYYY-MM-DD
+            hora: new Date().toTimeString().split(' ')[0] // Hora no formato HH:MM:SS
         });
 
         // Salvar o banco de dados atualizado
@@ -161,16 +156,15 @@ app.post('/salvarProcedimento', (req, res) => {
     banco.procedimentos.push({
         numero: numero,
         usuario: usuario, // Salvar o nome do usuário logado
-        leituras: [{
-        }]
+        leituras: []
     });
-
 
     // Salvar no banco de dados
     fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
 
     res.json({ success: true, message: "Procedimento salvo com sucesso." });
 });
+
 
 
 
@@ -445,16 +439,12 @@ app.post('/responder-transferencia/:id', (req, res) => {
             lock = false;
             return res.status(404).json({ success: false, message: "Processo não encontrado." });
         }
-
-        // Obter a data e hora atuais com fuso horário GMT -3
-        const dataAtual = new Date();
-        const dataFormatada = formatarData(dataAtual);  // Formato dd/mm/aaaa
-        const horaFormatada = ajustarHoraGMT3(dataAtual);  // Hora ajustada para GMT -3
+        
 
         procedimento.leituras.push({
             usuario: solicitacao.loginDestinatario,
-            data: dataFormatada,  // Data formatada
-            hora: horaFormatada   // Hora ajustada
+            data: new Date().toISOString().split('T')[0], // Data no formato YYYY-MM-DD
+            hora: new Date().toTimeString().split(' ')[0] // Hora no formato HH:MM:SS
         });
 
         console.log(`Leitura adicionada para o login ${solicitacao.loginDestinatario}`);
