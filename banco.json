@@ -14,17 +14,7 @@
       }
   ],
   "procedimentos": [
-      {
-          "numero": "479-00000/2024",
-          "usuario": "00000000",
-          "leituras": [
-              {
-                  "usuario": "30115910",
-                  "data": "2024-10-06",
-                  "hora": "22:35:06"
-              }
-          ]
-      }
+     
   ],
   "solicitacoes": [
     
