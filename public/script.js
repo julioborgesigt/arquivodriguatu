@@ -1,13 +1,17 @@
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Certificar que a div "resultado-pesquisa" esteja limpa
-    const resultadoPesquisa = document.getElementById('resultado-pesquisa');
-    if (resultadoPesquisa) {
-        resultadoPesquisa.innerHTML = '';  // Limpar a div ao carregar a página
+    const resultadoPesquisaDiv = document.getElementById('resultado-pesquisa');
+
+    // Limpar a div de resultados de pesquisa ao carregar a página se a flag estiver ativa
+    if (sessionStorage.getItem('limparResultado') === 'true') {
+        if (resultadoPesquisaDiv) {
+            resultadoPesquisaDiv.innerHTML = '';
+        }
+        sessionStorage.setItem('limparResultado', 'false');  // Reseta a flag
     }
 
-    // Carregar as solicitações pendentes automaticamente ao carregar a página
+    // Carregar as solicitações pendentes automaticamente
     carregarSolicitacoesPendentes();
 });
 
@@ -33,6 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Função para realizar o login
 function login() {
+    sessionStorage.setItem('limparResultado', 'true');
+    location.reload(true);
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
@@ -485,4 +491,19 @@ function testeGravacao() {
         console.error('Erro ao testar gravação:', error);
         alert('Erro ao testar gravação no banco de dados.');
     });
+}
+
+
+function verificarSolicitacoes() {
+    const timestamp = new Date().getTime();  // Gerar um parâmetro único
+    const url = '/solicitacoes-pendentes?t=' + timestamp;  // Adicionar o timestamp como parâmetro
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            // Processar as solicitações
+        })
+        .catch(error => {
+            console.error('Erro ao verificar solicitações:', error);
+        });
 }

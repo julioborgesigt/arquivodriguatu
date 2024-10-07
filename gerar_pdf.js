@@ -6,6 +6,18 @@ const app = express();
 const PORT = 3000;
 
 
+
+
+app.use((req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.setHeader('Surrogate-Control', 'no-store');
+    next();
+});
+
+
+
 // Rota para servir o banco.json
 app.get('/banco.json', (req, res) => {
     const filePath = path.join(__dirname, 'banco.json');
