@@ -114,11 +114,16 @@ app.post('/leitura', (req, res) => {
     const procedimento = banco.procedimentos.find(p => p.numero === numeroProcedimento);
 
     if (procedimento) {
+        // Obter a data e hora atuais com formatação correta
+        const dataAtual = new Date();
+        const dataFormatada = formatarData(dataAtual); // Data no formato dd/mm/aaaa
+        const horaFormatada = ajustarHoraGMT3(dataAtual); // Hora no formato HH:MM:SS com GMT -3
+
         // Adicionar a leitura ao procedimento
         procedimento.leituras.push({
             usuario, // Usar o nome do usuário logado
-            data: new Date().toISOString().split('T')[0], // Data no formato YYYY-MM-DD
-            hora: new Date().toTimeString().split(' ')[0] // Hora no formato HH:MM:SS
+            data: dataFormatada, // Data formatada corretamente
+            hora: horaFormatada // Hora ajustada para GMT -3
         });
 
         // Salvar o banco de dados atualizado
@@ -131,10 +136,6 @@ app.post('/leitura', (req, res) => {
 });
 
 
-
-
-
-// Rota para salvar o procedimento no banco de dados
 // Rota para salvar o procedimento no banco de dados
 app.post('/salvarProcedimento', (req, res) => {
     const { numero, usuario } = req.body;
@@ -152,11 +153,19 @@ app.post('/salvarProcedimento', (req, res) => {
         return res.json({ success: true, message: "Procedimento já existe." });
     }
 
+    // Obter a data e hora atuais formatadas
+    const dataAtual = new Date();
+    const dataFormatada = formatarData(dataAtual); // Formato dd/mm/aaaa
+    const horaFormatada = ajustarHoraGMT3(dataAtual); // Hora ajustada para GMT -3
+
     // Adicionar o novo procedimento com o usuário que o registrou
     banco.procedimentos.push({
         numero: numero,
         usuario: usuario, // Salvar o nome do usuário logado
-        leituras: []
+        leituras: [{
+            data: dataFormatada, // Data formatada corretamente
+            hora: horaFormatada // Hora ajustada para GMT -3
+        }]
     });
 
     // Salvar no banco de dados
@@ -164,8 +173,6 @@ app.post('/salvarProcedimento', (req, res) => {
 
     res.json({ success: true, message: "Procedimento salvo com sucesso." });
 });
-
-
 
 
 
