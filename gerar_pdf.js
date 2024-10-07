@@ -97,7 +97,6 @@ app.post('/register', (req, res) => {
 
 
 
-
 // Rota de leitura do QR Code
 // Rota de leitura do QR Code
 app.post('/leitura', (req, res) => {
