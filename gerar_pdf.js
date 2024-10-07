@@ -439,12 +439,16 @@ app.post('/responder-transferencia/:id', (req, res) => {
             lock = false;
             return res.status(404).json({ success: false, message: "Processo não encontrado." });
         }
-        
+
+        // Obter a data e hora atuais com fuso horário GMT -3
+        const dataAtual = new Date();
+        const dataFormatada = formatarData(dataAtual);  // Formato dd/mm/aaaa
+        const horaFormatada = ajustarHoraGMT3(dataAtual);  // Hora ajustada para GMT -3
 
         procedimento.leituras.push({
             usuario: solicitacao.loginDestinatario,
-            data: new Date().toISOString().split('T')[0], // Data no formato YYYY-MM-DD
-            hora: new Date().toTimeString().split(' ')[0] // Hora no formato HH:MM:SS
+            data: dataFormatada,  // Data formatada
+            hora: horaFormatada   // Hora ajustada
         });
 
         console.log(`Leitura adicionada para o login ${solicitacao.loginDestinatario}`);

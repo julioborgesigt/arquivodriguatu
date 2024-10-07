@@ -254,6 +254,22 @@ function lerQRCode() {
     const html5QrCode = new Html5Qrcode("qr-reader");
     let leituraEfetuada = false; // Flag para garantir que só uma leitura seja registrada
 
+    // Funções para formatar a data e ajustar o horário
+    function formatarData(data) {
+        const dia = String(data.getDate()).padStart(2, '0');
+        const mes = String(data.getMonth() + 1).padStart(2, '0');
+        const ano = data.getFullYear();
+        return `${dia}/${mes}/${ano}`;
+    }
+
+    function ajustarHoraGMT3(data) {
+        const novaData = new Date(data.getTime() - 3 * 60 * 60 * 1000);
+        const hora = String(novaData.getHours()).padStart(2, '0');
+        const minutos = String(novaData.getMinutes()).padStart(2, '0');
+        const segundos = String(novaData.getSeconds()).padStart(2, '0');
+        return `${hora}:${minutos}:${segundos}`;
+    }
+
     html5QrCode.start(
         { facingMode: "environment" },  // Câmera traseira
         {
@@ -265,12 +281,22 @@ function lerQRCode() {
             if (!leituraEfetuada) {
                 leituraEfetuada = true; // Marca como já lido para evitar múltiplas leituras
 
+                // Pegar a data e hora atuais ajustadas
+                const dataAtual = new Date();
+                const dataFormatada = formatarData(dataAtual);
+                const horaFormatada = ajustarHoraGMT3(dataAtual);
+
                 fetch('/leitura', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ qrCodeMessage, usuario: usuarioAtivo })
+                    body: JSON.stringify({ 
+                        qrCodeMessage, 
+                        usuario: usuarioAtivo, 
+                        data: dataFormatada, 
+                        hora: horaFormatada 
+                    })
                 })
                 .then(response => response.json())
                 .then(data => {
@@ -298,6 +324,7 @@ function lerQRCode() {
         console.log(`Erro ao iniciar a câmera: ${err}`);
     });
 }
+
 
 
 function lerQRCodePage() {
@@ -498,4 +525,24 @@ function verificarSolicitacoes() {
     
     // Reutilizar a função de carregar as solicitações pendentes
     carregarSolicitacoesPendentes();
+}
+
+
+
+// Função para formatar a data no formato dd/mm/aaaa
+function formatarData(data) {
+    const dia = String(data.getDate()).padStart(2, '0');
+    const mes = String(data.getMonth() + 1).padStart(2, '0'); // Mês começa do 0
+    const ano = data.getFullYear();
+    return `${dia}/${mes}/${ano}`;
+}
+
+// Função para ajustar o horário em GMT -3
+function ajustarHoraGMT3(data) {
+    // Ajustar a hora em 3 horas negativas
+    const novaData = new Date(data.getTime() - 3 * 60 * 60 * 1000);
+    const hora = String(novaData.getHours()).padStart(2, '0');
+    const minutos = String(novaData.getMinutes()).padStart(2, '0');
+    const segundos = String(novaData.getSeconds()).padStart(2, '0');
+    return `${hora}:${minutos}:${segundos}`;
 }
