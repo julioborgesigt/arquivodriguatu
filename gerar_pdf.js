@@ -157,18 +157,11 @@ app.post('/salvarProcedimento', (req, res) => {
         return res.json({ success: true, message: "Procedimento já existe." });
     }
 
-    // Obter a data e hora atuais formatadas
-    const dataAtual = new Date();
-    const dataFormatada = formatarData(dataAtual); // Formato dd/mm/aaaa
-    const horaFormatada = ajustarHoraGMT3(dataAtual); // Hora ajustada para GMT -3
-
     // Adicionar o novo procedimento com o usuário que o registrou
     banco.procedimentos.push({
         numero: numero,
         usuario: usuario, // Salvar o nome do usuário logado
         leituras: [{
-            data: dataFormatada, // Data formatada corretamente
-            hora: horaFormatada // Hora ajustada para GMT -3
         }]
     });
 
