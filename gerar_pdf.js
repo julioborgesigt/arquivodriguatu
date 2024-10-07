@@ -344,7 +344,6 @@ app.get('/dados', (req, res) => {
 
 
 
-
 // Variável de bloqueio (lock)
 let lock = false;
 

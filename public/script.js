@@ -378,14 +378,14 @@ function carregarSolicitacoesPendentes() {
             solicitacoesDiv.innerHTML = ''; // Limpar solicitações anteriores
 
             if (solicitacoes.length > 0) {
-                solicitacoes.forEach((solicitacao, index) => {
+                solicitacoes.forEach((solicitacao) => {
                     const div = document.createElement('div');
-                    div.id = `solicitacao-${index}`;  // Adicionar um ID para remover facilmente
+                    div.id = `solicitacao-${solicitacao.id}`;  // Usar o ID único da solicitação
                     div.innerHTML = `
                         <p><strong>Processo:</strong> ${solicitacao.numeroProcedimento}</p>
                         <p><strong>De:</strong> ${solicitacao.loginRemetente}</p>
-                        <button onclick="responderTransferencia(${index}, 'aceitar', this)">Aceitar</button>
-                        <button onclick="responderTransferencia(${index}, 'recusar', this)">Recusar</button>
+                        <button onclick="responderTransferencia('${solicitacao.id}', 'aceitar', this)">Aceitar</button>
+                        <button onclick="responderTransferencia('${solicitacao.id}', 'recusar', this)">Recusar</button>
                     `;
                     solicitacoesDiv.appendChild(div);
                 });
@@ -397,6 +397,7 @@ function carregarSolicitacoesPendentes() {
             console.error('Erro ao carregar as solicitações pendentes:', error);
         });
 }
+
 
 
 
@@ -425,6 +426,7 @@ function responderTransferencia(solicitacaoId, acao, botao) {
         botao.disabled = false;  // Reabilita o botão se houver erro
     });
 }
+
 
 
 
