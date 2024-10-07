@@ -286,7 +286,7 @@ function lerQRCode() {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ qrCodeMessage, usuario: usuarioAtivo,data: dataFormatada, hora: horaFormatada })
+                    body: JSON.stringify({ qrCodeMessage, usuario: usuarioAtivo })
                 })
                 .then(response => response.json())
                 .then(data => {

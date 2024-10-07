@@ -96,11 +96,25 @@ app.post('/register', (req, res) => {
 });
 
 
+
+
 // Rota de leitura do QR Code
 // Rota de leitura do QR Code
 app.post('/leitura', (req, res) => {
     const { qrCodeMessage, usuario } = req.body; // Receber o usuário logado junto com o QR code
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
+
+    // Captura a hora atual
+    let dataAtual = new Date();
+
+    // Subtrai 3 horas do horário atual
+    dataAtual.setHours(dataAtual.getHours() - 3);
+
+    // Formata a hora no formato HH:MM:SS
+    const horaAjustada = dataAtual.toTimeString().split(' ')[0]; // Agora a hora está ajustada para GMT -3
+
+    console.log(horaAjustada);
+
 
     // Extrair o número do procedimento da URL do QR code
     const urlParams = new URLSearchParams(new URL(qrCodeMessage).search);
@@ -118,7 +132,7 @@ app.post('/leitura', (req, res) => {
         procedimento.leituras.push({
             usuario, // Usar o nome do usuário logado
             data: new Date().toISOString().split('T')[0], // Data no formato YYYY-MM-DD
-            hora: new Date().toTimeString().split(' ')[0] // Hora no formato HH:MM:SS
+            horaAjustada // Hora ajustada para GMT -3
         });
 
         // Salvar o banco de dados atualizado
