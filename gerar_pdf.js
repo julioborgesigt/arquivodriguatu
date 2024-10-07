@@ -115,7 +115,6 @@ app.post('/leitura', (req, res) => {
 
     console.log(horaAjustada);
 
-
     // Extrair o número do procedimento da URL do QR code
     const urlParams = new URLSearchParams(new URL(qrCodeMessage).search);
     const numeroProcedimento = urlParams.get('procedimento');
