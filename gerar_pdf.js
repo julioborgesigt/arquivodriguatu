@@ -341,12 +341,28 @@ app.get('/dados', (req, res) => {
 
 
 
+
+
+
+
+// Variável de bloqueio (lock)
+let lock = false;
+
 // Rota para solicitar transferência
-const { v4: uuidv4 } = require('uuid'); // Para gerar IDs únicos
 app.post('/solicitar-transferencia', (req, res) => {
     const { loginDestinatario, numeroProcedimento, usuarioAtivo } = req.body;
-    const banco = JSON.parse(fs.readFileSync(bancoFilePath, 'utf8'));
 
+    // Ler o banco de dados existente
+    let banco;
+    try {
+        banco = JSON.parse(fs.readFileSync(bancoFilePath, 'utf8'));
+        console.log('Banco de dados lido com sucesso!');
+    } catch (error) {
+        console.error('Erro ao ler o banco de dados:', error);
+        return res.status(500).json({ success: false, message: "Erro ao ler o banco de dados." });
+    }
+
+    // Verificar se o processo e o login destinatário existem
     const procedimento = banco.procedimentos.find(p => p.numero === numeroProcedimento);
     const destinatarioExiste = banco.usuarios.find(user => user.username === loginDestinatario);
 
@@ -354,57 +370,90 @@ app.post('/solicitar-transferencia', (req, res) => {
         return res.status(400).json({ success: false, message: "Processo ou login inválido." });
     }
 
+    // Adicionar solicitação de transferência ao banco
     banco.solicitacoes.push({
-        id: uuidv4(),  // ID único
+        id: Math.random().toString(36).substr(2, 9),  // ID único
         loginRemetente: usuarioAtivo,
         loginDestinatario,
         numeroProcedimento,
         status: "pendente"
     });
 
-    fs.writeFileSync(bancoFilePath, JSON.stringify(banco, null, 2));
-    res.json({ success: true, message: "Solicitação de transferência enviada." });
+    // Gravar o banco de dados atualizado
+    try {
+        fs.writeFileSync(bancoFilePath, JSON.stringify(banco, null, 2));
+        console.log('Solicitação de transferência enviada e banco de dados atualizado!');
+        res.json({ success: true, message: "Solicitação de transferência enviada." });
+    } catch (error) {
+        console.error('Erro ao salvar o banco de dados:', error);
+        res.status(500).json({ success: false, message: "Erro ao salvar o banco de dados." });
+    }
 });
-
-
-
 
 // Rota para responder a solicitação de transferência
 app.post('/responder-transferencia/:id', (req, res) => {
+    if (lock) {
+        return res.status(503).json({ success: false, message: "Outra operação em andamento. Tente novamente." });
+    }
+
+    lock = true;  // Bloquear operações simultâneas
     const { acao } = req.body;
     const solicitacaoId = req.params.id;
 
+    // Ler o banco de dados existente
     let banco;
     try {
         banco = JSON.parse(fs.readFileSync(bancoFilePath, 'utf8'));
+        console.log('Banco de dados carregado com sucesso!');
     } catch (error) {
+        lock = false;
+        console.error('Erro ao carregar banco de dados:', error);
         return res.status(500).json({ success: false, message: "Erro ao carregar banco de dados." });
     }
 
+    // Verificar se a solicitação existe
     const solicitacao = banco.solicitacoes.find(s => s.id === solicitacaoId);
     if (!solicitacao) {
+        lock = false;
         return res.status(404).json({ success: false, message: "Solicitação não encontrada." });
     }
 
+    // Ação de aceitar ou recusar
     if (acao === 'aceitar') {
         solicitacao.status = 'aceita';
+
+        // Encontrar o processo e adicionar nova leitura
         const procedimento = banco.procedimentos.find(p => p.numero === solicitacao.numeroProcedimento);
+        if (!procedimento) {
+            lock = false;
+            return res.status(404).json({ success: false, message: "Processo não encontrado." });
+        }
+
         procedimento.leituras.push({
             usuario: solicitacao.loginDestinatario,
-            data: new Date().toISOString().split('T')[0],
-            hora: new Date().toTimeString().split(' ')[0]
+            data: new Date().toISOString().split('T')[0], // Data no formato YYYY-MM-DD
+            hora: new Date().toTimeString().split(' ')[0] // Hora no formato HH:MM:SS
         });
+
+        console.log(`Leitura adicionada para o login ${solicitacao.loginDestinatario}`);
     } else if (acao === 'recusar') {
         solicitacao.status = 'recusada';
+        console.log(`Solicitação ${solicitacaoId} recusada`);
     }
 
+    // Gravar o banco de dados atualizado
     try {
         fs.writeFileSync(bancoFilePath, JSON.stringify(banco, null, 2));
+        console.log('Banco de dados atualizado com sucesso!');
+        lock = false;  // Liberar o bloqueio
         res.json({ success: true, message: `Solicitação ${acao === 'aceitar' ? 'aceita' : 'recusada'} com sucesso!` });
     } catch (error) {
+        lock = false;  // Liberar o bloqueio em caso de erro
+        console.error('Erro ao salvar banco de dados:', error);
         return res.status(500).json({ success: false, message: "Erro ao salvar banco de dados." });
     }
 });
+
 
 
 
