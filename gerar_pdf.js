@@ -136,6 +136,10 @@ app.post('/leitura', (req, res) => {
 });
 
 
+
+
+
+// Rota para salvar o procedimento no banco de dados
 // Rota para salvar o procedimento no banco de dados
 app.post('/salvarProcedimento', (req, res) => {
     const { numero, usuario } = req.body;
@@ -168,11 +172,13 @@ app.post('/salvarProcedimento', (req, res) => {
         }]
     });
 
+
     // Salvar no banco de dados
     fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
 
     res.json({ success: true, message: "Procedimento salvo com sucesso." });
 });
+
 
 
 
