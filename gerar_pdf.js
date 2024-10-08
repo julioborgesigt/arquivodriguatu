@@ -70,7 +70,7 @@ app.post('/login', (req, res) => {
 });
 
 
-// Rota de cadastro
+
 // Rota de cadastro (register)
 app.post('/register', (req, res) => {
     const { username, password } = req.body;
@@ -96,8 +96,6 @@ app.post('/register', (req, res) => {
 });
 
 
-
-// Rota de leitura do QR Code
 // Rota de leitura do QR Code
 app.post('/leitura', (req, res) => {
     const { qrCodeMessage, usuario } = req.body; // Receber o usuário logado junto com o QR code
@@ -146,7 +144,7 @@ app.post('/leitura', (req, res) => {
 
 
 
-// Rota para salvar o procedimento no banco de dados
+
 // Rota para salvar o procedimento no banco de dados
 app.post('/salvarProcedimento', (req, res) => {
     const { numero, usuario } = req.body;
@@ -176,7 +174,6 @@ app.post('/salvarProcedimento', (req, res) => {
 
     res.json({ success: true, message: "Procedimento salvo com sucesso." });
 });
-
 
 
 
@@ -249,7 +246,7 @@ app.get('/dados', (req, res) => {
     });
 });
 
-// Rota para consultar movimentação
+
 // Rota para consultar movimentação
 app.get('/consultaMovimentacao', (req, res) => {
     const { procedimento } = req.query;
@@ -342,7 +339,7 @@ app.get('/login_admin.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'login_admin.html'));
 });
 
-// Servir a página login_admin.html
+// Servir a página index.html
 app.get('/index.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
@@ -361,10 +358,6 @@ app.get('/dados', (req, res) => {
         }
     });
 });
-
-
-
-
 
 
 
@@ -413,6 +406,8 @@ app.post('/solicitar-transferencia', (req, res) => {
     }
 });
 
+
+
 // Rota para responder a solicitação de transferência
 app.post('/responder-transferencia/:id', (req, res) => {
     if (lock) {
@@ -444,6 +439,16 @@ app.post('/responder-transferencia/:id', (req, res) => {
     // Ação de aceitar ou recusar
     if (acao === 'aceitar') {
         solicitacao.status = 'aceita';
+        // Captura a hora atual
+        let dataAtual = new Date();
+
+        // Subtrai 3 horas do horário atual
+        dataAtual.setHours(dataAtual.getHours() - 3);
+
+        // Formata a hora no formato HH:MM:SS
+        const horaAjustada = dataAtual.toTimeString().split(' ')[0]; // Agora a hora está ajustada para GMT -3
+
+        console.log(horaAjustada);
 
         // Encontrar o processo e adicionar nova leitura
         const procedimento = banco.procedimentos.find(p => p.numero === solicitacao.numeroProcedimento);
@@ -456,7 +461,7 @@ app.post('/responder-transferencia/:id', (req, res) => {
         procedimento.leituras.push({
             usuario: solicitacao.loginDestinatario,
             data: new Date().toISOString().split('T')[0], // Data no formato YYYY-MM-DD
-            hora: new Date().toTimeString().split(' ')[0] // Hora no formato HH:MM:SS
+            hora: horaAjustada // Hora ajustada para GMT -3
         });
 
         console.log(`Leitura adicionada para o login ${solicitacao.loginDestinatario}`);
