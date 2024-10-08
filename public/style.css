@@ -207,3 +207,47 @@ tbody tr:hover {
         font-size: 14px; /* Aumentar um pouco o tamanho da fonte para mobile */
     }
 }
+
+
+/* Estilo para a caixa de seleção */
+select {
+    width: 100%; /* Ocupa toda a largura disponível */
+    padding: 10px 15px; /* Espaçamento interno para tornar mais confortável */
+    font-size: 16px; /* Tamanho da fonte */
+    border-radius: 8px; /* Bordas arredondadas */
+    border: 2px solid #ddd; /* Borda sutil */
+    background-color: #f9f9f9; /* Fundo levemente acinzentado */
+    color: #333; /* Cor do texto */
+    appearance: none; /* Remove a aparência padrão do navegador */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Efeito suave ao focar */
+}
+
+select:focus {
+    border-color: #0066cc; /* Borda azul ao focar */
+    box-shadow: 0 0 5px rgba(0, 102, 204, 0.5); /* Efeito de sombra ao focar */
+    outline: none; /* Remove o contorno padrão */
+}
+
+/* Adiciona um pequeno ícone de seta para baixo */
+select::-ms-expand {
+    display: none; /* Remove o ícone do IE */
+}
+
+/* Estilo do contêiner para o select */
+.select-container {
+    position: relative; /* Posicionamento relativo para o ícone personalizado */
+    width: 100%;
+}
+
+.select-container::after {
+    content: '▼'; /* Ícone de seta para baixo */
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    pointer-events: none; /* Previne interação com o ícone */
+    color: #666; /* Cor da seta */
+    font-size: 12px;
+}
