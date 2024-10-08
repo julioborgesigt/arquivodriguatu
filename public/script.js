@@ -141,7 +141,7 @@ function register() {
 
 // Função para validar o formato do número de procedimento
 function validarProcedimento(numero) {
-    const regex = /^\d{3}-\d{5}\/\d{4}$/; // Novo formato: xxx-xxxxx/xxxx
+    const regex = /^\d{2}-\d{3}-\d{5}\/\d{4}$/; // Novo formato: xx-xxx-xxxxx/xxxx
     return regex.test(numero);
 }
 
@@ -152,7 +152,7 @@ function gerarPDF() {
     const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Pega o usuário logado
 
     if (!validarProcedimento(numeroProcedimento)) {
-        alert("O número do procedimento deve estar no formato xxx - xxxxx / xxxx.");
+        alert("O número do procedimento deve estar no formato xx-xxx-xxxxx/xxxx");
         return;
     }
 
@@ -199,7 +199,7 @@ function consultarMovimentacao() {
     const numeroProcedimento = document.getElementById("consulta-procedimento").value;
 
     if (!validarProcedimento(numeroProcedimento)) {
-        alert("O número do procedimento deve estar no formato xxx - xxxxx / xxxx.");
+        alert("O número do procedimento deve estar no formato xx-xxx-xxxxx/xxxx.");
         return;
     }
 
