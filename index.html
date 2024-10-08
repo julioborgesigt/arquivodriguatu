@@ -44,8 +44,17 @@
         <!-- Gerar Procedimento -->
         <h2>Gerar Procedimento</h2>
         <form id="formulario">
+            <label for="tipo-procedimento">Tipo de Procedimento:</label>
+            <select id="tipo-procedimento" name="tipo-procedimento" required>
+                <option value="BO">BO</option>
+                <option value="TC">TC</option>
+                <option value="AI">AI</option>
+                <option value="IP">IP</option>
+            </select>
+
+
             <label for="procedimento">Número do Procedimento:</label>
-            <input type="text" id="procedimento" name="procedimento" placeholder="xx-xxx-xxxxx/xxxx" required>
+            <input type="text" id="procedimento" name="procedimento" placeholder="xxx-xxxxx/xxxx" required>
             <button type="button" onclick="gerarPDF()">Gerar PDF</button>
             <button type="button" onclick="window.location.href='/leitor_qrcode.html'">Ler QR Code</button>
         </form>

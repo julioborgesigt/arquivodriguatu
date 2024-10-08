@@ -150,7 +150,8 @@ app.post('/salvarProcedimento', (req, res) => {
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
     // Verificar se o número do procedimento está no novo formato
-    if (!/^\d{2}-\d{3}-\d{5}\/\d{4}$/.test(numero)) {
+    const regex = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
+    if (!regex.test(numero)) {
         return res.status(400).json({ success: false, message: "Formato inválido para o número do procedimento." });
     }
 
@@ -173,6 +174,7 @@ app.post('/salvarProcedimento', (req, res) => {
 
     res.json({ success: true, message: "Procedimento salvo com sucesso." });
 });
+
 
 
 
@@ -252,7 +254,7 @@ app.get('/consultaMovimentacao', (req, res) => {
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
     // Verificar se o número do procedimento está no novo formato
-    if (!/^\d{3}-\d{5}\/\d{4}$/.test(procedimento)) {
+    if (!/^\d{2}-\d{3}-\d{5}\/\d{4}$/.test(procedimento)) {
         return res.status(400).json({ success: false, message: "Formato inválido para o número do procedimento." });
     }
 

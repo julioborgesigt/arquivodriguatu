@@ -141,9 +141,10 @@ function register() {
 
 // Função para validar o formato do número de procedimento
 function validarProcedimento(numero) {
-    const regex = /^\d{2}-\d{3}-\d{5}\/\d{4}$/; // Novo formato: xx-xxx-xxxxx/xxxx
+    const regex = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/; // Novo formato: xx-xxx-xxxxx/xxxx
     return regex.test(numero);
 }
+
 
 
 // Função para gerar o PDF
