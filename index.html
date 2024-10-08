@@ -64,15 +64,21 @@
 
         <!-- Consultar Movimentação -->
         <h2>Consultar Movimentação</h2>
-        <form id="consulta-form">
-            <label for="consulta-procedimento">Número do Procedimento:</label>
-            <input type="text" id="consulta-procedimento" name="consulta-procedimento" placeholder="xx-xxx-xxxxx/xxxx" required>
-            <button type="button" onclick="consultarMovimentacao()">Consultar</button>
-        </form>
+        <div class="select-container">
+            <label for="consulta-tipo-procedimento">Tipo de Procedimento:</label>
+            <select id="consulta-tipo-procedimento" name="consulta-tipo-procedimento" required>
+                <option value="BO">BO</option>
+                <option value="TC">TC</option>
+                <option value="AI">AI</option>
+                <option value="IP">IP</option>
+            </select>
+        </div>
         
-        <div id="resultado-consulta" style="margin-top: 20px;"></div>
-
-        <div id="qr-reader" style="width: 500px; display: none;"></div>
+        <input type="text" id="consulta-procedimento" name="consulta-procedimento" placeholder="xxx-xxxxx/xxxx" required>
+        <button type="button" onclick="consultarMovimentacao()">Consultar</button>
+        
+        <div id="resultado-consulta"></div>
+        
 
         <!-- Campo de pesquisa por login -->
         <form id="consultalogin-form">

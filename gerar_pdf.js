@@ -254,7 +254,8 @@ app.get('/consultaMovimentacao', (req, res) => {
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
     // Verificar se o número do procedimento está no novo formato
-    if (!/^\d{2}-\d{3}-\d{5}\/\d{4}$/.test(procedimento)) {
+    const regex = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
+    if (!regex.test(procedimento)) {
         return res.status(400).json({ success: false, message: "Formato inválido para o número do procedimento." });
     }
 
@@ -267,6 +268,7 @@ app.get('/consultaMovimentacao', (req, res) => {
         res.json({ success: false, message: "Procedimento não encontrado." });
     }
 });
+
 
 
 

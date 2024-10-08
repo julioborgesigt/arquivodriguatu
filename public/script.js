@@ -199,6 +199,39 @@ function gerarPDF() {
     });
 }
 
+// Função para consultar movimentação
+function consultarMovimentacao() {
+    const tipoProcedimento = document.getElementById("consulta-tipo-procedimento").value; // Pega o tipo
+    const numeroProcedimento = document.getElementById("consulta-procedimento").value;
+
+    // Combinar tipo e número
+    const numeroCompleto = `${tipoProcedimento}-${numeroProcedimento}`;
+
+    if (!validarProcedimento(numeroCompleto)) {
+        alert("O número do procedimento deve estar no formato xx-xxx-xxxxx/xxxx.");
+        return;
+    }
+
+    fetch(`/consultaMovimentacao?procedimento=${numeroCompleto}`)
+        .then(response => response.json())
+        .then(data => {
+            const resultadoDiv = document.getElementById('resultado-consulta');
+            if (data.success) {
+                let html = `<h3>Movimentações para o procedimento ${numeroCompleto}:</h3><ul>`;
+                data.leituras.forEach(leitura => {
+                    html += `<li>${leitura.usuario}, Data: ${leitura.data}, Hora: ${leitura.hora}</li>`;
+                });
+                html += `</ul>`;
+                resultadoDiv.innerHTML = html;
+            } else {
+                resultadoDiv.innerHTML = `<p>${data.message}</p>`;
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao consultar movimentação:', error);
+            document.getElementById('resultado-consulta').innerHTML = `<p>Erro ao consultar movimentação. Tente novamente.</p>`;
+        });
+}
 
 
 // Função para gerar QR Code
