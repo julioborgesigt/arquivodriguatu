@@ -373,12 +373,17 @@ function pesquisarPorLogin() {
 
 
 // Função para solicitar a transferência de processo para outro login
+// Função para solicitar a transferência de processo para outro login
 function solicitarTransferencia() {
-    const loginDestinatario = document.getElementById('login-transferencia').value;
+    const tipoProcedimento = document.getElementById('tipo-transferencia').value; // Pega o tipo de procedimento
     const numeroProcedimento = document.getElementById('procedimento-transferencia').value;
+    const loginDestinatario = document.getElementById('login-transferencia').value;
     const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Usuário logado
 
-    if (!loginDestinatario || !numeroProcedimento) {
+    // Combinar o tipo de procedimento com o número inserido
+    const numeroCompleto = `${tipoProcedimento}-${numeroProcedimento}`;
+
+    if (!loginDestinatario || !numeroCompleto) {
         alert('Por favor, preencha todos os campos.');
         return;
     }
@@ -388,7 +393,7 @@ function solicitarTransferencia() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ loginDestinatario, numeroProcedimento, usuarioAtivo })
+        body: JSON.stringify({ loginDestinatario, numeroProcedimento: numeroCompleto, usuarioAtivo })
     })
     .then(response => response.json())
     .then(data => {
@@ -403,6 +408,7 @@ function solicitarTransferencia() {
         alert('Erro ao solicitar transferência. Tente novamente.');
     });
 }
+
 
 
 

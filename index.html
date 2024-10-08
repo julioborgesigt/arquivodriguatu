@@ -95,10 +95,24 @@
         <div>
             <h3>Transferir Processo</h3>
         <form id="transferencia-form">
+
+            <div class="select-container">
+                <label for="tipo-transferencia">Tipo de Procedimento:</label>
+                <select id="tipo-transferencia" name="tipo-transferencia" required>
+                    <option value="BO">BO</option>
+                    <option value="TC">TC</option>
+                    <option value="AI">AI</option>
+                    <option value="IP">IP</option>
+                </select>
+            </div>
+
+
             <label for="login-transferencia">Número do Login do Destinatário:</label>
             <input type="text" id="login-transferencia" placeholder="Digite o número de login">
+
+
             <label for="procedimento-transferencia">Número do Processo:</label>
-            <input type="text" id="procedimento-transferencia" placeholder="xx-xxx-xxxxx/xxxx">
+            <input type="text" id="procedimento-transferencia" placeholder="xxx-xxxxx/xxxx">
             <button type="button" onclick="solicitarTransferencia()">Solicitar Transferência</button>
         </form>
         </div>

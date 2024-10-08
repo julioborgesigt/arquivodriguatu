@@ -381,6 +381,12 @@ app.post('/solicitar-transferencia', (req, res) => {
         return res.status(500).json({ success: false, message: "Erro ao ler o banco de dados." });
     }
 
+    // Verificar se o número do procedimento está no novo formato
+    const regex = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
+    if (!regex.test(numeroProcedimento)) {
+        return res.status(400).json({ success: false, message: "Formato inválido para o número do procedimento." });
+    }
+
     // Verificar se o processo e o login destinatário existem
     const procedimento = banco.procedimentos.find(p => p.numero === numeroProcedimento);
     const destinatarioExiste = banco.usuarios.find(user => user.username === loginDestinatario);
@@ -408,6 +414,7 @@ app.post('/solicitar-transferencia', (req, res) => {
         res.status(500).json({ success: false, message: "Erro ao salvar o banco de dados." });
     }
 });
+
 
 
 
