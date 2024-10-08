@@ -144,14 +144,13 @@ app.post('/leitura', (req, res) => {
 
 
 
-
 // Rota para salvar o procedimento no banco de dados
 app.post('/salvarProcedimento', (req, res) => {
     const { numero, usuario } = req.body;
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
     // Verificar se o número do procedimento está no novo formato
-    if (!/^\d{3}-\d{5}\/\d{4}$/.test(numero)) {
+    if (!/^\d{2}-\d{3}-\d{5}\/\d{4}$/.test(numero)) {
         return res.status(400).json({ success: false, message: "Formato inválido para o número do procedimento." });
     }
 
