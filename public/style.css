@@ -1,6 +1,6 @@
 /* Estilos Globais */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
@@ -12,13 +12,19 @@ body {
 
 /* Estilos do Container */
 #app-container, #auth-container {
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.9); /* Adicionando leve transparência */
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra mais forte */
+    border-radius: 12px;
     width: 100%;
     max-width: 600px;
     margin: 20px;
+    transition: transform 0.3s, box-shadow 0.3s; /* Suavização ao interagir */
+}
+
+#app-container:hover, #auth-container:hover {
+    transform: translateY(-5px); /* Efeito de elevação ao passar o mouse */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Aumentar a sombra ao passar o mouse */
 }
 
 h1, h2 {
@@ -37,12 +43,18 @@ label {
     color: #333;
 }
 
-input {
+input, select {
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Efeito suave ao focar */
+}
+
+input:focus, select:focus {
+    border-color: #007BFF; /* Borda azul ao focar */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Efeito de sombra ao focar */
 }
 
 /* Estilos dos Botões */
@@ -51,16 +63,17 @@ button {
     background-color: #007BFF;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
     margin-bottom: 10px;
+    transition: background-color 0.3s, transform 0.2s; /* Suavização ao passar o mouse */
 }
 
 button:hover {
     background-color: #0056b3;
+    transform: scale(1.02); /* Efeito de aumento ao passar o mouse */
 }
-
 
 /* Estilos para o leitor de QR Code */
 #qr-reader {
@@ -70,7 +83,7 @@ button:hover {
     left: 0;
     width: 100vw;  /* Ocupa toda a largura da tela */
     height: 100vh;  /* Ocupa toda a altura da tela */
-    background-color: #000;  /* Fundo preto para destacar o leitor */
+    background-color: rgba(0, 0, 0, 0.8);  /* Fundo preto com transparência */
     z-index: 9999;  /* Garantir que o leitor fique acima de outros elementos */
     justify-content: center;
     align-items: center;
@@ -80,25 +93,6 @@ button:hover {
     width: 100% !important;  /* Garante que o vídeo ocupe a área inteira */
     height: 100% !important;  /* Garante que o vídeo ocupe a área inteira */
 }
-
-
-
-
-
-/* Estilos responsivos para o leitor de QR code */
-@media (orientation: portrait) {
-    #qr-reader {
-        flex-direction: column;
-    }
-}
-
-@media (orientation: landscape) {
-    #qr-reader {
-        flex-direction: row;
-    }
-}
-
-
 
 /* Estilos Responsivos */
 @media (max-width: 768px) {
@@ -114,7 +108,6 @@ button:hover {
         width: 100%;
     }
 }
-
 
 /* Estilos para Tabelas */
 table {
@@ -154,7 +147,6 @@ tbody tr:hover {
     }
 }
 
-
 /* Estilo para o botão Administrador */
 #admin-btn {
     background-color: #4CAF50; /* Cor verde do botão */
@@ -164,12 +156,13 @@ tbody tr:hover {
     border: none; /* Remover borda */
     border-radius: 5px; /* Cantos arredondados */
     cursor: pointer; /* Cursor de mãozinha */
-    transition: background-color 0.3s ease; /* Suavização ao passar o mouse */
+    transition: background-color 0.3s ease, transform 0.2s; /* Suavização ao passar o mouse */
     margin-top: 20px; /* Espaço acima do botão */
 }
 
 #admin-btn:hover {
     background-color: #45a049; /* Cor mais escura ao passar o mouse */
+    transform: scale(1.02); /* Efeito de aumento ao passar o mouse */
 }
 
 /* Responsividade para garantir que o botão se ajuste em telas menores */
@@ -181,22 +174,22 @@ tbody tr:hover {
     }
 }
 
-
 /* Estilo para o botão logout */
 #botao-logout {
-    background-color: #d32525; /* Cor verde do botão */
+    background-color: #d32525; /* Cor do botão */
     color: white; /* Texto branco */
     padding: 10px 10px; /* Espaçamento interno */
     font-size: 16px; /* Tamanho da fonte */
     border: none; /* Remover borda */
     border-radius: 5px; /* Cantos arredondados */
     cursor: pointer; /* Cursor de mãozinha */
-    transition: background-color 0.3s ease; /* Suavização ao passar o mouse */
+    transition: background-color 0.3s ease, transform 0.2s; /* Suavização ao passar o mouse */
     margin-top: 20px; /* Espaço acima do botão */
 }
 
 #botao-logout:hover {
     background-color: #f30808; /* Cor mais escura ao passar o mouse */
+    transform: scale(1.02); /* Efeito de aumento ao passar o mouse */
 }
 
 /* Responsividade para garantir que o botão se ajuste em telas menores */
@@ -207,7 +200,6 @@ tbody tr:hover {
         font-size: 14px; /* Aumentar um pouco o tamanho da fonte para mobile */
     }
 }
-
 
 /* Estilo para a caixa de seleção */
 select {
