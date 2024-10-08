@@ -128,7 +128,7 @@ app.post('/leitura', (req, res) => {
         procedimento.leituras.push({
             usuario, // Usar o nome do usuário logado
             data: new Date().toISOString().split('T')[0], // Data no formato YYYY-MM-DD
-            horaAjustada // Hora ajustada para GMT -3
+            hora: horaAjustada // Hora ajustada para GMT -3
         });
 
         // Salvar o banco de dados atualizado
