@@ -149,10 +149,14 @@ function validarProcedimento(numero) {
 
 // Função para gerar o PDF
 function gerarPDF() {
+    const tipoProcedimento = document.getElementById("tipo-procedimento").value; // Captura as letras
     const numeroProcedimento = document.getElementById("procedimento").value;
     const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Pega o usuário logado
 
-    if (!validarProcedimento(numeroProcedimento)) {
+    // Combinar o tipo de procedimento com o restante do número
+    const numeroCompleto = `${tipoProcedimento}-${numeroProcedimento}`;
+
+    if (!validarProcedimento(numeroCompleto)) {
         alert("O número do procedimento deve estar no formato xx-xxx-xxxxx/xxxx");
         return;
     }
@@ -168,7 +172,7 @@ function gerarPDF() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ numero: numeroProcedimento, usuario: usuarioAtivo })
+        body: JSON.stringify({ numero: numeroCompleto, usuario: usuarioAtivo })
     })
     .then(response => response.json())
     .then(data => {
@@ -178,13 +182,13 @@ function gerarPDF() {
             const doc = new jsPDF();
             doc.setFont('Arial');
             doc.setFontSize(22);
-            doc.text(numeroProcedimento, doc.internal.pageSize.getWidth() / 2, doc.internal.pageSize.getHeight() / 2, { align: 'center' });
+            doc.text(numeroCompleto, doc.internal.pageSize.getWidth() / 2, doc.internal.pageSize.getHeight() / 2, { align: 'center' });
 
-            const qrCodeUrl = `https://arquivo-driguatu-production.up.railway.app/leitura?procedimento=${numeroProcedimento}`;
+            const qrCodeUrl = `https://arquivo-driguatu-production.up.railway.app/leitura?procedimento=${numeroCompleto}`;
             const qrCodeImg = generateQRCode(qrCodeUrl);
             doc.addImage(qrCodeImg, 'PNG', doc.internal.pageSize.getWidth() - 110, 10, 100, 100);
 
-            doc.save(`procedimento_${numeroProcedimento}.pdf`);
+            doc.save(`procedimento_${numeroCompleto}.pdf`);
         } else {
             alert("Erro ao salvar o procedimento: " + data.message);
         }
@@ -195,35 +199,6 @@ function gerarPDF() {
     });
 }
 
-// Função para consultar movimentação
-function consultarMovimentacao() {
-    const numeroProcedimento = document.getElementById("consulta-procedimento").value;
-
-    if (!validarProcedimento(numeroProcedimento)) {
-        alert("O número do procedimento deve estar no formato xx-xxx-xxxxx/xxxx.");
-        return;
-    }
-
-    fetch(`/consultaMovimentacao?procedimento=${numeroProcedimento}`)
-    .then(response => response.json())
-    .then(data => {
-        const resultadoDiv = document.getElementById('resultado-consulta');
-        if (data.success) {
-            let html = `<h3>Movimentações para o procedimento ${numeroProcedimento}:</h3><ul>`;
-            data.leituras.forEach(leitura => {
-                html += `<li>${leitura.usuario}, Data: ${leitura.data}, Hora: ${leitura.hora}</li>`;
-            });
-            html += `</ul>`;
-            resultadoDiv.innerHTML = html;
-        } else {
-            resultadoDiv.innerHTML = `<p>${data.message}</p>`;
-        }
-    })
-    .catch(error => {
-        console.error('Erro ao consultar movimentação:', error);
-        document.getElementById('resultado-consulta').innerHTML = `<p>Erro ao consultar movimentação. Tente novamente.</p>`;
-    });
-}
 
 
 // Função para gerar QR Code
