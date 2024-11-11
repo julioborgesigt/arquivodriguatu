@@ -533,6 +533,11 @@ function verificarSolicitacoes() {
 
 
 function mostrarConversor() {
+    document.getElementById("conversor-container").style.display = "block";
+}
+
+
+function converterProcedimento() {
     const numeroConverter = document.getElementById("numero-converter").value;
 
     // Verificar se o número foi preenchido
@@ -556,37 +561,4 @@ function mostrarConversor() {
             console.error("Erro ao obter tipo antigo:", error);
             alert("Erro ao buscar o tipo antigo do procedimento.");
         });
-}
-
-
-
-function converterProcedimento() {
-    const numeroOriginal = document.getElementById("numero-converter").value;
-    const novoTipo = document.getElementById("novo-tipo").value;
-    const novoNumero = document.getElementById("novo-numero").value;
-
-    if (!numeroOriginal || !novoTipo || !novoNumero) {
-        alert("Por favor, preencha todos os campos.");
-        return;
-    }
-
-    fetch('/converterProcedimento', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ numeroOriginal, novoTipo, novoNumero })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert("Procedimento convertido com sucesso!");
-        } else {
-            alert("Erro ao converter procedimento: " + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Erro ao converter procedimento:', error);
-        alert('Erro ao converter procedimento. Tente novamente.');
-    });
 }
