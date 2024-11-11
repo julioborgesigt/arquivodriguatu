@@ -589,3 +589,34 @@ app.post('/teste-gravacao', (req, res) => {
         res.status(500).json({ success: false, message: "Erro ao salvar o banco de dados." });
     }
 });
+
+
+app.post('/converterProcedimento', (req, res) => {
+    const { numeroOriginal, novoTipo } = req.body;
+
+    // Carregar banco de dados
+    let banco;
+    try {
+        banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Erro ao carregar banco de dados." });
+    }
+
+    // Localizar o procedimento e validar a existência
+    const procedimento = banco.procedimentos.find(p => p.numero === numeroOriginal);
+    if (!procedimento) {
+        return res.status(404).json({ success: false, message: "Procedimento não encontrado." });
+    }
+
+    // Alterar o tipo do procedimento (primeira parte do número) sem alterar o histórico
+    const numeroConvertido = numeroOriginal.replace(/^[A-Z]{2}/, novoTipo);
+    procedimento.numero = numeroConvertido;
+
+    // Salvar alterações
+    try {
+        fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
+        res.json({ success: true, message: "Procedimento convertido com sucesso." });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Erro ao salvar banco de dados." });
+    }
+});

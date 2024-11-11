@@ -530,3 +530,39 @@ function verificarSolicitacoes() {
     // Reutilizar a função de carregar as solicitações pendentes
     carregarSolicitacoesPendentes();
 }
+
+
+function mostrarConversor() {
+    document.getElementById("conversor-container").style.display = "block";
+}
+
+
+function converterProcedimento() {
+    const numeroOriginal = document.getElementById("numero-converter").value;
+    const novoTipo = document.getElementById("novo-tipo").value;
+
+    if (!numeroOriginal || !novoTipo) {
+        alert("Por favor, preencha todos os campos.");
+        return;
+    }
+
+    fetch('/converterProcedimento', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ numeroOriginal, novoTipo })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert("Procedimento convertido com sucesso!");
+        } else {
+            alert("Erro ao converter procedimento: " + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao converter procedimento:', error);
+        alert('Erro ao converter procedimento. Tente novamente.');
+    });
+}
