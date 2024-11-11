@@ -84,7 +84,7 @@ app.post('/login', (req, res) => {
             return res.status(500).json({ message: "Erro ao ler o banco de dados" });
         }
 
-        const bancoDados = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
+        const bancoDados = JSON.parse(data);
 
         // Verificar se o usuário existe e a senha está correta
         const usuario = bancoDados.usuarios.find(u => u.username === username && u.password === password);

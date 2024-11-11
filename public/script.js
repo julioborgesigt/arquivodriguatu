@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Função para realizar o login
 function login() {
     sessionStorage.setItem('limparResultado', 'true');
-    location.reload(true);
+    //location.reload(true);
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
