@@ -533,8 +533,31 @@ function verificarSolicitacoes() {
 
 
 function mostrarConversor() {
-    document.getElementById("conversor-container").style.display = "block";
+    const numeroConverter = document.getElementById("numero-converter").value;
+
+    // Verificar se o número foi preenchido
+    if (!numeroConverter) {
+        alert("Por favor, insira o número do procedimento.");
+        return;
+    }
+
+    // Buscar o tipo antigo do procedimento no banco de dados
+    fetch(`/obterTipoAntigo?numero=${numeroConverter}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById("antigo-tipo").value = data.tipoAntigo;  // Preencher o tipo antigo
+                document.getElementById("conversor-container").style.display = "block";
+            } else {
+                alert("Procedimento não encontrado.");
+            }
+        })
+        .catch(error => {
+            console.error("Erro ao obter tipo antigo:", error);
+            alert("Erro ao buscar o tipo antigo do procedimento.");
+        });
 }
+
 
 
 function converterProcedimento() {

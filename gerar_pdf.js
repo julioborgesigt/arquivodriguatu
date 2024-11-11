@@ -625,3 +625,25 @@ app.post('/converterProcedimento', (req, res) => {
         res.status(500).json({ success: false, message: "Erro ao salvar banco de dados." });
     }
 });
+
+
+app.get('/obterTipoAntigo', (req, res) => {
+    const { numero } = req.query;
+
+    // Carregar banco de dados
+    let banco;
+    try {
+        banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Erro ao carregar banco de dados." });
+    }
+
+    // Buscar o procedimento correspondente
+    const procedimento = banco.procedimentos.find(p => p.numero.includes(numero));
+    if (procedimento) {
+        const tipoAntigo = procedimento.numero.split('-')[0]; // Extrair o tipo atual do número
+        res.json({ success: true, tipoAntigo });
+    } else {
+        res.json({ success: false, message: "Procedimento não encontrado." });
+    }
+});
