@@ -47,7 +47,7 @@ app.get('/', (req, res) => {
 
 
 
-
+/*
 // Rota de login
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
@@ -71,6 +71,47 @@ app.post('/login', (req, res) => {
     });
 });
 
+*/
+
+
+// Rota de login
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    fs.readFile('banco.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Erro ao ler o banco de dados" });
+        }
+
+        const bancoDados = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
+
+        // Verificar se o usuário existe e a senha está correta
+        const usuario = bancoDados.usuarios.find(u => u.username === username && u.password === password);
+
+        if (usuario) {
+            res.status(200).json({ message: "Login realizado com sucesso", usuario: usuario });
+        } else {
+            res.status(401).json({ message: "Usuário ou senha incorretos" });
+        }
+    });
+});
+
+
+// Rota para verificar o login de administrador
+app.post('/login-admin', (req, res) => {
+    const { username, password } = req.body;
+    const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
+
+    // Verificar se o usuário e senha estão corretos
+    const admin = banco.usuarios.find(user => user.username === '00000000' && user.password === '789654321');
+
+    if (username === admin.username && password === admin.password) {
+        res.status(200).json({ success: true, message: "Login realizado com sucesso" });
+    } else {
+        res.status(401).json({ success: false, message: "Usuário ou senha incorretos" });
+    }
+});
 
 
 // Rota de cadastro (register)
@@ -323,20 +364,7 @@ app.get('/administrador.html', (req, res) => {
 });
 
 
-// Rota para verificar o login de administrador
-app.post('/login-admin', (req, res) => {
-    const { username, password } = req.body;
-    const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
-    // Verificar se o usuário e senha estão corretos
-    const admin = banco.usuarios.find(user => user.username === '00000000' && user.password === '789654321');
-
-    if (username === admin.username && password === admin.password) {
-        res.status(200).json({ success: true, message: "Login realizado com sucesso" });
-    } else {
-        res.status(401).json({ success: false, message: "Usuário ou senha incorretos" });
-    }
-});
 
 
 // Servir a página login_admin.html
