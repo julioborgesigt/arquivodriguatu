@@ -540,8 +540,9 @@ function mostrarConversor() {
 function converterProcedimento() {
     const numeroOriginal = document.getElementById("numero-converter").value;
     const novoTipo = document.getElementById("novo-tipo").value;
+    const novoNumero = document.getElementById("novo-numero").value;
 
-    if (!numeroOriginal || !novoTipo) {
+    if (!numeroOriginal || !novoTipo || !novoNumero) {
         alert("Por favor, preencha todos os campos.");
         return;
     }
@@ -551,7 +552,7 @@ function converterProcedimento() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ numeroOriginal, novoTipo })
+        body: JSON.stringify({ numeroOriginal, novoTipo, novoNumero })
     })
     .then(response => response.json())
     .then(data => {

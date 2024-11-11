@@ -592,7 +592,7 @@ app.post('/teste-gravacao', (req, res) => {
 
 
 app.post('/converterProcedimento', (req, res) => {
-    const { numeroOriginal, novoTipo } = req.body;
+    const { numeroOriginal, novoTipo, novoNumero } = req.body;
 
     // Carregar banco de dados
     let banco;
@@ -608,9 +608,14 @@ app.post('/converterProcedimento', (req, res) => {
         return res.status(404).json({ success: false, message: "Procedimento não encontrado." });
     }
 
-    // Alterar o tipo do procedimento (primeira parte do número) sem alterar o histórico
-    const numeroConvertido = numeroOriginal.replace(/^[A-Z]{2}/, novoTipo);
-    procedimento.numero = numeroConvertido;
+    // Validar formato do novo número
+    const regexNovoNumero = /^\d{3}-\d{5}\/\d{4}$/; // Formato do novo número
+    if (!regexNovoNumero.test(novoNumero)) {
+        return res.status(400).json({ success: false, message: "Formato inválido para a nova numeração." });
+    }
+
+    // Alterar o tipo e número do procedimento
+    procedimento.numero = `${novoTipo}-${novoNumero}`;
 
     // Salvar alterações
     try {

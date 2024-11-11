@@ -129,14 +129,14 @@
             </div>
         </div>
 
-        <!-- Botão para exibir o formulário de conversão -->
+       <!-- Botão para exibir o formulário de conversão -->
         <button id="converter-btn" onclick="mostrarConversor()">Converter Procedimento</button>
 
         <!-- Formulário de conversão (oculto até clicar no botão) -->
         <div id="conversor-container" style="display: none;">
             <label for="numero-converter">Número do Procedimento:</label>
-            <input type="text" id="numero-converter" placeholder="Ex.: BO-123-45678/2024" required>
-            
+            <input type="text" id="numero-converter" placeholder="Ex.: 123-45678/2024" required>
+
             <label for="novo-tipo">Novo Tipo de Procedimento:</label>
             <select id="novo-tipo">
                 <option value="BO">BO</option>
@@ -144,6 +144,9 @@
                 <option value="AI">AI</option>
                 <option value="IP">IP</option>
             </select>
+
+            <label for="novo-numero">Nova Numeração do Procedimento:</label>
+            <input type="text" id="novo-numero" placeholder="Ex.: 123-45678/2024" required>
 
             <button onclick="converterProcedimento()">Confirmar Conversão</button>
         </div>
