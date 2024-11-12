@@ -592,7 +592,7 @@ app.post('/teste-gravacao', (req, res) => {
 
 
 app.post('/converterProcedimento', (req, res) => {
-    const { numeroOriginal, novoTipo, novoNumero } = req.body;
+    const { antigoNumeroCompleto, novoTipo, novoNumero } = req.body;
 
     // Carregar banco de dados
     let banco;
@@ -603,7 +603,7 @@ app.post('/converterProcedimento', (req, res) => {
     }
 
     // Localizar o procedimento e validar a existência
-    const procedimento = banco.procedimentos.find(p => p.numero === numeroOriginal);
+    const procedimento = banco.procedimentos.find(p => p.numero === antigoNumeroCompleto);
     if (!procedimento) {
         return res.status(404).json({ success: false, message: "Procedimento não encontrado." });
     }
