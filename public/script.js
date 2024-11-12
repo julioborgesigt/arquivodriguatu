@@ -536,6 +536,8 @@ function mostrarConversor() {
     document.getElementById("conversor-container").style.display = "block";
 }
 
+
+/*
 // Função para carregar o tipo antigo com base no número do procedimento
 function carregarTipoAntigo() {
     const numero = document.getElementById("numero-converter").value;
@@ -554,7 +556,7 @@ function carregarTipoAntigo() {
             .catch(error => console.error("Erro ao carregar o tipo antigo:", error));
     }
 }
-
+*/
 
 
 function converterProcedimento() {
