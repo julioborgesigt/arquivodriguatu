@@ -615,7 +615,7 @@ app.post('/converterProcedimento', (req, res) => {
     }
 
     // Alterar o tipo e número do procedimento
-    procedimento.numero = `${novoTipo}-${novoNumero}`;
+    procedimento.numero = `${novoNumero}`;
 
     // Salvar alterações
     try {
