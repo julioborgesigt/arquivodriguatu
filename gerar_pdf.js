@@ -609,7 +609,7 @@ app.post('/converterProcedimento', (req, res) => {
     }
 
     // Validar formato do novo número
-    const regexNovoNumero = /^\d{3}-\d{5}\/\d{4}$/; // Formato do novo número
+    const regexNovoNumero = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/; // Formato do novo número
     if (!regexNovoNumero.test(novoNumero)) {
         return res.status(400).json({ success: false, message: "Formato inválido para a nova numeração." });
     }
