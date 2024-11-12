@@ -17,5 +17,6 @@
     "nodemon": "^3.1.7",
     "qrcode-generator": "^1.4.4"
   },
+  "devDependencies": {},
   "description": ""
 }
