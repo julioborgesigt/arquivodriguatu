@@ -536,6 +536,54 @@ function mostrarConversor() {
     document.getElementById("conversor-container").style.display = "block";
 }
 
+// Função para carregar o tipo antigo com base no número do procedimento
+function carregarTipoAntigo() {
+    const numero = document.getElementById("numero-converter").value;
+
+    if (numero) {
+        fetch(`/obterTipoAntigo?numero=${numero}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById("antigo-tipo").value = data.tipoAntigo;
+                } else {
+                    alert("Tipo antigo não encontrado. Verifique o número do procedimento.");
+                }
+            })
+            .catch(error => console.error("Erro ao carregar o tipo antigo:", error));
+    }
+}
+
+// Função para converter o procedimento
+function converterProcedimento() {
+    const numeroOriginal = document.getElementById("numero-converter").value;
+    const novoTipo = document.getElementById("novo-tipo").value;
+    const novoNumero = document.getElementById("novo-numero").value;
+
+    if (!numeroOriginal || !novoTipo || !novoNumero) {
+        alert("Preencha todos os campos para converter o procedimento.");
+        return;
+    }
+
+    fetch('/converterProcedimento', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ numeroOriginal, novoTipo, novoNumero })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            // Opcional: recarregar ou limpar o formulário após a conversão
+        } else {
+            alert("Erro ao converter o procedimento: " + data.message);
+        }
+    })
+    .catch(error => console.error("Erro ao converter procedimento:", error));
+}
+
 
 function converterProcedimento() {
     // Obter valores dos campos de entrada
