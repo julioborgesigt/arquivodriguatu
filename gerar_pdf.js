@@ -627,6 +627,7 @@ app.post('/converterProcedimento', (req, res) => {
 });
 
 
+
 app.get('/obterTipoAntigo', (req, res) => {
     const { numero } = req.query;
 
