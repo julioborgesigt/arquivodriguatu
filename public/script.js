@@ -539,6 +539,7 @@ function mostrarConversor() {
 // Função para carregar o tipo antigo com base no número do procedimento
 function carregarTipoAntigo() {
     const numero = document.getElementById("numero-converter").value;
+    
 
     if (numero) {
         fetch(`/obterTipoAntigo?numero=${numero}`)
@@ -555,7 +556,11 @@ function carregarTipoAntigo() {
 }
 
 
-// Função para converter o procedimento
+function validarProcedimento(numero) {
+    const regex = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/; // Formato xx-xxx-xxxxx/xxxx
+    return regex.test(numero);
+}
+
 function converterProcedimento() {
     const numeroOriginal = document.getElementById("numero-converter").value;
     const novoTipo = document.getElementById("novo-tipo").value;
@@ -563,6 +568,11 @@ function converterProcedimento() {
 
     if (!numeroOriginal || !novoTipo || !novoNumero) {
         alert("Preencha todos os campos para converter o procedimento.");
+        return;
+    }
+    
+    if (!validarProcedimento(numeroOriginal) || !validarProcedimento(novoNumero)) {
+        alert("Formato inválido. Use o formato xx-xxx-xxxxx/xxxx.");
         return;
     }
 
@@ -577,7 +587,6 @@ function converterProcedimento() {
     .then(data => {
         if (data.success) {
             alert(data.message);
-            // Opcional: recarregar ou limpar o formulário após a conversão
         } else {
             alert("Erro ao converter o procedimento: " + data.message);
         }
