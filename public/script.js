@@ -556,10 +556,6 @@ function carregarTipoAntigo() {
 }
 
 
-function validarProcedimento(numero) {
-    const regex = /^\d{3}-\d{5}\/\d{4}$/; // Formato: xxx-xxxxx/xxxx
-    return regex.test(numero);
-}
 
 function converterProcedimento() {
     const tipoSelecionado = document.getElementById("novo-tipo").value; // Tipo do procedimento (ex.: BO, TC)
@@ -571,10 +567,7 @@ function converterProcedimento() {
         return;
     }
     
-    if (!validarProcedimento(numeroDigitado)) {
-        alert("O número deve estar no formato xxx-xxxxx/xxxx.");
-        return;
-    }
+    
 
     const novoNumeroCompleto = `${tipoSelecionado}-${numeroDigitado}`; // Concatenar tipo e número
 
