@@ -557,41 +557,42 @@ function carregarTipoAntigo() {
 
 
 function validarProcedimento(numero) {
-    const regex = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/; // Formato xx-xxx-xxxxx/xxxx
+    const regex = /^\d{3}-\d{5}\/\d{4}$/; // Formato: xxx-xxxxx/xxxx
     return regex.test(numero);
 }
 
 function converterProcedimento() {
-    const numeroOriginal = document.getElementById("numero-converter").value;
-    const novoTipo = document.getElementById("novo-tipo").value;
-    const novoNumero = document.getElementById("novo-numero").value;
+    const tipoSelecionado = document.getElementById("novo-tipo").value; // Tipo do procedimento (ex.: BO, TC)
+    const numeroDigitado = document.getElementById("novo-numero").value; // Número no formato xxx-xxxxx/xxxx
+    const numeroOriginal = document.getElementById("numero-converter").value; // Número original do procedimento com tipo
 
-    if (!numeroOriginal || !novoTipo || !novoNumero) {
+    if (!numeroOriginal || !tipoSelecionado || !numeroDigitado) {
         alert("Preencha todos os campos para converter o procedimento.");
         return;
     }
     
-    if (!validarProcedimento(numeroOriginal) || !validarProcedimento(novoNumero)) {
-        alert("Formato inválido. Use o formato xx-xxx-xxxxx/xxxx.");
+    if (!validarProcedimento(numeroDigitado)) {
+        alert("O número deve estar no formato xxx-xxxxx/xxxx.");
         return;
     }
+
+    const novoNumeroCompleto = `${tipoSelecionado}-${numeroDigitado}`; // Concatenar tipo e número
 
     fetch('/converterProcedimento', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ numeroOriginal, novoTipo, novoNumero })
+        body: JSON.stringify({ numeroOriginal, novoTipo: tipoSelecionado, novoNumero: novoNumeroCompleto })
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
             alert(data.message);
+            // Limpar o formulário ou atualizar a página, conforme necessário
         } else {
             alert("Erro ao converter o procedimento: " + data.message);
         }
     })
     .catch(error => console.error("Erro ao converter procedimento:", error));
 }
-
-
