@@ -538,27 +538,79 @@ function mostrarConversor() {
 
 
 function converterProcedimento() {
-    const numeroConverter = document.getElementById("numero-converter").value;
-
-    // Verificar se o número foi preenchido
-    if (!numeroConverter) {
-        alert("Por favor, insira o número do procedimento.");
+    // Obter valores dos campos de entrada
+    const numeroAntigo = document.getElementById("numero-antigo").value;
+    const tipoAntigo = document.getElementById("antigo-tipo").value;
+    const tipoNovo = document.getElementById("novo-tipo").value;
+    const numeroNovo = document.getElementById("novo-numero").value;
+    
+    // Validar entrada
+    if (!numeroAntigo || !tipoAntigo || !tipoNovo || !numeroNovo) {
+        alert("Por favor, preencha todos os campos.");
         return;
     }
+    
+    const numeroProcedimentoAntigo = `${tipoAntigo}-${numeroAntigo}`;
+    const numeroProcedimentoNovo = `${tipoNovo}-${numeroNovo}`;
 
-    // Buscar o tipo antigo do procedimento no banco de dados
-    fetch(`/obterTipoAntigo?numero=${numeroConverter}`)
+    // Verificar se o número novo já existe
+    fetch(`/consultaMovimentacao?procedimento=${numeroProcedimentoNovo}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                document.getElementById("antigo-tipo").value = data.tipoAntigo;  // Preencher o tipo antigo
-                document.getElementById("conversor-container").style.display = "block";
+                alert("O número do novo procedimento já existe.");
             } else {
-                alert("Procedimento não encontrado.");
+                // Buscar o procedimento antigo e transferir o histórico
+                fetch(`/consultaMovimentacao?procedimento=${numeroProcedimentoAntigo}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const leiturasAntigas = data.leituras;
+
+                            // Adicionar o procedimento convertido com as leituras antigas
+                            fetch('/salvarProcedimento', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    numero: numeroProcedimentoNovo,
+                                    usuario: localStorage.getItem('usuarioAtivo'),
+                                    leituras: leiturasAntigas
+                                })
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    alert("Procedimento convertido com sucesso!");
+
+                                    // Excluir o procedimento antigo, se necessário
+                                    fetch(`/excluirProcedimento?procedimento=${numeroProcedimentoAntigo}`, {
+                                        method: 'DELETE'
+                                    })
+                                    .then(() => alert("Procedimento antigo removido com sucesso."))
+                                    .catch(error => console.error("Erro ao remover o procedimento antigo:", error));
+                                } else {
+                                    alert("Erro ao salvar o novo procedimento.");
+                                }
+                            })
+                            .catch(error => {
+                                console.error("Erro ao salvar o novo procedimento:", error);
+                                alert("Erro ao salvar o novo procedimento.");
+                            });
+                        } else {
+                            alert("Procedimento antigo não encontrado.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Erro ao consultar procedimento antigo:", error);
+                        alert("Erro ao consultar procedimento antigo.");
+                    });
             }
         })
         .catch(error => {
-            console.error("Erro ao obter tipo antigo:", error);
-            alert("Erro ao buscar o tipo antigo do procedimento.");
+            console.error("Erro ao consultar o novo número de procedimento:", error);
+            alert("Erro ao consultar o novo número de procedimento.");
         });
 }
+
