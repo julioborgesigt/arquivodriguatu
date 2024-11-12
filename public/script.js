@@ -580,7 +580,6 @@ function converterProcedimento() {
     console.log("novoNumeroCompleto", novoNumeroCompleto);
     
 
-
     fetch('/converterProcedimento', {
         method: 'POST',
         headers: {
