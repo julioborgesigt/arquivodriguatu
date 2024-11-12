@@ -131,34 +131,34 @@
 
        
         <!-- Botão para exibir o formulário de conversão -->
-        <button id="converter-btn" onclick="mostrarConversor()">Converter Procedimento</button>
+<button id="converter-btn" onclick="mostrarConversor()">Converter Procedimento</button>
 
-        <!-- Formulário de conversão (oculto até clicar no botão) -->
-        <div id="conversor-container" style="display: none;">
-            <label for="numero-converter">Número do Procedimento:</label>
-            <input type="text" id="numero-converter" placeholder="Ex.: 123-45678/2024" required>
+<!-- Formulário de conversão (oculto até clicar no botão) -->
+<div id="conversor-container" style="display: none;">
+    <label for="numero-converter">Número do Procedimento:</label>
+    <input type="text" id="numero-converter" placeholder="Ex.: 123-45678/2024" required oninput="carregarTipoAntigo()">
 
-            <label for="antigo-tipo">Antigo Tipo de Procedimento:</label>
-            <select id="antigo-tipo">
-                <option value="BO">BO</option>
-                <option value="TC">TC</option>
-                <option value="AI">AI</option>
-                <option value="IP">IP</option>
-            </select>
+    <label for="antigo-tipo">Antigo Tipo de Procedimento:</label>
+    <select id="antigo-tipo">
+        <option value="BO">BO</option>
+        <option value="TC">TC</option>
+        <option value="AI">AI</option>
+        <option value="IP">IP</option>
+    </select>
 
-            <label for="novo-tipo">Novo Tipo de Procedimento:</label>
-            <select id="novo-tipo">
-                <option value="BO">BO</option>
-                <option value="TC">TC</option>
-                <option value="AI">AI</option>
-                <option value="IP">IP</option>
-            </select>
+    <label for="novo-tipo">Novo Tipo de Procedimento:</label>
+    <select id="novo-tipo">
+        <option value="BO">BO</option>
+        <option value="TC">TC</option>
+        <option value="AI">AI</option>
+        <option value="IP">IP</option>
+    </select>
 
-            <label for="novo-numero">Nova Numeração do Procedimento:</label>
-            <input type="text" id="novo-numero" placeholder="Ex.: 123-45678/2024" required>
+    <label for="novo-numero">Nova Numeração do Procedimento:</label>
+    <input type="text" id="novo-numero" placeholder="Ex.: 123-45678/2024" required>
 
-            <button onclick="converterProcedimento()">Confirmar Conversão</button>
-        </div>
+    <button onclick="converterProcedimento()">Confirmar Conversão</button>
+</div>
 
         
         
