@@ -571,7 +571,7 @@ function converterProcedimento() {
     const novoNumeroCompleto = `${tipoSelecionado}-${numeroDigitado}`; // Concatenar tipo e número
 
     console.log("Número original recebido:", numeroOriginal);
-    console.alert("Número original recebido:", numeroOriginal);
+    alert("Número original recebido:", numeroOriginal);
 
 
     fetch('/converterProcedimento', {
