@@ -554,6 +554,7 @@ function carregarTipoAntigo() {
     }
 }
 
+
 // Função para converter o procedimento
 function converterProcedimento() {
     const numeroOriginal = document.getElementById("numero-converter").value;
