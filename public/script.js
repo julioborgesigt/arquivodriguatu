@@ -567,7 +567,6 @@ function converterProcedimento() {
         return;
     }
     
-    
 
     const novoNumeroCompleto = `${tipoSelecionado}-${numeroDigitado}`; // Concatenar tipo e número
 
