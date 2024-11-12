@@ -562,6 +562,7 @@ function carregarTipoAntigo() {
 function converterProcedimento() {
     const tipoSelecionado = document.getElementById("novo-tipo").value; // Tipo do procedimento (ex.: BO, TC)
     const numeroDigitado = document.getElementById("novo-numero").value; // Número no formato xxx-xxxxx/xxxx
+    const tipoSelecionadoAntigo = document.getElementById("antigo-tipo").value; // Tipo do procedimento (ex.: BO, TC)
     const numeroOriginal = document.getElementById("numero-converter").value; // Número original do procedimento com tipo
 
     if (!numeroOriginal || !tipoSelecionado || !numeroDigitado) {
@@ -571,13 +572,14 @@ function converterProcedimento() {
     
 
     const novoNumeroCompleto = `${tipoSelecionado}-${numeroDigitado}`; // Concatenar tipo e número
-
+    const antigoNumeroCompleto = `${tipoSelecionadoAntigo}-${numeroOriginal}`; // Concatenar tipo e número
 
 
     console.log("tipoSelecionado:", tipoSelecionado);
     console.log("numeroDigitado", numeroDigitado);
     console.log("Número original recebido:", numeroOriginal);
     console.log("novoNumeroCompleto", novoNumeroCompleto);
+    console.log("antigoNumeroCompleto", antigoNumeroCompleto);
     
 
     fetch('/converterProcedimento', {
@@ -585,7 +587,7 @@ function converterProcedimento() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ numeroOriginal, novoTipo: tipoSelecionado, novoNumero: novoNumeroCompleto })
+        body: JSON.stringify({ antigoNumeroCompleto, novoTipo: tipoSelecionado, novoNumero: novoNumeroCompleto })
     })
     .then(response => response.json())
     .then(data => {

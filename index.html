@@ -130,13 +130,14 @@
         </div>
 
        
+
         <!-- Botão para exibir o formulário de conversão -->
 <button id="converter-btn" onclick="mostrarConversor()">Converter Procedimento</button>
 
 <!-- Formulário de conversão (oculto até clicar no botão) -->
 <div id="conversor-container" style="display: none;">
     <label for="numero-converter">Número do Procedimento:</label>
-    <input type="text" id="numero-converter" placeholder="Ex.: 123-45678/2024" required oninput="carregarTipoAntigo()">
+    <input type="text" id="numero-converter" placeholder="Ex.: 123-45678/2024">
 
     <label for="antigo-tipo">Antigo Tipo de Procedimento:</label>
     <select id="antigo-tipo">
@@ -155,7 +156,7 @@
     </select>
 
     <label for="novo-numero">Nova Numeração do Procedimento:</label>
-    <input type="text" id="novo-numero" placeholder="Ex.: 123-45678/2024" required>
+    <input type="text" id="novo-numero" placeholder="Ex.: 123-45678/2024">
 
     <button onclick="converterProcedimento()">Confirmar Conversão</button>
 </div>
