@@ -243,3 +243,39 @@ select::-ms-expand {
     color: #666; /* Cor da seta */
     font-size: 12px;
 }
+
+
+#conversor-container {
+    display: none;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+#conversor-container select,
+#conversor-container input {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#conversor-container button {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+#conversor-container button:hover {
+    background-color: #0056b3;
+}
+
+
