@@ -48,7 +48,7 @@ label {
 
 input {
     padding: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
@@ -96,7 +96,7 @@ button {
 }
 
 .bottom-nav button i {
-    font-size: 18px;
+    font-size: 14px;
     margin-bottom: 2px;
 }
 
@@ -107,6 +107,6 @@ button {
     }
 
     input, button {
-        font-size: 14px;
+        font-size: 12px;
     }
 }
