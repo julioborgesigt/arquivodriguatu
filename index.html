@@ -41,16 +41,18 @@
         <div id="app-container" style="display: none;">
             <h1>Bem-vindo, <span id="user-name"></span></h1>
         
-                <form id="botoesadm-form">
-                <!-- Botão de logout -->
-                <button id="botao-logout" type="button" onclick="logout()">Sair</button>
-               </form>
+                
         
 
 
             <div id="main-container">
             <h1>Bem-vindo</h1>
             <h2>Escolha uma opção abaixo</h2>
+
+            <form id="botoesadm-form">
+                <!-- Botão de logout -->
+                <button id="botao-logout" type="button" onclick="logout()">Sair</button>
+               </form>
     
             <!-- Formulários para cada funcionalidade -->
             <div id="gerarPDF-form" class="formulario">
@@ -74,7 +76,7 @@
                 <label for="procedimento">Número do Procedimento:</label>
                 <input type="text" id="procedimento" name="procedimento" placeholder="xxx-xxxxx/xxxx" required>
                 <button type="button" onclick="gerarPDF()">Gerar PDF</button>
-                <button type="button" onclick="window.location.href='/leitor_qrcode.html'">Ler QR Code</button>
+                
                 </form>
             </div>
     
@@ -82,6 +84,7 @@
                 <h3>Ler QR Code</h3>
                 <form>
                     <!-- Conteúdo específico de Ler QR Code -->
+                    <button type="button" onclick="window.location.href='/leitor_qrcode.html'">Ler QR Code</button>
                     <button type="button" onclick="lerQRCode()">Iniciar Leitura</button>
                 </form>
             </div>
