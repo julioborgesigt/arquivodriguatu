@@ -600,3 +600,30 @@ function converterProcedimento() {
     })
     .catch(error => console.error("Erro ao converter procedimento:", error));
 }
+
+
+// Função para redirecionar para telas específicas
+function abrirTela(tela) {
+    switch (tela) {
+        case 'gerarPDF':
+            // Código para abrir a tela de gerar PDF
+            break;
+        case 'lerQrcode':
+            // Código para abrir a tela de leitura de QR Code
+            break;
+        case 'consultarMovimentacao':
+            // Código para abrir a tela de consulta de movimentação
+            break;
+        case 'transferirProcesso':
+            // Código para abrir a tela de transferência de processo
+            break;
+        case 'solicitacoes':
+            // Código para abrir a tela de solicitações de transferência
+            break;
+        case 'converter':
+            // Código para abrir a tela de conversão de procedimentos
+            break;
+        default:
+            console.log("Tela não encontrada.");
+    }
+}
