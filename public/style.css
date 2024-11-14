@@ -124,7 +124,7 @@ button:hover {
 /* Ajuste para dispositivos móveis */
 @media (max-width: 768px) {
     #main-container {
-        padding: 15px;
+        padding: 25px;
     }
 
     input, button {
