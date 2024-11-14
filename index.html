@@ -37,106 +37,92 @@
         </form>
     </div>
 
-    <!-- Interface após login -->
-    <div id="app-container" style="display: none;">
-        <h1>Bem-vindo, <span id="user-name"></span></h1>
+        <!-- Interface após login -->
+        <div id="app-container" style="display: none;">
+            <h1>Bem-vindo, <span id="user-name"></span></h1>
         
-        
-        
-
-        
-
-        
-
-
-        
-
-       
+                <form id="botoesadm-form">
+                <!-- Botão de logout -->
+                <button id="botao-logout" type="button" onclick="logout()">Sair</button>
+               </form>
         
 
 
-
-
-        
-        
-     
-
-
-
-    <div id="main-container">
-        <h1>Bem-vindo</h1>
-        <h2>Escolha uma opção abaixo</h2>
+            <div id="main-container">
+            <h1>Bem-vindo</h1>
+            <h2>Escolha uma opção abaixo</h2>
     
-        <!-- Formulários para cada funcionalidade -->
-        <div id="gerarPDF-form" class="formulario">
-            <h3>Gerar Procedimento</h3>
-            <form>
-                <!-- Gerar Procedimento -->
-        <h2>Gerar Procedimento</h2>
-        <form id="formulario">
+            <!-- Formulários para cada funcionalidade -->
+            <div id="gerarPDF-form" class="formulario">
+                <h3>Gerar Procedimento</h3>
+                <form>
+                    <!-- Gerar Procedimento -->
+            <h2>Gerar Procedimento</h2>
+            <form id="formulario">
+                <div class="select-container">
+                    <label for="tipo-procedimento">Tipo de Procedimento:</label>
+                    <select id="tipo-procedimento" name="tipo-procedimento" required>
+                        <option value="BO">BO</option>
+                        <option value="TC">TC</option>
+                        <option value="AI">AI</option>
+                        <option value="IP">IP</option>
+                    </select>
+                </div>
+                
+
+
+                <label for="procedimento">Número do Procedimento:</label>
+                <input type="text" id="procedimento" name="procedimento" placeholder="xxx-xxxxx/xxxx" required>
+                <button type="button" onclick="gerarPDF()">Gerar PDF</button>
+                <button type="button" onclick="window.location.href='/leitor_qrcode.html'">Ler QR Code</button>
+                </form>
+            </div>
+    
+            <div id="lerQrcode-form" class="formulario">
+                <h3>Ler QR Code</h3>
+                <form>
+                    <!-- Conteúdo específico de Ler QR Code -->
+                    <button type="button" onclick="lerQRCode()">Iniciar Leitura</button>
+                </form>
+            </div>
+    
+            <div id="consultarMovimentacao-form" class="formulario">
+                <h3>Consultar Movimentação</h3>
+                <form>
+                <!-- Consultar Movimentação -->
+            <h2>Consultar Movimentação</h2>
             <div class="select-container">
-                <label for="tipo-procedimento">Tipo de Procedimento:</label>
-                <select id="tipo-procedimento" name="tipo-procedimento" required>
+                <label for="consulta-tipo-procedimento">Tipo de Procedimento:</label>
+                <select id="consulta-tipo-procedimento" name="consulta-tipo-procedimento" required>
                     <option value="BO">BO</option>
                     <option value="TC">TC</option>
                     <option value="AI">AI</option>
                     <option value="IP">IP</option>
                 </select>
             </div>
-            
-
-
-            <label for="procedimento">Número do Procedimento:</label>
-            <input type="text" id="procedimento" name="procedimento" placeholder="xxx-xxxxx/xxxx" required>
-            <button type="button" onclick="gerarPDF()">Gerar PDF</button>
-            <button type="button" onclick="window.location.href='/leitor_qrcode.html'">Ler QR Code</button>
-            </form>
-        </div>
-    
-        <div id="lerQrcode-form" class="formulario">
-            <h3>Ler QR Code</h3>
-            <form>
-                <!-- Conteúdo específico de Ler QR Code -->
-                <button type="button" onclick="lerQRCode()">Iniciar Leitura</button>
-            </form>
-        </div>
-    
-        <div id="consultarMovimentacao-form" class="formulario">
-            <h3>Consultar Movimentação</h3>
-            <form>
-               <!-- Consultar Movimentação -->
-        <h2>Consultar Movimentação</h2>
-        <div class="select-container">
-            <label for="consulta-tipo-procedimento">Tipo de Procedimento:</label>
-            <select id="consulta-tipo-procedimento" name="consulta-tipo-procedimento" required>
-                <option value="BO">BO</option>
-                <option value="TC">TC</option>
-                <option value="AI">AI</option>
-                <option value="IP">IP</option>
-            </select>
-        </div>
         
-        <input type="text" id="consulta-procedimento" name="consulta-procedimento" placeholder="xxx-xxxxx/xxxx" required>
-        <button type="button" onclick="consultarMovimentacao()">Consultar</button>
-    </form>
-        <div id="resultado-consulta"></div>
+            <input type="text" id="consulta-procedimento" name="consulta-procedimento" placeholder="xxx-xxxxx/xxxx" required>
+            <button type="button" onclick="consultarMovimentacao()">Consultar</button>
+            </form>
+
+         <div id="resultado-consulta"></div>
         
 
-        <!-- Campo de pesquisa por login -->
-        <form id="consultalogin-form">
-        <h3>Pesquisar Processos por Login</h3>
-        <label for="login-pesquisa">Número do Login:</label>
-        <input type="text" id="login-pesquisa" placeholder="Digite o número do login">
-        <button type="button" onclick="pesquisarPorLogin()">Pesquisar</button>
-        </form>
+            <!-- Campo de pesquisa por login -->
+            <form id="consultalogin-form">
+            <h3>Pesquisar Processos por Login</h3>
+            <label for="login-pesquisa">Número do Login:</label>
+            <input type="text" id="login-pesquisa" placeholder="Digite o número do login">
+            <button type="button" onclick="pesquisarPorLogin()">Pesquisar</button>
+            </form>
 
-        <div id="resultado-pesquisa">
+            <div id="resultado-pesquisa">
             <!-- Resultados da pesquisa serão exibidos aqui -->
-        </div>
+         </div>
             </form>
-        </div>
+         </div>
     
-        <div id="transferirProcesso-form" class="formulario">
+         <div id="transferirProcesso-form" class="formulario">
             <h3>Transferir Processo</h3>
             <form>
                 <div>
@@ -164,9 +150,9 @@
                 </form>
                 </div>
             </form>
-        </div>
+          </div>
     
-        <div id="solicitacoes-form" class="formulario">
+          <div id="solicitacoes-form" class="formulario">
             <h3>Solicitações de Transferência</h3>
             <div id="solicitacoes-pendentes"></div>
             <div>
@@ -174,28 +160,21 @@
                 <form id="VerificaSolicitacoes-form">
                 <button type="button" onclick="verificarSolicitacoes()">Verificar Solicitações</button>
                 
-    
                 <div id="solicitacoes-pendentes">
                     <!-- As solicitações pendentes serão carregadas aqui -->
                 </div>
-                <!-- Botão para exibir o formulário de conversão -->
-    
-               
-                    <button type="button" onclick="mostrarConversor()">Converter Procedimento</button>
                 
                 </form>
-    
-    
             </div>
 
 
-        </div>
+         </div>
     
-        <div id="converter-form" class="formulario">
+         <div id="converter-form" class="formulario">
             <h3>Conversão de Procedimento</h3>
             <form>
-                <!-- Formulário de conversão (oculto até clicar no botão) -->
-                <div id="conversor-container" style="display: none;">
+                <!-- Formulário de conversão -->
+               
                     <label for="numero-converter">Número do Procedimento:</label>
                     <input type="text" id="numero-converter" placeholder="Ex.: 123-45678/2024">
 
@@ -219,9 +198,10 @@
                     <input type="text" id="novo-numero" placeholder="Ex.: 123-45678/2024">
 
                     <button onclick="converterProcedimento()">Confirmar Conversão</button>
-                </div>
+               
             </form>
-        </div>
+
+   
     </div>
     
     <!-- Barra inferior de navegação -->
@@ -234,16 +214,8 @@
         <button onclick="mostrarFormulario('converter-form')"><i>🔄</i>Conversão</button>
     </div>
     
-    <form id="botoesadm-form">
-        <!-- Botão de logout -->
-        <button id="botao-logout" type="button" onclick="logout()">Sair</button>
-       </form>
-
-       <!-- botões de teste
-       <button onclick="testeLeitura()">Teste Leitura</button>
-       <button onclick="testeGravacao()">Teste Gravação</button>
-       -->
-   </div>
+   
+   
 
  
 </body>
