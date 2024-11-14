@@ -1,5 +1,5 @@
-  /* Estilos globais */
-  body {
+ /* Estilos globais */
+ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -68,7 +68,7 @@ button {
     margin-bottom: 10px;
 }
 
-/* Botões inferiores estilo WhatsApp com fundo transparente */
+/* Botões inferiores fixos */
 .bottom-nav {
     display: flex;
     justify-content: space-around;
@@ -76,25 +76,24 @@ button {
     bottom: 0;
     width: 100%;
     max-width: 500px;
-    background-color: rgba(0, 0, 0, 0.6); /* Fundo transparente */
+    background-color: #fff; /* Fundo branco fixo */
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
     padding: 10px 0;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    backdrop-filter: blur(5px); /* Efeito de desfoque */
 }
 
 .bottom-nav button {
     background-color: transparent;
-    color: white;
+    color: #333;
     font-size: 12px;
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     border: none;
+    margin: 0 5px; /* Espaço entre botões */
 }
-
 
 .bottom-nav button i {
     font-size: 18px;
