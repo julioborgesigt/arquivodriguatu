@@ -602,11 +602,27 @@ function converterProcedimento() {
 }
 
 
- // Função para mostrar o formulário selecionado e esconder os outros
- function mostrarFormulario(formularioId) {
+ // Função para mostrar o formulário com efeito de transição
+function mostrarFormulario(formularioId) {
+    // Obter todos os formulários e ocultar os que estão visíveis
     const formularios = document.querySelectorAll('.formulario');
     formularios.forEach(form => {
-        form.style.display = 'none';
+        if (form.classList.contains('fade-in')) {
+            form.classList.remove('fade-in');
+            form.classList.add('fade-out');
+
+            // Aguarda a transição antes de ocultar completamente
+            setTimeout(() => {
+                form.style.display = 'none';
+                form.classList.remove('fade-out');
+            }, 500); // Tempo de duração da transição em milissegundos
+        }
     });
-    document.getElementById(formularioId).style.display = 'block';
+
+    // Exibir o formulário selecionado com a classe de fade-in
+    const formularioSelecionado = document.getElementById(formularioId);
+    formularioSelecionado.style.display = 'block';
+    setTimeout(() => {
+        formularioSelecionado.classList.add('fade-in');
+    }, 10); // Delay para garantir que o efeito ocorra
 }
