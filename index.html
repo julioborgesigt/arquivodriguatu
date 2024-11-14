@@ -92,38 +92,38 @@
             <div id="consultarMovimentacao-form" class="formulario">
                 <h3>Consultar Movimentação</h3>
                 <form>
-                <!-- Consultar Movimentação -->
-                    <h2>Consultar Movimentação</h2>
-                    <div class="select-container">
-                        <label for="consulta-tipo-procedimento">Tipo de Procedimento:</label>
-                        <select id="consulta-tipo-procedimento" name="consulta-tipo-procedimento" required>
-                            <option value="BO">BO</option>
-                            <option value="TC">TC</option>
-                            <option value="AI">AI</option>
-                            <option value="IP">IP</option>
-                        </select>
-                    </div>
+                        <!-- Consultar Movimentação -->
+                        <h2>Consultar Movimentação</h2>
+                        <div class="select-container">
+                            <label for="consulta-tipo-procedimento">Tipo de Procedimento:</label>
+                            <select id="consulta-tipo-procedimento" name="consulta-tipo-procedimento" required>
+                                <option value="BO">BO</option>
+                                <option value="TC">TC</option>
+                                <option value="AI">AI</option>
+                                <option value="IP">IP</option>
+                            </select>
+                        </div>
         
-                <input type="text" id="consulta-procedimento" name="consulta-procedimento" placeholder="xxx-xxxxx/xxxx" required>
-                <button type="button" onclick="consultarMovimentacao()">Consultar</button>
-                </form>
-
-                <div id="resultado-consulta"></div>
+                        <input type="text" id="consulta-procedimento" name="consulta-procedimento" placeholder="xxx-xxxxx/xxxx" required>
+                        <button type="button" onclick="consultarMovimentacao()">Consultar</button>
                 
 
-                    <!-- Campo de pesquisa por login -->
-                    <form id="consultalogin-form">
-                    <h3>Pesquisar Processos por Login</h3>
-                    <label for="login-pesquisa">Número do Login:</label>
-                    <input type="text" id="login-pesquisa" placeholder="Digite o número do login">
-                    <button type="button" onclick="pesquisarPorLogin()">Pesquisar</button>
-                    </form>
+                        <div id="resultado-consulta"></div>
+                
 
-                    <div id="resultado-pesquisa">
-                    <!-- Resultados da pesquisa serão exibidos aqui -->
-                    </div>
+                        <!-- Campo de pesquisa por login -->
+                            <form id="consultalogin-form">
+                            <h3>Pesquisar Processos por Login</h3>
+                            <label for="login-pesquisa">Número do Login:</label>
+                            <input type="text" id="login-pesquisa" placeholder="Digite o número do login">
+                            <button type="button" onclick="pesquisarPorLogin()">Pesquisar</button>
+                            </form>
+
+                                <div id="resultado-pesquisa">
+                                <!-- Resultados da pesquisa serão exibidos aqui -->
+                                </div>
                 </form>
-         </div>
+            </div>
     
          <div id="transferirProcesso-form" class="formulario">
             <h3>Transferir Processo</h3>
@@ -153,6 +153,7 @@
               
                     <h3>Solicitações de Transferência</h3>
                     <div id="solicitacoes-pendentes"></div>
+                    
                     <div>
                     
                     <h3>Solicitações de Transferência de Processos</h3>
