@@ -75,7 +75,8 @@ button {
     position: fixed;
     bottom: 0;
     width: 100%;
-    max-width: 10%;
+    max-width: 500px;
+    max-height: 20%;
     background-color: rgba(0, 0, 0, 0.6); /* Fundo transparente */
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
     padding: 10px 0;
