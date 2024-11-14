@@ -41,7 +41,10 @@
         <div id="app-container" style="display: none;">
             <h1>Bem-vindo, <span id="user-name"></span></h1>
         
-                
+            <form id="botoesadm-form">
+                <!-- Botão de logout -->
+                <button id="botao-logout" type="button" onclick="logout()">Sair</button>
+               </form>
         
 
 
@@ -49,10 +52,7 @@
             <h1>Bem-vindo</h1>
             <h2>Escolha uma opção abaixo</h2>
 
-            <form id="botoesadm-form">
-                <!-- Botão de logout -->
-                <button id="botao-logout" type="button" onclick="logout()">Sair</button>
-               </form>
+            
     
             <!-- Formulários para cada funcionalidade -->
             <div id="gerarPDF-form" class="formulario">

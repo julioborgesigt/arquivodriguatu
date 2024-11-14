@@ -92,18 +92,18 @@ button {
     flex-direction: column;
     align-items: center;
     border: none;
-    margin: 0 5px; /* Espaço entre botões */
+    margin: 0 2px; /* Espaço entre botões */
 }
 
 .bottom-nav button i {
-    font-size: 14px;
+    font-size: 12px;
     margin-bottom: 2px;
 }
 
 /* Ajuste responsivo */
 @media (max-width: 768px) {
     #main-container {
-        padding: 15px;
+        padding: 10px;
     }
 
     input, button {
