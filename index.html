@@ -130,7 +130,7 @@
             <form>
                 <div>
                     <h3>Transferir Processo</h3>
-                <form id="transferencia-form">
+               
         
                     <div class="select-container">
                         <label for="tipo-transferencia">Tipo de Procedimento:</label>
@@ -150,28 +150,27 @@
                     <label for="procedimento-transferencia">Número do Processo:</label>
                     <input type="text" id="procedimento-transferencia" placeholder="xxx-xxxxx/xxxx">
                     <button type="button" onclick="solicitarTransferencia()">Solicitar Transferência</button>
-                </form>
-                </div>
-                </form>
-            </div>
-    
-            <div id="solicitacoes-form" class="formulario">
-                <h3>Solicitações de Transferência</h3>
-                <div id="solicitacoes-pendentes"></div>
-                <div>
+              
+                    <h3>Solicitações de Transferência</h3>
+                    <div id="solicitacoes-pendentes"></div>
+                    <div>
+                    
                     <h3>Solicitações de Transferência de Processos</h3>
-                    <form id="VerificaSolicitacoes-form">
+                    
                     <button type="button" onclick="verificarSolicitacoes()">Verificar Solicitações</button>
                     
                     <div id="solicitacoes-pendentes">
                         <!-- As solicitações pendentes serão carregadas aqui -->
                     </div>
                     
-                    </form>
+                  
+                    </div>
+
                 </div>
-
-
+                </form>
             </div>
+    
+
     
          <div id="converter-form" class="formulario">
             <h3>Conversão de Procedimento</h3>
@@ -212,8 +211,7 @@
         <button onclick="mostrarFormulario('gerarPDF-form')"><i>📄</i>Gerar PDF</button>
         <button onclick="mostrarFormulario('lerQrcode-form')"><i>📷</i>Ler Qr</button>
         <button onclick="mostrarFormulario('consultarMovimentacao-form')"><i>🔍</i>Consultar</button>
-        <button onclick="mostrarFormulario('transferirProcesso-form')"><i>🔄</i>Transferir</button>
-        <button onclick="mostrarFormulario('solicitacoes-form')"><i>📨</i>Solicitações</button>
+        <button onclick="mostrarFormulario('transferirProcesso-form')"><i>🔄</i>Transferencias</button>
         <button onclick="mostrarFormulario('converter-form')"><i>🔄</i>Conversão</button>
     </div>
     
