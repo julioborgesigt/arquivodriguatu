@@ -6,7 +6,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f0f2f5; /* Cor de fundo clara e moderna */
+    background-color: #f0f2f5;
     min-height: 100vh;
 }
 
@@ -17,12 +17,12 @@ body {
     align-items: center;
     width: 100%;
     max-width: 500px;
-    background: rgba(255, 255, 255, 0.9); /* Fundo translúcido */
+    background: rgba(255, 255, 255, 0.8); /* Fundo translúcido */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border-radius: 12px;
     padding: 20px;
     box-sizing: border-box;
-    margin-bottom: 70px; /* Espaço extra para os botões inferiores */
+    margin-bottom: 70px;
 }
 
 /* Ocultar todos os formulários inicialmente */
@@ -46,14 +46,22 @@ label {
     color: #333;
 }
 
-input {
+input, select {
     padding: 12px;
     margin-bottom: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 16px;
     width: 100%;
     box-sizing: border-box;
+    background-color: #ffffff; /* Fundo branco */
+    color: #333; /* Texto preto */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 /* Botões */
@@ -61,15 +69,17 @@ button {
     padding: 12px;
     font-size: 16px;
     color: #fff;
+    background-color: #007BFF;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s;
     margin-bottom: 10px;
 }
 
 button:hover {
     background-color: #0056b3;
+    transform: translateY(-2px); /* Efeito leve de levantar o botão */
 }
 
 /* Botões inferiores fixos */
@@ -80,9 +90,9 @@ button:hover {
     bottom: 0;
     width: 100%;
     max-width: 500px;
-    background-color: #fff;
+    background-color: #ffffff;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-    padding: 8px 0;
+    padding: 10px 0;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
     z-index: 999;
@@ -90,23 +100,25 @@ button:hover {
 
 .bottom-nav button {
     background-color: transparent;
-    color: #333;
+    color: #007BFF;
     font-size: 14px;
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     border: none;
-    transition: color 0.3s;
+    transition: color 0.3s, transform 0.2s;
 }
 
 .bottom-nav button:hover {
-    color: #007BFF;
+    color: #0056b3;
+    transform: scale(1.1);
 }
 
 .bottom-nav button i {
-    font-size: 16px;
+    font-size: 18px;
     margin-bottom: 2px;
+    color: inherit;
 }
 
 /* Ajuste para dispositivos móveis */
