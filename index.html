@@ -38,7 +38,7 @@
         </div>
 
         <!-- Interface após login -->
-    <!--- "><div id="app-container" style="display: none;"> -->
+    <div id="app-container" style="display: none;">
                     
                 
 
@@ -76,7 +76,7 @@
 
                                 <label for="procedimento">Número do Procedimento:</label>
                                 <input type="text" id="procedimento" name="procedimento" placeholder="xxx-xxxxx/xxxx" required>
-                                <button type="button" onclick="gerarPDF()">Gerar PDF</button>
+                                <button id="botao-gerar" type="button" onclick="gerarPDF()">Gerar PDF</button>
                             
                     </div>
                 </form>
@@ -91,7 +91,7 @@
                         <form>
                             <!-- Conteúdo específico de Ler QR Code -->
                             <button type="button" onclick="window.location.href='/leitor_qrcode.html'">Ler QR Code</button>
-                            <button type="button" onclick="lerQRCode()">Iniciar Leitura</button>
+                            
                         </form>
                     </div>
             
@@ -233,7 +233,7 @@
    
         </div>
    
-    <!-- </div>-->
+    </div>
  
 </body>
 </html>
