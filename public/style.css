@@ -1,5 +1,5 @@
-/* Estilos globais */
-body {
+ /* Estilos globais */
+ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -24,7 +24,11 @@ body {
     box-sizing: border-box;
 }
 
-/* Título e formulários */
+/* Ocultar todos os formulários inicialmente */
+.formulario {
+    display: none;
+}
+
 h1, h2 {
     text-align: center;
     color: #333;
@@ -61,10 +65,6 @@ button {
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-bottom: 10px;
-}
-
-button:hover {
-    opacity: 0.9;
 }
 
 /* Botões inferiores estilo WhatsApp */

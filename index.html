@@ -186,17 +186,72 @@
     <div id="main-container">
         <h1>Bem-vindo</h1>
         <h2>Escolha uma opção abaixo</h2>
+    
+        <!-- Formulários para cada funcionalidade -->
+        <div id="gerarPDF-form" class="formulario">
+            <h3>Gerar Procedimento</h3>
+            <form>
+                <!-- Conteúdo específico de Gerar PDF -->
+                <label for="numeroPDF">Número do Procedimento:</label>
+                <input type="text" id="numeroPDF" placeholder="Ex.: 123-45678/2024">
+                <button type="button" onclick="gerarPDF()">Gerar PDF</button>
+            </form>
+        </div>
+    
+        <div id="lerQrcode-form" class="formulario">
+            <h3>Ler QR Code</h3>
+            <form>
+                <!-- Conteúdo específico de Ler QR Code -->
+                <button type="button" onclick="lerQRCode()">Iniciar Leitura</button>
+            </form>
+        </div>
+    
+        <div id="consultarMovimentacao-form" class="formulario">
+            <h3>Consultar Movimentação</h3>
+            <form>
+                <!-- Conteúdo específico de Consultar Movimentação -->
+                <label for="numeroConsulta">Número do Procedimento:</label>
+                <input type="text" id="numeroConsulta" placeholder="Ex.: 123-45678/2024">
+                <button type="button" onclick="consultarMovimentacao()">Consultar</button>
+            </form>
+        </div>
+    
+        <div id="transferirProcesso-form" class="formulario">
+            <h3>Transferir Processo</h3>
+            <form>
+                <!-- Conteúdo específico de Transferir Processo -->
+                <label for="loginDestinatario">Login Destinatário:</label>
+                <input type="text" id="loginDestinatario">
+                <button type="button" onclick="solicitarTransferencia()">Transferir</button>
+            </form>
+        </div>
+    
+        <div id="solicitacoes-form" class="formulario">
+            <h3>Solicitações de Transferência</h3>
+            <div id="solicitacoes-pendentes"></div>
+        </div>
+    
+        <div id="converter-form" class="formulario">
+            <h3>Conversão de Procedimento</h3>
+            <form>
+                <!-- Conteúdo específico de Conversão -->
+                <label for="numeroConverter">Número do Procedimento:</label>
+                <input type="text" id="numeroConverter" placeholder="Ex.: 123-45678/2024">
+                <button type="button" onclick="converterProcedimento()">Converter</button>
+            </form>
+        </div>
     </div>
     
     <!-- Barra inferior de navegação -->
     <div class="bottom-nav">
-        <button onclick="abrirTela('gerarPDF')"><i>📄</i>Gerar PDF</button>
-        <button onclick="abrirTela('lerQrcode')"><i>📷</i>Ler QR Code</button>
-        <button onclick="abrirTela('consultarMovimentacao')"><i>🔍</i>Consultar</button>
-        <button onclick="abrirTela('transferirProcesso')"><i>🔄</i>Transferir</button>
-        <button onclick="abrirTela('solicitacoes')"><i>📨</i>Solicitações</button>
-        <button onclick="abrirTela('converter')"><i>🔄</i>Conversão</button>
+        <button onclick="mostrarFormulario('gerarPDF-form')"><i>📄</i>Gerar PDF</button>
+        <button onclick="mostrarFormulario('lerQrcode-form')"><i>📷</i>Ler QR Code</button>
+        <button onclick="mostrarFormulario('consultarMovimentacao-form')"><i>🔍</i>Consultar</button>
+        <button onclick="mostrarFormulario('transferirProcesso-form')"><i>🔄</i>Transferir</button>
+        <button onclick="mostrarFormulario('solicitacoes-form')"><i>📨</i>Solicitações</button>
+        <button onclick="mostrarFormulario('converter-form')"><i>🔄</i>Conversão</button>
     </div>
+    
     
 
  
