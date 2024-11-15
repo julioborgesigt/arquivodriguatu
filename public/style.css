@@ -150,6 +150,26 @@ button:hover {
 
 
 
+
+#botao-logout {
+    background-color: #d9534f; /* Vermelho para o botão de logout */
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#botao-logout:hover {
+    background-color: #c9302c; /* Tom mais escuro ao passar o mouse */
+}
+
+
+
+
+
 /* Estilos apenas para os botões dos formulários */
 .btn-form {
     width: 100%;
