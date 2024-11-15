@@ -608,6 +608,6 @@ function converterProcedimento() {
     formularios.forEach(form => {
         form.style.display = 'none';
     });
-    document.getElementById('form-gerar').style.display = 'block';
+    document.getElementById('gerarPDF-form').style.display = 'block';
 
 }
