@@ -11,12 +11,13 @@ document.addEventListener('DOMContentLoaded', function() {
         sessionStorage.setItem('limparResultado', 'false');  // Reseta a flag
     }
 
-    // Carregar as solicitações pendentes automaticamente
-    carregarSolicitacoesPendentes();
+    // Chamar a função de carregar solicitações se o formulário de transferência for exibido
+    if (formularioId === 'transferirProcesso-form') {
+        carregarSolicitacoesPendentes();
+    }
 
     exibirFormulario('gerarPDF-form');
 });
-
 
 
 
@@ -528,10 +529,10 @@ function testeGravacao() {
 
 
 function verificarSolicitacoes() {
-    location.reload(true);
+    
     // Reutilizar a função de carregar as solicitações pendentes
     carregarSolicitacoesPendentes();
-    location.reload(true);
+    
 }
 
 
