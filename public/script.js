@@ -602,26 +602,11 @@ function converterProcedimento() {
 }
 
 
- // Função para mostrar o formulário com efeito de transição
+ // Função para mostrar o formulário selecionado e esconder os outros
  function mostrarFormulario(formularioId) {
-    // Seleciona todos os formulários para aplicar a transição de saída nos visíveis
     const formularios = document.querySelectorAll('.formulario');
     formularios.forEach(form => {
-        if (form.classList.contains('slide-in')) {
-            form.classList.remove('slide-in');
-            form.classList.add('slide-out');
-            // Aguarda a transição antes de ocultar completamente
-            setTimeout(() => {
-                form.style.display = 'none';
-                form.classList.remove('slide-out');
-            }, 500);
-        }
+        form.style.display = 'none';
     });
-
-    // Exibe o formulário selecionado com a classe de slide-in
-    const formularioSelecionado = document.getElementById(formularioId);
-    formularioSelecionado.style.display = 'block';
-    setTimeout(() => {
-        formularioSelecionado.classList.add('slide-in');
-    }, 10);
+    document.getElementById(formularioId).style.display = 'block';
 }

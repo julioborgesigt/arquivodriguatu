@@ -25,30 +25,28 @@ body {
     margin-bottom: 70px;
 }
 
+/* Ocultar todos os formulários inicialmente */
+.formulario {
+    display: none;
+}
 
 
 /* Estilo para ocultar os formulários inicialmente */
-/* Estilos de exibição padrão */
 .formulario {
     display: none;
-    transform: translateX(100%);
     opacity: 0;
-    transition: transform 0.5s ease, opacity 0.5s ease;
+    transition: opacity 0.5s ease;
 }
 
-/* Animação de entrada deslizante */
-.slide-in {
+/* Animações de esmaecimento */
+.fade-in {
     display: block;
-    transform: translateX(0);
     opacity: 1;
 }
 
-/* Animação de saída deslizante */
-.slide-out {
-    transform: translateX(-100%);
+.fade-out {
     opacity: 0;
 }
-
 
 
 h1, h2 {
