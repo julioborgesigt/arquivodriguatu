@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Carregar as solicitações pendentes automaticamente
     carregarSolicitacoesPendentes();
+
+    exibirFormulario('gerarPDF-form');
 });
 
 
@@ -608,7 +610,15 @@ function converterProcedimento() {
     formularios.forEach(form => {
         form.style.display = 'none';
     });
-    document.getElementById('gerarPDF-form').style.display = 'block';
-    document.getElementById('app-container').style.display = 'none';
+    document.getElementById(formularioId).style.display = 'block';
 
+}
+
+// Função para exibir o formulário selecionado e ocultar os outros
+function exibirFormulario(formularioId) {
+    const formularios = ['gerarPDF-form', 'lerQRCode-form', 'consultarMovimentacao-form', 'transferirProcesso-form', 'solicitacoesTransferencia-form', 'conversao-form'];
+    
+    formularios.forEach(id => {
+        document.getElementById(id).style.display = id === formularioId ? 'block' : 'none';
+    });
 }
