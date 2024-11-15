@@ -528,9 +528,10 @@ function testeGravacao() {
 
 
 function verificarSolicitacoes() {
-    
+    location.reload(true);
     // Reutilizar a função de carregar as solicitações pendentes
     carregarSolicitacoesPendentes();
+    location.reload(true);
 }
 
 
