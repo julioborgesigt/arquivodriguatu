@@ -625,4 +625,3 @@ function converterProcedimento() {
         formularioSelecionado.classList.add('slide-in');
     }, 10);
 }
-
