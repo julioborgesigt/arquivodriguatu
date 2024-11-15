@@ -608,6 +608,6 @@ function converterProcedimento() {
     formularios.forEach(form => {
         form.style.display = 'none';
     });
-    document.getElementById(formularioId).style.display = 'block';
+    document.getElementById('form-gerar').style.display = 'block';
 
 }
