@@ -25,6 +25,7 @@ body {
     box-sizing: border-box;
     margin-bottom: 70px;
     justify-content: top; 
+}
 
 /* Ocultar todos os formulários inicialmente */
 .formulario {
