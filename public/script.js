@@ -609,5 +609,6 @@ function converterProcedimento() {
         form.style.display = 'none';
     });
     document.getElementById('gerarPDF-form').style.display = 'block';
+    document.getElementById('app-container').style.display = 'none';
 
 }
