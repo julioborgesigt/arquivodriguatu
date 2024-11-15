@@ -31,7 +31,6 @@ body {
 }
 
 
-
 h1, h2 {
     text-align: center;
     color: #333;
@@ -66,23 +65,73 @@ input:focus, select:focus {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-/* Botões */
-button {
-    padding: 12px;
+/* Estilos dos Formulários */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 8px;
+    color: #333;
+}
+
+input, select {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
     font-size: 16px;
-    color: #fff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Efeito suave ao focar */
+}
+
+input:focus, select:focus {
+    border-color: #007BFF; /* Borda azul ao focar */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Efeito de sombra ao focar */
+}
+
+/* Estilos dos Botões */
+button {
+    padding: 10px;
     background-color: #007BFF;
+    color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
+    font-size: 16px;
     margin-bottom: 10px;
+    transition: background-color 0.3s, transform 0.2s; /* Suavização ao passar o mouse */
 }
 
 button:hover {
     background-color: #0056b3;
-    transform: translateY(-2px); /* Efeito leve de levantar o botão */
+    transform: scale(1.02); /* Efeito de aumento ao passar o mouse */
 }
+
+
+
+
+
+/* Estilos para o leitor de QR Code */
+#qr-reader {
+    display: none;  /* Oculto até ser ativado */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;  /* Ocupa toda a largura da tela */
+    height: 100vh;  /* Ocupa toda a altura da tela */
+    background-color: rgba(0, 0, 0, 0.8);  /* Fundo preto com transparência */
+    z-index: 9999;  /* Garantir que o leitor fique acima de outros elementos */
+    justify-content: center;
+    align-items: center;
+}
+
+#qr-reader video {
+    width: 100% !important;  /* Garante que o vídeo ocupe a área inteira */
+    height: 100% !important;  /* Garante que o vídeo ocupe a área inteira */
+}
+
+
 
 /* Botões inferiores fixos */
 .bottom-nav {
