@@ -621,4 +621,9 @@ function exibirFormulario(formularioId) {
     formularios.forEach(id => {
         document.getElementById(id).style.display = id === formularioId ? 'block' : 'none';
     });
+
+    // Chamar a função de carregar solicitações se o formulário de transferência for exibido
+    if (formularioId === 'transferirProcesso-form') {
+        carregarSolicitacoesPendentes();
+    }
 }
