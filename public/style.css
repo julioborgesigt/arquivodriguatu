@@ -23,20 +23,6 @@ body {
     padding: 20px;
     box-sizing: border-box;
     margin-bottom: 70px;
-
-
-
-    
-    
-    
-    
-    
-    
-    margin: 20px auto;
-    min-height: 100vh; /* Garante que ocupe no mínimo 100% da altura da viewport */
-    
-    
-    justify-content: center; /* Centraliza verticalmente o conteúdo */
 }
 
 /* Ocultar todos os formulários inicialmente */
@@ -104,7 +90,7 @@ input:focus, select:focus {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Efeito de sombra ao focar */
 }
 
-/* Botões de login */
+/* Botões */
 button {
     padding: 12px;
     font-size: 16px;
@@ -156,7 +142,7 @@ button:hover {
 }
 
 .bottom-nav button i {
-    font-size: 16px;
+    font-size: 18px;
     margin-bottom: 2px;
     color: inherit;
 }
@@ -187,8 +173,8 @@ button:hover {
 /* Estilos apenas para os botões dos formulários */
 .btn-form {
     width: 100%;
-    padding: 8px 12px; /* Reduz o tamanho do espaçamento interno */
-    font-size: 14px;
+    padding: 14px;
+    font-size: 18px;
     font-weight: bold;
     background-color: #007BFF;
     color: #fff;
