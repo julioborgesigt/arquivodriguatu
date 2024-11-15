@@ -609,6 +609,5 @@ function converterProcedimento() {
         form.style.display = 'none';
     });
     document.getElementById(formularioId).style.display = 'block';
-    
-    document.getElementById('gerar-btn').classList.add('active');  // Ativa o botão "Gerar PDF" visualmente
+
 }
