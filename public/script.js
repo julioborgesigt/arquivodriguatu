@@ -11,10 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
         sessionStorage.setItem('limparResultado', 'false');  // Reseta a flag
     }
 
-    // Chamar a função de carregar solicitações se o formulário de transferência for exibido
-    if (formularioId === 'transferirProcesso-form') {
-        carregarSolicitacoesPendentes();
-    }
 
     exibirFormulario('gerarPDF-form');
 });
@@ -624,8 +620,5 @@ function exibirFormulario(formularioId) {
         document.getElementById(id).style.display = id === formularioId ? 'block' : 'none';
     });
 
-    // Chamar a função de carregar solicitações se o formulário de transferência for exibido
-    if (formularioId === 'transferirProcesso-form') {
-        carregarSolicitacoesPendentes();
-    }
+    
 }
