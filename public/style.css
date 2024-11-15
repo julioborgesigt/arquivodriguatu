@@ -10,8 +10,26 @@ body {
     min-height: 100vh;
 }
 
+
+/* Container auth-container */
+#auth-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    justify-content: center; /* Centraliza verticalmente o conteúdo */
+    background: rgba(255, 255, 255, 0.8); /* Fundo translúcido */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-bottom: 70px;
+    
+}
+
 /* Container Principal */
-#main-container, #auth-container {
+#main-container{
     display: flex;
     flex-direction: column;
     align-items: center;
