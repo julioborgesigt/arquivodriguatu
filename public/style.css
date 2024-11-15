@@ -106,20 +106,27 @@ input:focus, select:focus {
 
 /* Botões */
 button {
-    padding: 12px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #007BFF;
+    padding: 8px 12px; /* Reduz o tamanho do espaçamento interno */
+    font-size: 14px; /* Reduz o tamanho da fonte */
+    background-color: #007BFF; /* Cor padrão do botão */
+    color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 5px; /* Cantos levemente arredondados */
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
-    margin-bottom: 10px;
+    transition: all 0.3s ease; /* Suaviza mudanças de estilo */
+    margin: 5px 0; /* Adiciona espaçamento entre botões */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
 
 button:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px); /* Efeito leve de levantar o botão */
+    background-color: #0056b3; /* Cor mais escura ao passar o mouse */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Realce maior na sombra */
+    transform: translateY(-2px); /* Efeito de elevação ao passar o mouse */
+}
+
+.btn-form:active {
+    transform: translateY(0); /* Retorno ao clique */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra reduzida ao clicar */
 }
 
 /* Botões inferiores fixos */
