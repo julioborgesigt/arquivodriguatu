@@ -109,10 +109,11 @@
 
                     <div id="consultarMovimentacao-form" class="formulario">
                         
-                        <form>
+                        
 
                             <div class="selecteresultado-container">
-                                <h2>Consultar Movimentação</h2>
+                                <!-- Consultar Movimentação -->
+                                <h2>Consultar movimentação</h2>
                                 <div class="select-container">
                                     <label for="consulta-tipo-procedimento">Tipo de Procedimento:</label>
                                     <select id="consulta-tipo-procedimento" name="consulta-tipo-procedimento" required>
@@ -121,27 +122,34 @@
                                         <option value="AI">AI</option>
                                         <option value="IP">IP</option>
                                     </select>
-                                    <input type="text" id="consulta-procedimento" name="consulta-procedimento" placeholder="xxx-xxxxx/xxxx" required>
-                                    <button class="btn-form" type="button" onclick="consultarMovimentacao()">Consultar</button>
+                                
+                
+                                <input type="text" id="consulta-procedimento" name="consulta-procedimento" placeholder="xxx-xxxxx/xxxx" required>
+                                <button class="btn-form" type="button" onclick="consultarMovimentacao()">Consultar</button>
                                 </div>
+
                                 <div id="resultado-consulta"></div>
                             </div>
-                            
-                            <hr style="border: 1px solid #ddd; margin: 20px 0;">
-                            
+
+
                             <div class="pesquisaeresultado-container">
-                                <h2>Pesquisar Processos por Login</h2>
+
+                                <!-- Campo de pesquisa por login -->
                                 <div class="pesquisa-container">
+                                    <h2>Pesquisar processos por matrícula</h2>
                                     <label for="login-pesquisa">Número do Login:</label>
                                     <input type="text" id="login-pesquisa" placeholder="Digite o número do login">
                                     <button class="btn-form" type="button" onclick="pesquisarPorLogin()">Pesquisar</button>
                                 </div>
-                                <div id="resultado-pesquisa"></div>
+
+                                    <div id="resultado-pesquisa">
+                                    <!-- Resultados da pesquisa serão exibidos aqui -->
+                                    </div>
+
                             </div>
-                            
 
 
-                        </form>
+                        
                     </div>
             
 
