@@ -78,6 +78,9 @@ function logout() {
     localStorage.removeItem('usuarioAtivo');
     document.getElementById('auth-container').style.display = 'block';
     document.getElementById('app-container').style.display = 'none';
+    limparSolicitacoesPendentes(); // Limpa solicitações na interface
+    sessionStorage.clear();
+    location.reload();
 }
 
 
@@ -681,4 +684,12 @@ function exibirFormulario(formularioId) {
     });
 
     
+}
+
+
+function limparSolicitacoesPendentes() {
+    const solicitacoesDiv = document.getElementById('solicitacoes-pendentes');
+    if (solicitacoesDiv) {
+        solicitacoesDiv.innerHTML = ''; // Limpa o conteúdo da div
+    }
 }
