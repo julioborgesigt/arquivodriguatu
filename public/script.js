@@ -371,12 +371,16 @@ function pesquisarPorLogin() {
 }
 
 
-// Função para solicitar a transferência de processo para outro login
+
 // Função para solicitar a transferência de processo para outro login
 function solicitarTransferencia() {
     const loginDestinatario = document.getElementById('login-transferencia').value;
+    const tipoProcedimento = document.getElementById('tipo-transferencia').value; // Pega o tipo de procedimento
     const numeroProcedimento = document.getElementById('procedimento-transferencia').value;
     const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Usuário logado
+
+    // Combinar o tipo de procedimento com o número inserido
+    const numeroCompleto = `${tipoProcedimento}-${numeroProcedimento}`;
 
     if (!loginDestinatario || !numeroProcedimento) {
         alert('Por favor, preencha todos os campos.');
@@ -384,7 +388,7 @@ function solicitarTransferencia() {
     }
 
     // Verificar se já existe uma solicitação pendente para o procedimento
-    fetch(`/verificarSolicitacaoPendente?procedimento=${numeroProcedimento}`)
+    fetch(`/verificarSolicitacaoPendente?procedimento=${numeroCompleto}`)
         .then(response => response.json())
         .then(data => {
             if (data.pendente) {
@@ -398,7 +402,7 @@ function solicitarTransferencia() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ loginDestinatario, numeroProcedimento, usuarioAtivo })
+                body: JSON.stringify({ loginDestinatario, numeroProcedimento: numeroCompleto, usuarioAtivo })
             })
                 .then(response => response.json())
                 .then(data => {
@@ -420,7 +424,44 @@ function solicitarTransferencia() {
 }
 
 
+/*
+// Função para solicitar a transferência de processo para outro login
+function solicitarTransferencia() {
+    const tipoProcedimento = document.getElementById('tipo-transferencia').value; // Pega o tipo de procedimento
+    const numeroProcedimento = document.getElementById('procedimento-transferencia').value;
+    const loginDestinatario = document.getElementById('login-transferencia').value;
+    const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Usuário logado
 
+    // Combinar o tipo de procedimento com o número inserido
+    const numeroCompleto = `${tipoProcedimento}-${numeroProcedimento}`;
+
+    if (!loginDestinatario || !numeroCompleto) {
+        alert('Por favor, preencha todos os campos.');
+        return;
+    }
+
+    fetch('/solicitar-transferencia', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ loginDestinatario, numeroProcedimento: numeroCompleto, usuarioAtivo })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Solicitação enviada com sucesso!');
+        } else {
+            alert('Erro ao enviar solicitação: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao solicitar transferência:', error);
+        alert('Erro ao solicitar transferência. Tente novamente.');
+    });
+}
+
+*/
 
 
 
