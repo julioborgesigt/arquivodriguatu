@@ -1,9 +1,23 @@
-self.addEventListener('push', function (event) {
-    const data = event.data.json();
+// service-worker.js
+
+self.addEventListener('install', event => {
+    console.log('Service Worker instalado!');
     event.waitUntil(
-        self.registration.showNotification(data.title, {
-            body: data.body,
-            icon: '/path/to/icon.png',
+        caches.open('v1').then(cache => {
+            return cache.addAll([
+                '/', // Página principal
+                '/index.html',
+                '/style.css',
+                '/script.js'
+            ]);
+        })
+    );
+});
+
+self.addEventListener('fetch', event => {
+    event.respondWith(
+        caches.match(event.request).then(response => {
+            return response || fetch(event.request);
         })
     );
 });
