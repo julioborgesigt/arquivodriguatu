@@ -655,9 +655,9 @@ const webpush = require('web-push');
 
 // Configure VAPID keys
 webpush.setVapidDetails(
-    'mailto:your-email@example.com',
-    'YOUR_PUBLIC_VAPID_KEY_HERE',
-    'YOUR_PRIVATE_VAPID_KEY_HERE'
+    'mailto:julio.aparecido3@gmail.com',
+    'BGVMo0_ujZTJ7UMQcEFgcBM3J98kxvpxfCYkM7RRTPr2OE5iqPhK-O_myj9wF5nLfJ2ecucrDqaoC6uvFKdxxa8',
+    'l8IjnXnyj8ejdF2urj6hKfR35ZzqbnDTP-sQBAR6Nq4'
 );
 
 let subscriptions = []; // Armazene as assinaturas no banco de dados
