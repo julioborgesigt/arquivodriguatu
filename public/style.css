@@ -312,7 +312,7 @@ button:hover {
 }
 
 
-.selecteresultado-container {
+.selecteresultado-container, transferir-container, solicitacoes-container {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
