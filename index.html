@@ -21,6 +21,9 @@
     
 </head>
 <body>
+
+
+    <div>
         <!-- Formulário de Login/Cadastro -->
         <div id="auth-container">
                 <h2>Login ou Cadastro</h2>
@@ -37,14 +40,14 @@
         </div>
 
         <!-- Interface após login -->
-    <div id="app-container" style="display: none;">
+        <div id="app-container" style="display: none;">
                     
                 
 
 
-        <div id="main-container">
+            <div id="main-container">
                         
-            <h2>Bem-vindo, <span id="user-name"></span></h2>
+                <h2>Bem-vindo, <span id="user-name"></span></h2>
                 
                 
                     <form id="botoesadm-form">
@@ -52,46 +55,43 @@
                         <button class="btn-form" id="botao-logout" type="button" onclick="logout()">Sair</button>
                     </form>
                     
-            
-            <!-- Formulários para cada funcionalidade -->
-
 
                 
-                
-
 
 
                     <div id="gerarPDF-form" class="formulario">
 
-                        <div class="gerarpdf-container">
+                             
+                         <form>
+                            <div class="gerarpdf-container">
 
-                        <h2>Gerar capa de procedimento</h2>      
-                        <form>
-                            <div>
-                                        <!-- Gerar Procedimento -->
-                                
-                                    
-                                        <div class="select-container">
-                                            <label for="tipo-procedimento">Tipo de Procedimento:</label>
-                                            <select id="tipo-procedimento" name="tipo-procedimento" required>
-                                                <option value="BO">BO</option>
-                                                <option value="TC">TC</option>
-                                                <option value="AI">AI</option>
-                                                <option value="IP">IP</option>
-                                            </select>
-                                        </div>
-                                    
+                                <h2>Gerar capa de procedimento</h2> 
+                                <div>
+                                                <!-- Gerar Procedimento -->
+                                        
+                                            
+                                                <div class="select-container">
+                                                    <label for="tipo-procedimento">Tipo de Procedimento:</label>
+                                                    <select id="tipo-procedimento" name="tipo-procedimento" required>
+                                                        <option value="BO">BO</option>
+                                                        <option value="TC">TC</option>
+                                                        <option value="AI">AI</option>
+                                                        <option value="IP">IP</option>
+                                                    </select>
+                                                </div>
+                                            
 
 
-                                        <label for="procedimento">Número do Procedimento:</label>
-                                        <input type="text" id="procedimento" name="procedimento" placeholder="xxx-xxxxx/xxxx" required>
-                                        <button class="btn-form" id="botao-gerar" type="button" onclick="gerarPDF()">Gerar PDF</button>
-                                    
+                                                <label for="procedimento">Número do Procedimento:</label>
+                                                <input type="text" id="procedimento" name="procedimento" placeholder="xxx-xxxxx/xxxx" required>
+                                                <button class="btn-form" id="botao-gerar" type="button" onclick="gerarPDF()">Gerar PDF</button>
+                                            
+                                </div>
                             </div>
                         </form>
-                    </div>
+                        
                 
-                </div>
+                    </div>
 
 
 
@@ -207,40 +207,40 @@
                     </div>
             
 
-                <div class="converter-container">
-                    <div id="converter-form" class="formulario">
-                        <h2>Conversão de procedimento</h2>
-                        <form>
-                            <div>
-                            <!-- Formulário de conversão -->
-                        
-                                <label for="numero-converter">Número do Procedimento:</label>
-                                <input type="text" id="numero-converter" placeholder="Ex.: 123-45678/2024">
+                    <div class="converter-container">
+                        <div id="converter-form" class="formulario">
+                            <h2>Conversão de procedimento</h2>
+                            <form>
+                                <div>
+                                <!-- Formulário de conversão -->
+                            
+                                    <label for="numero-converter">Número do Procedimento:</label>
+                                    <input type="text" id="numero-converter" placeholder="Ex.: 123-45678/2024">
 
-                                <label for="antigo-tipo">Antigo Tipo de Procedimento:</label>
-                                <select id="antigo-tipo">
-                                    <option value="BO">BO</option>
-                                    <option value="TC">TC</option>
-                                    <option value="AI">AI</option>
-                                    <option value="IP">IP</option>
-                                </select>
+                                    <label for="antigo-tipo">Antigo Tipo de Procedimento:</label>
+                                    <select id="antigo-tipo">
+                                        <option value="BO">BO</option>
+                                        <option value="TC">TC</option>
+                                        <option value="AI">AI</option>
+                                        <option value="IP">IP</option>
+                                    </select>
 
-                                <label for="novo-tipo">Novo Tipo de Procedimento:</label>
-                                <select id="novo-tipo">
-                                    <option value="BO">BO</option>
-                                    <option value="TC">TC</option>
-                                    <option value="AI">AI</option>
-                                    <option value="IP">IP</option>
-                                </select>
+                                    <label for="novo-tipo">Novo Tipo de Procedimento:</label>
+                                    <select id="novo-tipo">
+                                        <option value="BO">BO</option>
+                                        <option value="TC">TC</option>
+                                        <option value="AI">AI</option>
+                                        <option value="IP">IP</option>
+                                    </select>
 
-                                <label for="novo-numero">Nova Numeração do Procedimento:</label>
-                                <input type="text" id="novo-numero" placeholder="Ex.: 123-45678/2024">
+                                    <label for="novo-numero">Nova Numeração do Procedimento:</label>
+                                    <input type="text" id="novo-numero" placeholder="Ex.: 123-45678/2024">
 
-                                <button class="btn-form" onclick="converterProcedimento()">Confirmar Conversão</button>
-                            </div>
-                        </form>
+                                    <button class="btn-form" onclick="converterProcedimento()">Confirmar Conversão</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
         
             </div>
         
