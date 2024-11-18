@@ -13,6 +13,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     exibirFormulario('gerarPDF-form');
+
+    if (Notification.permission === 'default') {
+        Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+                subscribeUserToPush();
+            }
+        });
+    }
+
+
 });
 
 
@@ -32,6 +42,29 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('app-container').style.display = 'none';
     }
 });
+
+
+function subscribeUserToPush() {
+    navigator.serviceWorker.ready.then(function (registration) {
+        registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: 'YOUR_PUBLIC_VAPID_KEY_HERE' // Gere sua chave pública no VAPID
+        }).then(function (subscription) {
+            console.log('Usuário inscrito para notificações:', subscription);
+
+            // Envie a inscrição ao backend para salvar
+            fetch('/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(subscription),
+            });
+        }).catch(function (error) {
+            console.error('Erro ao inscrever usuário:', error);
+        });
+    });
+}
 
 
 // Função para realizar o login

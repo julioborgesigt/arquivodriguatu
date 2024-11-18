@@ -648,3 +648,34 @@ app.get('/obterTipoAntigo', (req, res) => {
         res.json({ success: false, message: "Procedimento não encontrado." });
     }
 });
+
+
+
+const webpush = require('web-push');
+
+// Configure VAPID keys
+webpush.setVapidDetails(
+    'mailto:your-email@example.com',
+    'YOUR_PUBLIC_VAPID_KEY_HERE',
+    'YOUR_PRIVATE_VAPID_KEY_HERE'
+);
+
+let subscriptions = []; // Armazene as assinaturas no banco de dados
+
+app.post('/subscribe', (req, res) => {
+    const subscription = req.body;
+    subscriptions.push(subscription);
+    res.status(201).json({ message: 'Inscrição salva com sucesso!' });
+});
+
+app.post('/enviar-notificacao', (req, res) => {
+    const { title, body } = req.body;
+
+    subscriptions.forEach(subscription => {
+        webpush.sendNotification(subscription, JSON.stringify({ title, body }))
+            .then(() => console.log('Notificação enviada!'))
+            .catch(error => console.error('Erro ao enviar notificação:', error));
+    });
+
+    res.status(200).json({ message: 'Notificação enviada com sucesso!' });
+});
