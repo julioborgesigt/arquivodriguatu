@@ -60,7 +60,7 @@ function subscribeUserToPush() {
     navigator.serviceWorker.ready.then(function (registration) {
         registration.pushManager.subscribe({
             userVisibleOnly: true,
-            applicationServerKey: 'YOUR_PUBLIC_VAPID_KEY_HERE' // Gere sua chave pública no VAPID
+            applicationServerKey: 'BH9Q3t5JxJIuuPiCWZSNoQmhajCao4VlvaQTFFge3PoX4m2bd7COphElcXQnFL7TZ9yjmYpRBqbpxxp04o-9SVU' // Gere sua chave pública no VAPID
         }).then(function (subscription) {
             console.log('Usuário inscrito para notificações:', subscription);
 
