@@ -56,39 +56,42 @@
             <!-- Formulários para cada funcionalidade -->
 
 
-            <div class="gerarpdf-container">
-            
+                
+                
 
 
 
-                <div id="gerarPDF-form" class="formulario">
-                    <h2>Gerar capa de procedimento</h2>      
-                    <form>
-                        <div>
-                                    <!-- Gerar Procedimento -->
-                            
+                    <div id="gerarPDF-form" class="formulario">
+
+                        <div class="gerarpdf-container">
+
+                        <h2>Gerar capa de procedimento</h2>      
+                        <form>
+                            <div>
+                                        <!-- Gerar Procedimento -->
                                 
-                                    <div class="select-container">
-                                        <label for="tipo-procedimento">Tipo de Procedimento:</label>
-                                        <select id="tipo-procedimento" name="tipo-procedimento" required>
-                                            <option value="BO">BO</option>
-                                            <option value="TC">TC</option>
-                                            <option value="AI">AI</option>
-                                            <option value="IP">IP</option>
-                                        </select>
-                                    </div>
-                                
+                                    
+                                        <div class="select-container">
+                                            <label for="tipo-procedimento">Tipo de Procedimento:</label>
+                                            <select id="tipo-procedimento" name="tipo-procedimento" required>
+                                                <option value="BO">BO</option>
+                                                <option value="TC">TC</option>
+                                                <option value="AI">AI</option>
+                                                <option value="IP">IP</option>
+                                            </select>
+                                        </div>
+                                    
 
 
-                                    <label for="procedimento">Número do Procedimento:</label>
-                                    <input type="text" id="procedimento" name="procedimento" placeholder="xxx-xxxxx/xxxx" required>
-                                    <button class="btn-form" id="botao-gerar" type="button" onclick="gerarPDF()">Gerar PDF</button>
-                                
-                        </div>
-                    </form>
+                                        <label for="procedimento">Número do Procedimento:</label>
+                                        <input type="text" id="procedimento" name="procedimento" placeholder="xxx-xxxxx/xxxx" required>
+                                        <button class="btn-form" id="botao-gerar" type="button" onclick="gerarPDF()">Gerar PDF</button>
+                                    
+                            </div>
+                        </form>
+                    </div>
+                
                 </div>
-            
-            </div>
 
 
 
@@ -204,7 +207,7 @@
                     </div>
             
 
-            
+                <div class="converter-container">
                     <div id="converter-form" class="formulario">
                         <h2>Conversão de procedimento</h2>
                         <form>
@@ -237,6 +240,7 @@
                             </div>
                         </form>
                     </div>
+                </div>
         
             </div>
         
