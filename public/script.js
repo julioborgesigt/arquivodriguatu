@@ -57,27 +57,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function subscribeUserToPush() {
-    navigator.serviceWorker.ready.then(function (registration) {
-        registration.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: 'BGVMo0_ujZTJ7UMQcEFgcBM3J98kxvpxfCYkM7RRTPr2OE5iqPhK-O_myj9wF5nLfJ2ecucrDqaoC6uvFKdxxa8' // Gere sua chave pública no VAPID
-        }).then(function (subscription) {
-            console.log('Usuário inscrito para notificações:', subscription);
+    const applicationServerKey = 'BGVMo0_ujZTJ7UMQcEFgcBM3J98kxvpxfCYkM7RRTPr2OE5iqPhK-O_myj9wF5nLfJ2ecucrDqaoC6uvFKdxxa8'; // Gerada pelo web-push
+const convertedKey = urlBase64ToUint8Array(applicationServerKey);
 
-            // Envie a inscrição ao backend para salvar
-            fetch('/subscribe', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(subscription),
-            });
-        }).catch(function (error) {
-            console.error('Erro ao inscrever usuário:', error);
+navigator.serviceWorker.ready.then(registration => {
+    registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: convertedKey
+    })
+    .then(subscription => {
+        console.log('Usuário inscrito:', subscription);
+        // Enviar a assinatura ao servidor para salvar
+        fetch('/save-subscription', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(subscription)
         });
-    });
+    })
+    .catch(error => console.error('Erro ao inscrever usuário:', error));
+});
+
 }
 
+function urlBase64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+    const rawData = window.atob(base64);
+    return new Uint8Array([...rawData].map(char => char.charCodeAt(0)));
+}
 
 // Função para realizar o login
 function login() {
