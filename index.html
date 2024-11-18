@@ -101,7 +101,7 @@
                         
                         <form>
 
-                            <div>
+                            <div class="selecteresultado-container">
                                 <!-- Consultar Movimentação -->
                                 <h2>Consultar movimentação</h2>
                                 <div class="select-container">
@@ -119,21 +119,26 @@
                                 </div>
 
                                 <div id="resultado-consulta"></div>
-                        
+                            </div>
+
+
+                            <div class="pesquisaeresultado-container">
 
                                 <!-- Campo de pesquisa por login -->
-                                    
+                                <div class="pesquisa-container">
                                     <h2>Pesquisar processos por matrícula</h2>
                                     <label for="login-pesquisa">Número do Login:</label>
                                     <input type="text" id="login-pesquisa" placeholder="Digite o número do login">
                                     <button class="btn-form" type="button" onclick="pesquisarPorLogin()">Pesquisar</button>
-                                    
+                                </div>
 
                                     <div id="resultado-pesquisa">
                                     <!-- Resultados da pesquisa serão exibidos aqui -->
                                     </div>
 
                             </div>
+
+
                         </form>
                     </div>
             
