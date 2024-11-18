@@ -664,7 +664,7 @@ app.get('/verificarSolicitacaoPendente', (req, res) => {
 
     // Verificar se há uma solicitação pendente para o procedimento
     const solicitacaoPendente = banco.solicitacoes.some(
-        (s) => s.numeroCompleto === procedimento && s.status === 'pendente'
+        (s) => s.numeroProcedimento === procedimento && s.status === 'pendente'
     );
 
     res.json({ pendente: solicitacaoPendente });
