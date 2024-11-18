@@ -15,7 +15,8 @@
     "jspdf": "^2.5.2",
     "nodemailer": "^6.9.16",
     "nodemon": "^3.1.7",
-    "qrcode-generator": "^1.4.4"
+    "qrcode-generator": "^1.4.4",
+    "web-push": "^3.6.7"
   },
   "description": ""
 }
