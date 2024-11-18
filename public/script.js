@@ -13,29 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     exibirFormulario('gerarPDF-form');
-
-
 });
-
-
-// Função de inicialização
-function inicializarPagina() {
-    // Solicitar permissão para notificações
-    if (Notification.permission === 'default') {
-        Notification.requestPermission().then(permission => {
-            if (permission === 'granted') {
-                subscribeUserToPush();
-            }
-        });
-    }
-
-    // Outras funções que devem rodar na inicialização
-    carregarSolicitacoesPendentes();
-}
-
-// Chamar a função de inicialização ao carregar a página
-document.addEventListener('DOMContentLoaded', inicializarPagina);
-
 
 
 
@@ -55,37 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-
-
-function subscribeUserToPush() {
-    const applicationServerKey = 'BGVMo0_ujZTJ7UMQcEFgcBM3J98kxvpxfCYkM7RRTPr2OE5iqPhK-O_myj9wF5nLfJ2ecucrDqaoC6uvFKdxxa8'; // Gerada pelo web-push
-const convertedKey = urlBase64ToUint8Array(applicationServerKey);
-
-navigator.serviceWorker.ready.then(registration => {
-    registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: convertedKey
-    })
-    .then(subscription => {
-        console.log('Usuário inscrito:', subscription);
-        // Enviar a assinatura ao servidor para salvar
-        fetch('/save-subscription', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(subscription)
-        });
-    })
-    .catch(error => console.error('Erro ao inscrever usuário:', error));
-});
-
-}
-
-function urlBase64ToUint8Array(base64String) {
-    const padding = '='.repeat((4 - base64String.length % 4) % 4);
-    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-    const rawData = window.atob(base64);
-    return new Uint8Array([...rawData].map(char => char.charCodeAt(0)));
-}
 
 // Função para realizar o login
 function login() {
@@ -427,39 +374,51 @@ function pesquisarPorLogin() {
 // Função para solicitar a transferência de processo para outro login
 // Função para solicitar a transferência de processo para outro login
 function solicitarTransferencia() {
-    const tipoProcedimento = document.getElementById('tipo-transferencia').value; // Pega o tipo de procedimento
-    const numeroProcedimento = document.getElementById('procedimento-transferencia').value;
     const loginDestinatario = document.getElementById('login-transferencia').value;
+    const numeroProcedimento = document.getElementById('procedimento-transferencia').value;
     const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Usuário logado
 
-    // Combinar o tipo de procedimento com o número inserido
-    const numeroCompleto = `${tipoProcedimento}-${numeroProcedimento}`;
-
-    if (!loginDestinatario || !numeroCompleto) {
+    if (!loginDestinatario || !numeroProcedimento) {
         alert('Por favor, preencha todos os campos.');
         return;
     }
 
-    fetch('/solicitar-transferencia', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ loginDestinatario, numeroProcedimento: numeroCompleto, usuarioAtivo })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Solicitação enviada com sucesso!');
-        } else {
-            alert('Erro ao enviar solicitação: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Erro ao solicitar transferência:', error);
-        alert('Erro ao solicitar transferência. Tente novamente.');
-    });
+    // Verificar se já existe uma solicitação pendente para o procedimento
+    fetch(`/verificarSolicitacaoPendente?procedimento=${numeroProcedimento}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.pendente) {
+                alert('Já existe uma solicitação pendente para este procedimento.');
+                return;
+            }
+
+            // Caso não haja pendência, enviar a nova solicitação
+            fetch('/solicitar-transferencia', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ loginDestinatario, numeroProcedimento, usuarioAtivo })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Solicitação enviada com sucesso!');
+                    } else {
+                        alert('Erro ao enviar solicitação: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao solicitar transferência:', error);
+                    alert('Erro ao solicitar transferência. Tente novamente.');
+                });
+        })
+        .catch(error => {
+            console.error('Erro ao verificar solicitação pendente:', error);
+            alert('Erro ao verificar solicitação pendente. Tente novamente.');
+        });
 }
+
 
 
 

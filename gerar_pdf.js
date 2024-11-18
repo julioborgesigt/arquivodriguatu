@@ -650,32 +650,22 @@ app.get('/obterTipoAntigo', (req, res) => {
 });
 
 
+// Rota para verificar se existe uma solicitação pendente para um procedimento
+app.get('/verificarSolicitacaoPendente', (req, res) => {
+    const { procedimento } = req.query;
 
-const webpush = require('web-push');
+    // Carregar banco de dados
+    let banco;
+    try {
+        banco = JSON.parse(fs.readFileSync(bancoFilePath, 'utf8'));
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Erro ao carregar banco de dados." });
+    }
 
-// Configure VAPID keys
-webpush.setVapidDetails(
-    'mailto:julio.aparecido3@gmail.com',
-    'BGVMo0_ujZTJ7UMQcEFgcBM3J98kxvpxfCYkM7RRTPr2OE5iqPhK-O_myj9wF5nLfJ2ecucrDqaoC6uvFKdxxa8',
-    'l8IjnXnyj8ejdF2urj6hKfR35ZzqbnDTP-sQBAR6Nq4'
-);
+    // Verificar se há uma solicitação pendente para o procedimento
+    const solicitacaoPendente = banco.solicitacoes.some(
+        (s) => s.numeroProcedimento === procedimento && s.status === 'pendente'
+    );
 
-let subscriptions = []; // Armazene as assinaturas no banco de dados
-
-app.post('/subscribe', (req, res) => {
-    const subscription = req.body;
-    subscriptions.push(subscription);
-    res.status(201).json({ message: 'Inscrição salva com sucesso!' });
-});
-
-app.post('/enviar-notificacao', (req, res) => {
-    const { title, body } = req.body;
-
-    subscriptions.forEach(subscription => {
-        webpush.sendNotification(subscription, JSON.stringify({ title, body }))
-            .then(() => console.log('Notificação enviada!'))
-            .catch(error => console.error('Erro ao enviar notificação:', error));
-    });
-
-    res.status(200).json({ message: 'Notificação enviada com sucesso!' });
+    res.json({ pendente: solicitacaoPendente });
 });
