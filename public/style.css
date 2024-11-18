@@ -45,6 +45,11 @@ body {
     
 }
 
+.selecteresultado-container, .pesquisaeresultado-container {
+    display: block;
+}
+
+
 .selecteresultado-container {
     background-color: #fff;
     border: 1px solid #ddd;
