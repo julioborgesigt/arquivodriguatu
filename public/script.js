@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+
 function subscribeUserToPush() {
     const applicationServerKey = 'BGVMo0_ujZTJ7UMQcEFgcBM3J98kxvpxfCYkM7RRTPr2OE5iqPhK-O_myj9wF5nLfJ2ecucrDqaoC6uvFKdxxa8'; // Gerada pelo web-push
 const convertedKey = urlBase64ToUint8Array(applicationServerKey);
