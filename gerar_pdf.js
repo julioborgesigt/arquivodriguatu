@@ -656,8 +656,8 @@ const webpush = require('web-push');
 // Configure VAPID keys
 webpush.setVapidDetails(
     'mailto:julio.aparecido3@gmail.com',
-    'BH9Q3t5JxJIuuPiCWZSNoQmhajCao4VlvaQTFFge3PoX4m2bd7COphElcXQnFL7TZ9yjmYpRBqbpxxp04o-9SVU',
-    '3Hc3HbdazWcMUF7dsn6Wxm2qxXGFhYUuCZxbfTyRFLU'
+    'BGVMo0_ujZTJ7UMQcEFgcBM3J98kxvpxfCYkM7RRTPr2OE5iqPhK-O_myj9wF5nLfJ2ecucrDqaoC6uvFKdxxa8',
+    'l8IjnXnyj8ejdF2urj6hKfR35ZzqbnDTP-sQBAR6Nq4'
 );
 
 let subscriptions = []; // Armazene as assinaturas no banco de dados
