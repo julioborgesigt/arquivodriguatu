@@ -73,7 +73,7 @@ app.post('/login', (req, res) => {
 
 */
 
-
+/*
 // Rota de login
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
@@ -96,6 +96,40 @@ app.post('/login', (req, res) => {
         }
     });
 });
+
+*/
+
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    fs.readFile('banco.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Erro ao ler o banco de dados" });
+        }
+
+        const bancoDados = JSON.parse(data);
+
+        // Verificar se o usuário existe e a senha está correta
+        const usuario = bancoDados.usuarios.find(u => u.username === username && u.password === password);
+
+        if (usuario) {
+            // Verificar solicitações pendentes
+            const pendentes = bancoDados.solicitacoes.filter(
+                solicitacao => solicitacao.loginDestinatario === username && solicitacao.status === "pendente"
+            );
+
+            res.status(200).json({ 
+                message: "Login realizado com sucesso", 
+                usuario: usuario, 
+                possuiPendentes: pendentes.length > 0 
+            });
+        } else {
+            res.status(401).json({ message: "Usuário ou senha incorretos" });
+        }
+    });
+});
+
 
 
 // Rota para verificar o login de administrador

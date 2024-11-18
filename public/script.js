@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Função para realizar o login
 function login() {
     sessionStorage.setItem('limparResultado', 'true');
-    //location.reload(true);
+    location.reload(true);
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
@@ -52,6 +52,12 @@ function login() {
     .then(data => {
         if (data.message === "Login realizado com sucesso") {
             alert(data.message);
+
+            // Notificar o usuário se houver solicitações pendentes
+            if (data.possuiPendentes) {
+                alert("Você possui solicitações de transferência pendentes.");
+            }
+
             // Armazenar o nome de usuário no localStorage
             localStorage.setItem('usuarioAtivo', username);
             // Exibir a interface do app
@@ -64,6 +70,7 @@ function login() {
     })
     .catch(error => console.error('Erro ao realizar login:', error));
 }
+
 
 
 // Função para realizar o logout
