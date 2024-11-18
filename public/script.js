@@ -14,6 +14,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     exibirFormulario('gerarPDF-form');
 
+
+});
+
+
+// Função de inicialização
+function inicializarPagina() {
+    // Solicitar permissão para notificações
     if (Notification.permission === 'default') {
         Notification.requestPermission().then(permission => {
             if (permission === 'granted') {
@@ -22,8 +29,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Outras funções que devem rodar na inicialização
+    carregarSolicitacoesPendentes();
+}
 
-});
+// Chamar a função de inicialização ao carregar a página
+document.addEventListener('DOMContentLoaded', inicializarPagina);
+
 
 
 
