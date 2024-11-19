@@ -201,7 +201,7 @@ function gerarPDF() {
             doc.setFontSize(16);
 
             // Título principal
-            doc.text("Capa de Procedimento", 105, 20, { align: 'center' });
+            doc.text("Capa de Procedimento.", 105, 20, { align: 'center' });
 
             // Adicionar conteúdo
             doc.setFontSize(12);
