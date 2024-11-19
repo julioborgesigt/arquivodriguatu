@@ -160,6 +160,9 @@ function validarProcedimento(numero) {
 function gerarPDF() {
     const tipoProcedimento = document.getElementById("tipo-procedimento").value; // Captura as letras
     const numeroProcedimento = document.getElementById("procedimento").value;
+    const autorInvestigado = document.getElementById("autor-investigado").value || "";
+    const assunto = document.getElementById("assunto").value || "";
+    const vitima = document.getElementById("vitima").value || "";
     const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Pega o usuário logado
 
     // Combinar o tipo de procedimento com o restante do número
@@ -189,9 +192,30 @@ function gerarPDF() {
             // Gera o PDF se o procedimento foi salvo
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            doc.setFont('Arial');
-            doc.setFontSize(22);
-            doc.text(numeroCompleto, doc.internal.pageSize.getWidth() / 2, doc.internal.pageSize.getHeight() / 2, { align: 'center' });
+            
+            
+            
+            
+            // Configurar o estilo do PDF
+            doc.setFont('Helvetica', 'normal');
+            doc.setFontSize(16);
+
+            // Título principal
+            doc.text("Capa de Procedimento", 105, 20, { align: 'center' });
+
+            // Adicionar conteúdo
+            doc.setFontSize(12);
+            doc.text(`Tipo de Procedimento: ${tipoProcedimento}`, 10, 40);
+            doc.text(`Número do Procedimento: ${numeroProcedimento}`, 10, 50);
+
+            if (autorInvestigado) doc.text(`Autor/Investigado: ${autorInvestigado}`, 10, 60);
+            if (assunto) doc.text(`Assunto: ${assunto}`, 10, 70);
+            if (vitima) doc.text(`Vítima: ${vitima}`, 10, 80);
+
+
+
+
+
 
             const qrCodeUrl = `https://arquivo-driguatu-production.up.railway.app/leitura?procedimento=${numeroCompleto}`;
             const qrCodeImg = generateQRCode(qrCodeUrl);

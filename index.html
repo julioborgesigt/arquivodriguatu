@@ -83,8 +83,22 @@
                                             
 
 
+                                               
                                                 <label for="procedimento">Número do Procedimento:</label>
                                                 <input type="text" id="procedimento" name="procedimento" placeholder="xxx-xxxxx/xxxx" required>
+
+                                                <label for="autor-investigado">Autor/Investigado:</label>
+                                                <input type="text" id="autor-investigado" name="autor-investigado" placeholder="Nome do Autor/Investigado">
+
+                                                <label for="assunto">Assunto:</label>
+                                                <input type="text" id="assunto" name="assunto" placeholder="Assunto">
+
+                                                <label for="vitima">Vítima:</label>
+                                                <input type="text" id="vitima" name="vitima" placeholder="Nome da Vítima">
+
+
+
+
                                                 <button class="btn-form" id="botao-gerar" type="button" onclick="gerarPDF()">Gerar PDF</button>
                                             
                                 </div>
@@ -124,7 +138,7 @@
                                         <option value="IP">IP</option>
                                     </select>
                                 
-                
+                                <label for="consulta-tipo-procedimento">Número do Procedimento:</label>
                                 <input type="text" id="consulta-procedimento" name="consulta-procedimento" placeholder="xxx-xxxxx/xxxx" required>
                                 <button class="btn-form" type="button" onclick="consultarMovimentacao()">Consultar</button>
                                 </div>
