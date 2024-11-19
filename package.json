@@ -18,5 +18,8 @@
     "qrcode-generator": "^1.4.4",
     "web-push": "^3.6.7"
   },
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.9"
+  }
 }
