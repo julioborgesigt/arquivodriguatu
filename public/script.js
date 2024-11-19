@@ -214,9 +214,6 @@ function gerarPDF() {
 
 
 
-
-
-
             const qrCodeUrl = `https://arquivo-driguatu-production.up.railway.app/leitura?procedimento=${numeroCompleto}`;
             const qrCodeImg = generateQRCode(qrCodeUrl);
             // Reduza o tamanho do QR Code ao mínimo desejado
