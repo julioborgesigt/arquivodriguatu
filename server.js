@@ -9,6 +9,16 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 
+
+// Middleware para lidar com solicitações JSON
+app.use(express.json());
+
+// Middleware para servir arquivos estáticos
+app.use(express.static(path.join(__dirname)));
+
+
+
+
 const cors = require('cors');
 app.use(cors());
 
