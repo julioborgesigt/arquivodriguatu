@@ -19,6 +19,20 @@ app.use((req, res, next) => {
 });
 
 
+/*
+// Inicia o servidor
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+});
+
+*/
+
+// Inicie o servidor
+app.listen(PORT, () => {
+    console.log(`Servidor rodando em http://localhost:${PORT}`);
+  });
+
+  
 
 // Rota para servir o banco.json
 app.get('/banco.json', (req, res) => {
@@ -255,11 +269,6 @@ app.post('/salvarProcedimento', (req, res) => {
 
 
 
-
-// Inicia o servidor
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-});
 
 
 // Rota para exibir o comprovante
