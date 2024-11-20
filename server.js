@@ -18,7 +18,6 @@ app.use(express.static(path.join(__dirname)));
 
 
 
-
 const cors = require('cors');
 app.use(cors());
 
