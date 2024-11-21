@@ -358,7 +358,7 @@ function lerQRCode() {
 
 
 function lerQRCodePage() {
-    window.location.href = "leitor_qrcode.html";
+    window.location.href = "/leitor_qrcode.html";
 }
 
 // Função para pesquisar processos pelo login

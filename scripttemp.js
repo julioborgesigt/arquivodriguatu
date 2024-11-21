@@ -11,9 +11,10 @@ document.addEventListener('DOMContentLoaded', function() {
         sessionStorage.setItem('limparResultado', 'false');  // Reseta a flag
     }
 
-
-    exibirFormulario('gerarPDF-form');
+    // Carregar as solicitações pendentes automaticamente
+    carregarSolicitacoesPendentes();
 });
+
 
 
 
@@ -37,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Função para realizar o login
 function login() {
     sessionStorage.setItem('limparResultado', 'true');
-    //location.reload(true);
+    location.reload(true);
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
@@ -52,12 +53,6 @@ function login() {
     .then(data => {
         if (data.message === "Login realizado com sucesso") {
             alert(data.message);
-
-            // Notificar o usuário se houver solicitações pendentes
-            if (data.possuiPendentes) {
-                alert("Você possui solicitações de transferência pendentes.");
-            }
-
             // Armazenar o nome de usuário no localStorage
             localStorage.setItem('usuarioAtivo', username);
             // Exibir a interface do app
@@ -72,15 +67,11 @@ function login() {
 }
 
 
-
 // Função para realizar o logout
 function logout() {
     localStorage.removeItem('usuarioAtivo');
     document.getElementById('auth-container').style.display = 'block';
     document.getElementById('app-container').style.display = 'none';
-    limparSolicitacoesPendentes(); // Limpa solicitações na interface
-    sessionStorage.clear();
-    location.reload();
 }
 
 
@@ -150,26 +141,18 @@ function register() {
 
 // Função para validar o formato do número de procedimento
 function validarProcedimento(numero) {
-    const regex = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/; // Novo formato: xx-xxx-xxxxx/xxxx
+    const regex = /^\d{3}-\d{5}\/\d{4}$/; // Novo formato: xxx-xxxxx/xxxx
     return regex.test(numero);
 }
 
 
-
 // Função para gerar o PDF
 function gerarPDF() {
-    const tipoProcedimento = document.getElementById("tipo-procedimento").value; // Captura as letras
     const numeroProcedimento = document.getElementById("procedimento").value;
-    const autorInvestigado = document.getElementById("autor-investigado").value || "";
-    const assunto = document.getElementById("assunto").value || "";
-    const vitima = document.getElementById("vitima").value || "";
     const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Pega o usuário logado
 
-    // Combinar o tipo de procedimento com o restante do número
-    const numeroCompleto = `${tipoProcedimento}-${numeroProcedimento}`;
-
-    if (!validarProcedimento(numeroCompleto)) {
-        alert("O número do procedimento deve estar no formato xx-xxx-xxxxx/xxxx");
+    if (!validarProcedimento(numeroProcedimento)) {
+        alert("O número do procedimento deve estar no formato xxx - xxxxx / xxxx.");
         return;
     }
 
@@ -184,7 +167,7 @@ function gerarPDF() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ numero: numeroCompleto, usuario: usuarioAtivo })
+        body: JSON.stringify({ numero: numeroProcedimento, usuario: usuarioAtivo })
     })
     .then(response => response.json())
     .then(data => {
@@ -192,35 +175,15 @@ function gerarPDF() {
             // Gera o PDF se o procedimento foi salvo
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            
-            
-            
-            
-            // Configurar o estilo do PDF
-            doc.setFont('Helvetica', 'normal');
-            doc.setFontSize(16);
+            doc.setFont('Arial');
+            doc.setFontSize(22);
+            doc.text(numeroProcedimento, doc.internal.pageSize.getWidth() / 2, doc.internal.pageSize.getHeight() / 2, { align: 'center' });
 
-            // Título principal
-            doc.text("Capa de Procedimento para uso e controle interno.", 105, 20, { align: 'center' });
-
-            // Adicionar conteúdo
-            doc.setFontSize(12);
-            doc.text(`Tipo de Procedimento: ${tipoProcedimento}`, 10, 40);
-            doc.text(`Número do Procedimento: ${numeroProcedimento}`, 10, 50);
-
-            if (autorInvestigado) doc.text(`Autor/Investigado: ${autorInvestigado}`, 10, 60);
-            if (assunto) doc.text(`Assunto: ${assunto}`, 10, 70);
-            if (vitima) doc.text(`Vítima: ${vitima}`, 10, 80);
-
-
-
-            const qrCodeUrl = `https://arquivo-driguatu-production.up.railway.app/leitura?procedimento=${numeroCompleto}`;
+            const qrCodeUrl = `https://arquivo-driguatu-production.up.railway.app/leitura?procedimento=${numeroProcedimento}`;
             const qrCodeImg = generateQRCode(qrCodeUrl);
-            // Reduza o tamanho do QR Code ao mínimo desejado
-            doc.addImage(qrCodeImg, 'PNG', doc.internal.pageSize.getWidth() - 50, 30, 40, 40); // Ajuste largura e altura (40x40)
+            doc.addImage(qrCodeImg, 'PNG', doc.internal.pageSize.getWidth() - 110, 10, 100, 100);
 
-
-            doc.save(`procedimento_${numeroCompleto}.pdf`);
+            doc.save(`procedimento_${numeroProcedimento}.pdf`);
         } else {
             alert("Erro ao salvar o procedimento: " + data.message);
         }
@@ -233,36 +196,32 @@ function gerarPDF() {
 
 // Função para consultar movimentação
 function consultarMovimentacao() {
-    const tipoProcedimento = document.getElementById("consulta-tipo-procedimento").value; // Pega o tipo
     const numeroProcedimento = document.getElementById("consulta-procedimento").value;
 
-    // Combinar tipo e número
-    const numeroCompleto = `${tipoProcedimento}-${numeroProcedimento}`;
-
-    if (!validarProcedimento(numeroCompleto)) {
-        alert("O número do procedimento deve estar no formato xx-xxx-xxxxx/xxxx.");
+    if (!validarProcedimento(numeroProcedimento)) {
+        alert("O número do procedimento deve estar no formato xxx - xxxxx / xxxx.");
         return;
     }
 
-    fetch(`/consultaMovimentacao?procedimento=${numeroCompleto}`)
-        .then(response => response.json())
-        .then(data => {
-            const resultadoDiv = document.getElementById('resultado-consulta');
-            if (data.success) {
-                let html = `<h3>Movimentações para o procedimento ${numeroCompleto}:</h3><ul>`;
-                data.leituras.forEach(leitura => {
-                    html += `<li>${leitura.usuario}, Data: ${leitura.data}, Hora: ${leitura.hora}</li>`;
-                });
-                html += `</ul>`;
-                resultadoDiv.innerHTML = html;
-            } else {
-                resultadoDiv.innerHTML = `<p>${data.message}</p>`;
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao consultar movimentação:', error);
-            document.getElementById('resultado-consulta').innerHTML = `<p>Erro ao consultar movimentação. Tente novamente.</p>`;
-        });
+    fetch(`/consultaMovimentacao?procedimento=${numeroProcedimento}`)
+    .then(response => response.json())
+    .then(data => {
+        const resultadoDiv = document.getElementById('resultado-consulta');
+        if (data.success) {
+            let html = `<h3>Movimentações para o procedimento ${numeroProcedimento}:</h3><ul>`;
+            data.leituras.forEach(leitura => {
+                html += `<li>${leitura.usuario}, Data: ${leitura.data}, Hora: ${leitura.hora}</li>`;
+            });
+            html += `</ul>`;
+            resultadoDiv.innerHTML = html;
+        } else {
+            resultadoDiv.innerHTML = `<p>${data.message}</p>`;
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao consultar movimentação:', error);
+        document.getElementById('resultado-consulta').innerHTML = `<p>Erro ao consultar movimentação. Tente novamente.</p>`;
+    });
 }
 
 
@@ -358,7 +317,7 @@ function lerQRCode() {
 
 
 function lerQRCodePage() {
-    window.location.href = "leitor_qrcode.html";
+    window.location.href = "/leitor_qrcode.html";
 }
 
 // Função para pesquisar processos pelo login
@@ -404,71 +363,13 @@ function pesquisarPorLogin() {
 }
 
 
-
 // Função para solicitar a transferência de processo para outro login
 function solicitarTransferencia() {
     const loginDestinatario = document.getElementById('login-transferencia').value;
-    const tipoProcedimento = document.getElementById('tipo-transferencia').value; // Pega o tipo de procedimento
     const numeroProcedimento = document.getElementById('procedimento-transferencia').value;
     const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Usuário logado
-
-    // Combinar o tipo de procedimento com o número inserido
-    const numeroCompleto = `${tipoProcedimento}-${numeroProcedimento}`;
 
     if (!loginDestinatario || !numeroProcedimento) {
-        alert('Por favor, preencha todos os campos.');
-        return;
-    }
-
-    // Verificar se já existe uma solicitação pendente para o procedimento
-    fetch(`/verificarSolicitacaoPendente?procedimento=${numeroCompleto}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.pendente) {
-                alert('Já existe uma solicitação pendente para este procedimento.');
-                return;
-            }
-
-            // Caso não haja pendência, enviar a nova solicitação
-            fetch('/solicitar-transferencia', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ loginDestinatario, numeroProcedimento: numeroCompleto, usuarioAtivo })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Solicitação enviada com sucesso!');
-                    } else {
-                        alert('Erro ao enviar solicitação: ' + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro ao solicitar transferência:', error);
-                    alert('Erro ao solicitar transferência. Tente novamente.');
-                });
-        })
-        .catch(error => {
-            console.error('Erro ao verificar solicitação pendente:', error);
-            alert('Erro ao verificar solicitação pendente. Tente novamente.');
-        });
-}
-
-
-/*
-// Função para solicitar a transferência de processo para outro login
-function solicitarTransferencia() {
-    const tipoProcedimento = document.getElementById('tipo-transferencia').value; // Pega o tipo de procedimento
-    const numeroProcedimento = document.getElementById('procedimento-transferencia').value;
-    const loginDestinatario = document.getElementById('login-transferencia').value;
-    const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Usuário logado
-
-    // Combinar o tipo de procedimento com o número inserido
-    const numeroCompleto = `${tipoProcedimento}-${numeroProcedimento}`;
-
-    if (!loginDestinatario || !numeroCompleto) {
         alert('Por favor, preencha todos os campos.');
         return;
     }
@@ -478,7 +379,7 @@ function solicitarTransferencia() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ loginDestinatario, numeroProcedimento: numeroCompleto, usuarioAtivo })
+        body: JSON.stringify({ loginDestinatario, numeroProcedimento, usuarioAtivo })
     })
     .then(response => response.json())
     .then(data => {
@@ -494,7 +395,6 @@ function solicitarTransferencia() {
     });
 }
 
-*/
 
 
 
@@ -614,105 +514,4 @@ function verificarSolicitacoes() {
     
     // Reutilizar a função de carregar as solicitações pendentes
     carregarSolicitacoesPendentes();
-    
-}
-
-
-function mostrarConversor() {
-    document.getElementById("conversor-container").style.display = "block";
-}
-
-
-/*
-// Função para carregar o tipo antigo com base no número do procedimento
-function carregarTipoAntigo() {
-    const numero = document.getElementById("numero-converter").value;
-    
-
-    if (numero) {
-        fetch(`/obterTipoAntigo?numero=${numero}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById("antigo-tipo").value = data.tipoAntigo;
-                } else {
-                    alert("Tipo antigo não encontrado. Verifique o número do procedimento.");
-                }
-            })
-            .catch(error => console.error("Erro ao carregar o tipo antigo:", error));
-    }
-}
-*/
-
-
-function converterProcedimento() {
-    const tipoSelecionado = document.getElementById("novo-tipo").value; // Tipo do procedimento (ex.: BO, TC)
-    const numeroDigitado = document.getElementById("novo-numero").value; // Número no formato xxx-xxxxx/xxxx
-    const tipoSelecionadoAntigo = document.getElementById("antigo-tipo").value; // Tipo do procedimento (ex.: BO, TC)
-    const numeroOriginal = document.getElementById("numero-converter").value; // Número original do procedimento com tipo
-
-    if (!numeroOriginal || !tipoSelecionado || !numeroDigitado) {
-        alert("Preencha todos os campos para converter o procedimento.");
-        return;
-    }
-    
-
-    const novoNumeroCompleto = `${tipoSelecionado}-${numeroDigitado}`; // Concatenar tipo e número
-    const antigoNumeroCompleto = `${tipoSelecionadoAntigo}-${numeroOriginal}`; // Concatenar tipo e número
-
-
-    console.log("tipoSelecionado:", tipoSelecionado);
-    console.log("numeroDigitado", numeroDigitado);
-    console.log("Número original recebido:", numeroOriginal);
-    console.log("novoNumeroCompleto", novoNumeroCompleto);
-    console.log("antigoNumeroCompleto", antigoNumeroCompleto);
-    
-
-    fetch('/converterProcedimento', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ antigoNumeroCompleto, novoTipo: tipoSelecionado, novoNumero: novoNumeroCompleto })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert(data.message);
-            // Limpar o formulário ou atualizar a página, conforme necessário
-        } else {
-            alert("Erro ao converter o procedimento: " + data.message);
-        }
-    })
-    .catch(error => console.error("Erro ao converter procedimento:", error));
-}
-
-
- // Função para mostrar o formulário selecionado e esconder os outros
- function mostrarFormulario(formularioId) {
-    const formularios = document.querySelectorAll('.formulario');
-    formularios.forEach(form => {
-        form.style.display = 'none';
-    });
-    document.getElementById(formularioId).style.display = 'block';
-
-}
-
-// Função para exibir o formulário selecionado e ocultar os outros
-function exibirFormulario(formularioId) {
-    const formularios = ['gerarPDF-form', 'lerQRCode-form', 'consultarMovimentacao-form', 'transferirProcesso-form', 'solicitacoesTransferencia-form', 'conversao-form'];
-    
-    formularios.forEach(id => {
-        document.getElementById(id).style.display = id === formularioId ? 'block' : 'none';
-    });
-
-    
-}
-
-
-function limparSolicitacoesPendentes() {
-    const solicitacoesDiv = document.getElementById('solicitacoes-pendentes');
-    if (solicitacoesDiv) {
-        solicitacoesDiv.innerHTML = ''; // Limpa o conteúdo da div
-    }
 }
