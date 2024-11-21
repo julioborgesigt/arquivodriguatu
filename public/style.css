@@ -18,12 +18,14 @@ body {
     align-items: center;
     width: 100%;
     max-width: 500px;
+    min-height: 90vh; /* Garante que ocupe no mínimo 90% da altura da viewport */
     justify-content: center; /* Centraliza verticalmente o conteúdo */
     background: rgba(255, 255, 255, 0.8); /* Fundo translúcido */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border-radius: 12px;
-    padding: 20px;
+    padding: 10px;
     box-sizing: border-box;
+    margin-bottom: 70px;
 
     
 }
@@ -36,10 +38,11 @@ body {
     width: 100%;
     max-width: 500px;
     min-height: 90vh; /* Garante que ocupe no mínimo 90% da altura da viewport */
+    justify-content: center; /* Centraliza verticalmente o conteúdo */
     background: rgba(255, 255, 255, 0.8); /* Fundo translúcido */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border-radius: 12px;
-    padding: 20px;
+    padding: 10px;
     box-sizing: border-box;
     margin-bottom: 70px;
     
