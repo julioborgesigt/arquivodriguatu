@@ -24,7 +24,7 @@ body {
     min-height: 90vh; /* Garante que ocupe no mínimo 90% da altura da viewport */
     min-width: 90vh; /* Garante que ocupe no mínimo 90% da altura da viewport */
     justify-content: center; /* Centraliza verticalmente o conteúdo */
-    background: rgba(255, 255, 255, 0.8); /* Fundo translúcido */
+    background: rgba(163, 156, 156, 0.8); /* Fundo translúcido */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border-radius: 12px;
     padding: 10px;
