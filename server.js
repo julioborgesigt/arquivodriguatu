@@ -39,10 +39,7 @@ app.listen(PORT, () => {
 
 */
 
-// Inicie o servidor
-app.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
-  });
+
 
   
 
@@ -724,3 +721,9 @@ app.get('/verificarSolicitacaoPendente', (req, res) => {
 
     res.json({ pendente: solicitacaoPendente });
 });
+
+
+// Inicie o servidor
+app.listen(PORT, () => {
+    console.log(`Servidor rodando em http://localhost:${PORT}`);
+  });
