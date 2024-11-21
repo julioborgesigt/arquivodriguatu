@@ -36,8 +36,8 @@ body {
     flex-direction: column;
     align-items: center;
     width: 90%;
+    height:90%;
     max-width: 500px;
-    min-width: 500px;
     min-height: 90vh; /* Garante que ocupe no mínimo 90% da altura da viewport */
     min-width: 90vh; /* Garante que ocupe no mínimo 90% da altura da viewport */
     justify-content: center; /* Centraliza verticalmente o conteúdo */
