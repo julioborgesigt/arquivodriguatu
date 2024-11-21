@@ -374,6 +374,10 @@ button:hover {
         padding: 25px;
     }
 
+    #auth-container {
+        padding: 25px;
+    }
+
     input, button {
         font-size: 14px;
     }
