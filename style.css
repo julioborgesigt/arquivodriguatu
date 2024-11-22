@@ -1,0 +1,376 @@
+/* Estilos globais */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f2f5;
+    min-height: 100vh;
+}
+
+
+/* Container auth-container */
+#auth-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    min-height: 90vh; /* Garante que ocupe no mínimo 90% da altura da viewport */
+    background: rgba(255, 255, 255, 0.8); /* Fundo translúcido */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    padding: 20px;
+    box-sizing: border-box;
+    
+
+    
+}
+
+/* Container Principal */
+#main-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    min-height: 90vh; /* Garante que ocupe no mínimo 90% da altura da viewport */
+    background: rgba(255, 255, 255, 0.8); /* Fundo translúcido */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-bottom: 70px;
+    
+}
+
+.selecteresultado-container, .pesquisaeresultado-container {
+    display: block;
+}
+
+
+.selecteresultado-container {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+}
+
+.pesquisaeresultado-container {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+}
+
+
+.transferir-container {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.solicitacoes-container{
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.gerarpdf-container{
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.conversao-container{
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Ocultar todos os formulários inicialmente */
+.formulario {
+    display: none;
+}
+
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+label {
+    margin-bottom: 8px;
+    color: #333;
+}
+
+input, select {
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #ffffff; /* Fundo branco */
+    color: #333; /* Texto preto */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Estilos dos Formulários */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 8px;
+    color: #333;
+}
+
+input, select {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Efeito suave ao focar */
+}
+
+input:focus, select:focus {
+    border-color: #007BFF; /* Borda azul ao focar */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Efeito de sombra ao focar */
+}
+
+/* Botões */
+button {
+    padding: 12px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Efeito leve de levantar o botão */
+}
+
+/* Botões inferiores fixos */
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 500px;
+    background-color: #ffffff;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    z-index: 999;
+}
+
+.bottom-nav button {
+    background-color: transparent;
+    color: #007BFF;
+    font-size: 14px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: none;
+    transition: color 0.3s, transform 0.2s;
+}
+
+.bottom-nav button:hover {
+    color: #0056b3;
+    transform: scale(1.1);
+}
+
+.bottom-nav button i {
+    font-size: 18px;
+    margin-bottom: 2px;
+    color: inherit;
+}
+
+
+
+
+
+#botao-logout {
+    background-color: #d9534f; /* Vermelho para o botão de logout */
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#botao-logout:hover {
+    background-color: #c9302c; /* Tom mais escuro ao passar o mouse */
+}
+
+
+
+
+
+/* Estilos apenas para os botões dos formulários */
+.btn-form {
+    width: 100%;
+    padding: 8px 12px; /* Reduz o tamanho do espaçamento interno */
+    font-size: 14px; /* Reduz o tamanho da fonte */
+    font-weight: bold;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.1s ease, background-color 0.3s;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+}
+
+/* Feedback visual para toque */
+.btn-form:active {
+    transform: scale(0.98);
+}
+
+/* Cor e sombra ao passar o mouse */
+.btn-form:hover {
+    background-color: #0056b3;
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Botões dos formulários em telas menores */
+@media (max-width: 768px) {
+    .btn-form {
+        font-size: 16px;
+        padding: 12px;
+    }
+}
+
+/* Botões dos formulários em telas menores ainda */
+@media (max-width: 480px) {
+    .btn-form {
+        font-size: 14px;
+        padding: 10px;
+        margin-top: 8px;
+    }
+}
+
+
+
+
+
+
+
+/* Estilos para o leitor de QR Code */
+#qr-reader {
+    display: none;  /* Oculto até ser ativado */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;  /* Ocupa toda a largura da tela */
+    height: 100vh;  /* Ocupa toda a altura da tela */
+    background-color: rgba(0, 0, 0, 0.8);  /* Fundo preto com transparência */
+    z-index: 9999;  /* Garantir que o leitor fique acima de outros elementos */
+    justify-content: center;
+    align-items: center;
+}
+
+#qr-reader video {
+    width: 100% !important;  /* Garante que o vídeo ocupe a área inteira */
+    height: 100% !important;  /* Garante que o vídeo ocupe a área inteira */
+}
+
+
+
+/* Botões inferiores fixos */
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 500px;
+    background-color: #ffffff;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    padding: 0px 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    z-index: 999;
+}
+
+.bottom-nav button {
+    background-color: transparent;
+    color: #007BFF;
+    font-size: 14px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: none;
+    transition: color 0.3s, transform 0.2s;
+}
+
+.bottom-nav button:hover {
+    color: #0056b3;
+    transform: scale(1.1);
+}
+
+.bottom-nav button i {
+    font-size: 18px;
+    margin-bottom: 2px;
+    color: inherit;
+}
+
+/* Ajuste para dispositivos móveis */
+@media (max-width: 768px) {
+    #main-container {
+        padding: 25px;
+    }
+
+    input, button {
+        font-size: 14px;
+    }
+}
