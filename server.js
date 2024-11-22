@@ -675,9 +675,15 @@ app.post('/converterProcedimento', (req, res) => {
         res.status(500).json({ success: false, message: "Erro ao salvar banco de dados." });
     }
 });
+// Extrair o número do procedimento da URL do QR code
+    //const urlParams = new URLSearchParams(new URL(qrCodeMessage).search);
+    //const regexProcedimento = urlParams.get('procedimento');
 
 
-app.post('/transferencias-em-massa', (req, res) => {
+
+   // alert('antes da verificação');
+
+   app.post('/transferencias-em-massa', (req, res) => {
     const { loginDestinatario, procedimentos } = req.body;
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
@@ -685,28 +691,11 @@ app.post('/transferencias-em-massa', (req, res) => {
         return res.status(400).json({ success: false, message: 'Login do destinatário não encontrado.' });
     }
 
-
-
-
-    // Extrair o número do procedimento da URL do QR code
-    //const urlParams = new URLSearchParams(new URL(qrCodeMessage).search);
-    //const regexProcedimento = urlParams.get('procedimento');
-
-
-
-    alert('antes da verificação');
-
-    
-
     const regexProcedimento = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
     const procedimentosValidos = procedimentos.filter(proc => regexProcedimento.test(proc));
     if (procedimentosValidos.length !== procedimentos.length) {
-        alert('dentro do if da verificação');
         return res.status(400).json({ success: false, message: 'Alguns procedimentos estão no formato inválido.' });
     }
-
-    alert('depois da verificação');
-
 
     procedimentosValidos.forEach(numeroProcedimento => {
         banco.solicitacoes.push({
@@ -721,6 +710,7 @@ app.post('/transferencias-em-massa', (req, res) => {
     fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
     res.json({ success: true, message: 'Transferências registradas com sucesso!' });
 });
+
 
 
 
