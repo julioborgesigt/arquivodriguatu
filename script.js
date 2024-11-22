@@ -341,30 +341,11 @@ function lerQRCode(modoTransferencia = false) {
 
                 if (modoTransferencia) {
                     alert('entrou no if.');
-                    fetch('/leitura', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ qrCodeMessage, usuario: usuarioAtivo })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert(data.message); // Exibe mensagem de sucesso
-                            window.location.href = `/comprovante?procedimento=${data.procedimento}`;
-                        } else {
-                            alert("Erro: " + data.message); // Exibe mensagem de erro
-                        }
-                        html5QrCode.stop(); // Para o leitor de QR code
-                        qrReaderElement.style.display = "none"; // Esconder o leitor
-                    })
-                    .catch(error => {
-                        console.error('Erro ao registrar leitura:', error);
-                        alert('Erro ao registrar leitura. Tente novamente.');
-                        html5QrCode.stop();
-                        qrReaderElement.style.display = "none";
-                    });
+                    if (!procedimentosLidos.includes(qrCodeMessage)) {
+                        procedimentosLidos.push(qrCodeMessage);
+                        atualizarListaProcedimentos();
+                        alert(`Procedimento lido: ${qrCodeMessage}`);
+                    }
                     leituraEfetuada = false; // Permitir novas leituras
                 } else {
                     alert('entrou no else.');
