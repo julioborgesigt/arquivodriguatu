@@ -686,19 +686,19 @@ app.post('/transferencias-em-massa', (req, res) => {
     }
 
 
+
+
     // Extrair o número do procedimento da URL do QR code
     const urlParams = new URLSearchParams(new URL(qrCodeMessage).search);
-    const numeroProcedimento = urlParams.get('procedimento');
-    alert('o numero do procedimento é: ', numeroProcedimento)
-
-    // Verificar se o número do procedimento está no novo formato
-    const regexProcedimento = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
-    if (!regexProcedimento.test(numeroProcedimento)) {
-        return res.status(400).json({ success: false, message: "Formato inválido para o número do procedimento." });
-    }
+    const regexProcedimento = urlParams.get('procedimento');
 
 
-    //const regexProcedimento = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
+
+
+
+    
+
+    
     const procedimentosValidos = procedimentos.filter(proc => regexProcedimento.test(proc));
     if (procedimentosValidos.length !== procedimentos.length) {
         return res.status(400).json({ success: false, message: 'Alguns procedimentos estão no formato inválido.' });
@@ -717,6 +717,7 @@ app.post('/transferencias-em-massa', (req, res) => {
     fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
     res.json({ success: true, message: 'Transferências registradas com sucesso!' });
 });
+
 
 
 

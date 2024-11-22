@@ -421,10 +421,10 @@ function finalizarTransferencia() {
             atualizarListaProcedimentos();
             document.getElementById('finalizarLeitura').style.display = 'none';
         } else {
-            alert(`Erro ao registrar transferências: ${data.message}`);
+            alert(`Erro ao registrar transferências1: ${data.message}`);
         }
     })
-    .catch(error => console.error('Erro ao registrar transferências:', error));
+    .catch(error => console.error('Erro ao registrar transferências2:', error));
 }
 
 
