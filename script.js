@@ -280,10 +280,10 @@ let procedimentosLidos = [];
 
 function iniciarLeituraTransferencia() {
     const loginDestinatario = document.getElementById('login-destinatario').value;
-    if (!loginDestinatario) {
+   /* if (!loginDestinatario) {
         alert('Por favor, insira o login do destinatário.');
         return;
-    }
+    }*/
 
     procedimentosLidos = []; // Reiniciar a lista de procedimentos
     document.getElementById('procedimentos-lista').innerHTML = ''; // Limpar a lista exibida
