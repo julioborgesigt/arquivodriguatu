@@ -727,23 +727,22 @@ app.listen(PORT, () => {
   });
 
 
+
+
   app.post('/transferencias-em-massa', (req, res) => {
     const { loginDestinatario, procedimentos } = req.body;
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
-    // Validar login do destinatário
     if (!banco.usuarios.find(user => user.username === loginDestinatario)) {
         return res.status(400).json({ success: false, message: 'Login do destinatário não encontrado.' });
     }
 
-    // Validar procedimentos
     const regexProcedimento = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
     const procedimentosValidos = procedimentos.filter(proc => regexProcedimento.test(proc));
     if (procedimentosValidos.length !== procedimentos.length) {
         return res.status(400).json({ success: false, message: 'Alguns procedimentos estão no formato inválido.' });
     }
 
-    // Registrar transferências
     procedimentosValidos.forEach(numeroProcedimento => {
         banco.solicitacoes.push({
             id: Math.random().toString(36).substr(2, 9),
@@ -754,7 +753,6 @@ app.listen(PORT, () => {
         });
     });
 
-    // Salvar no banco
     fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
     res.json({ success: true, message: 'Transferências registradas com sucesso!' });
 });
