@@ -171,6 +171,26 @@
                     <div id="transferirProcesso-form" class="formulario">
                 
                         <form>
+
+                            <div id="leituraTransferencia-form" class="formulario" style="display: none;">
+                                <h2>Transferir Procedimentos por QR Code</h2>
+                                <label for="login-destinatario">Login do Destinatário:</label>
+                                <input type="text" id="login-destinatario" placeholder="Digite o login do destinatário" required>
+                                <button type="button" id="iniciarLeitura" onclick="iniciarLeitura()">Iniciar Leitura</button>
+                                <div id="qr-reader-container" style="display: none;">
+                                    <div id="qr-reader"></div>
+                                    <button type="button" id="finalizarLeitura" onclick="finalizarLeitura()">Finalizar Leitura</button>
+                                </div>
+                                <ul id="procedimentos-lista"></ul>
+                            </div>
+                            
+
+
+
+
+
+
+
                             <div class="transferir-container">
 
                                 <h2>Transferir procedimento</h2>

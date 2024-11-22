@@ -716,3 +716,70 @@ function limparSolicitacoesPendentes() {
         solicitacoesDiv.innerHTML = ''; // Limpa o conteúdo da div
     }
 }
+
+
+
+
+let procedimentosLidos = [];
+
+function iniciarLeitura() {
+    const loginDestinatario = document.getElementById('login-destinatario').value;
+    if (!loginDestinatario) {
+        alert('Por favor, insira o login do destinatário.');
+        return;
+    }
+    procedimentosLidos = []; // Reinicia a lista
+    document.getElementById('qr-reader-container').style.display = 'block';
+    iniciarQrCodeReader();
+}
+
+function iniciarQrCodeReader() {
+    const html5QrCode = new Html5Qrcode("qr-reader");
+    html5QrCode.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: 250 },
+        qrCodeMessage => {
+            if (!procedimentosLidos.includes(qrCodeMessage)) {
+                procedimentosLidos.push(qrCodeMessage);
+                atualizarListaProcedimentos();
+                alert(`QR Code lido: ${qrCodeMessage}`);
+            }
+        },
+        errorMessage => console.error("Erro ao ler QR Code:", errorMessage)
+    ).catch(err => console.error("Erro ao iniciar leitor de QR Code:", err));
+}
+
+function atualizarListaProcedimentos() {
+    const lista = document.getElementById('procedimentos-lista');
+    lista.innerHTML = '';
+    procedimentosLidos.forEach(proc => {
+        const li = document.createElement('li');
+        li.textContent = proc;
+        lista.appendChild(li);
+    });
+}
+
+function finalizarLeitura() {
+    const loginDestinatario = document.getElementById('login-destinatario').value;
+    if (!procedimentosLidos.length) {
+        alert('Nenhum QR code foi lido.');
+        return;
+    }
+    fetch('/transferencias-em-massa', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ loginDestinatario, procedimentos: procedimentosLidos })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Transferências registradas com sucesso!');
+            procedimentosLidos = [];
+            atualizarListaProcedimentos();
+            document.getElementById('qr-reader-container').style.display = 'none';
+        } else {
+            alert('Erro ao registrar transferências: ' + data.message);
+        }
+    })
+    .catch(error => console.error('Erro ao registrar transferências:', error));
+}
