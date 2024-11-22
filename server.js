@@ -721,6 +721,37 @@ app.get('/verificarSolicitacaoPendente', (req, res) => {
 });
 
 
+app.post('/transferencias-em-massa', (req, res) => {
+    const { loginDestinatario, procedimentos } = req.body;
+    const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
+
+    if (!banco.usuarios.find(user => user.username === loginDestinatario)) {
+        return res.status(400).json({ success: false, message: 'Login do destinatário não encontrado.' });
+    }
+
+    const regexProcedimento = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
+    const procedimentosValidos = procedimentos.filter(proc => regexProcedimento.test(proc));
+    if (procedimentosValidos.length !== procedimentos.length) {
+        return res.status(400).json({ success: false, message: 'Alguns procedimentos estão no formato inválido.' });
+    }
+
+    procedimentosValidos.forEach(numeroProcedimento => {
+        banco.solicitacoes.push({
+            id: Math.random().toString(36).substr(2, 9),
+            loginRemetente: req.body.usuarioAtivo,
+            loginDestinatario,
+            numeroProcedimento,
+            status: "pendente"
+        });
+    });
+
+    fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
+    res.json({ success: true, message: 'Transferências registradas com sucesso!' });
+});
+
+
+
+
 // Inicie o servidor
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
