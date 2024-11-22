@@ -691,11 +691,26 @@ app.post('/converterProcedimento', (req, res) => {
         return res.status(400).json({ success: false, message: 'Login do destinatário não encontrado.' });
     }
 
+
+
+    //const urlParams = new URLSearchParams(new URL(qrCodeMessage).search);
+    //const regexProcedimento = urlParams.get('procedimento');
+
+
+
+    alert('antes da verificação');
+
+
+
+
     const regexProcedimento = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
+    alert('este é o regexProcedimento', regexProcedimento);
     const procedimentosValidos = procedimentos.filter(proc => regexProcedimento.test(proc));
     if (procedimentosValidos.length !== procedimentos.length) {
         return res.status(400).json({ success: false, message: 'Alguns procedimentos estão no formato inválido.' });
     }
+
+    alert('depois da verificação');
 
     procedimentosValidos.forEach(numeroProcedimento => {
         banco.solicitacoes.push({
@@ -710,6 +725,7 @@ app.post('/converterProcedimento', (req, res) => {
     fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
     res.json({ success: true, message: 'Transferências registradas com sucesso!' });
 });
+
 
 
 
