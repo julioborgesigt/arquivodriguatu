@@ -689,6 +689,7 @@ app.post('/transferencias-em-massa', (req, res) => {
     // Extrair o número do procedimento da URL do QR code
     const urlParams = new URLSearchParams(new URL(qrCodeMessage).search);
     const numeroProcedimento = urlParams.get('procedimento');
+    alert('o numero do procedimento é: ', numeroProcedimento)
 
     // Verificar se o número do procedimento está no novo formato
     const regexProcedimento = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
