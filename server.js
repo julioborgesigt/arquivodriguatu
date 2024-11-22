@@ -691,14 +691,14 @@ app.post('/transferencias-em-massa', (req, res) => {
     const numeroProcedimento = urlParams.get('procedimento');
 
     // Verificar se o número do procedimento está no novo formato
-    const regex = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
-    if (!regex.test(numeroProcedimento)) {
+    const regexProcedimento = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
+    if (!regexProcedimento.test(numeroProcedimento)) {
         return res.status(400).json({ success: false, message: "Formato inválido para o número do procedimento." });
     }
 
 
     //const regexProcedimento = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
-    const procedimentosValidos = procedimentos.filter(proc => regex.test(proc));
+    const procedimentosValidos = procedimentos.filter(proc => regexProcedimento.test(proc));
     if (procedimentosValidos.length !== procedimentos.length) {
         return res.status(400).json({ success: false, message: 'Alguns procedimentos estão no formato inválido.' });
     }
