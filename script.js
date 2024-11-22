@@ -276,23 +276,7 @@ function generateQRCode(text) {
 
 
 
-let procedimentosLidos = [];
-
-function iniciarLeituraTransferencia() {
-    const loginDestinatario = document.getElementById('login-destinatario').value;
-   /* if (!loginDestinatario) {
-        alert('Por favor, insira o login do destinatário.');
-        return;
-    }*/
-
-    procedimentosLidos = []; // Reiniciar a lista de procedimentos
-    document.getElementById('procedimentos-lista').innerHTML = ''; // Limpar a lista exibida
-    document.getElementById('finalizarLeitura').style.display = 'block'; // Mostrar botão de finalizar
-
-    lerQRCode(true); // Iniciar o leitor em modo transferência
-}
-
-function lerQRCode(modoTransferencia = false) {
+function lerQRCode() {
     const qrReaderElement = document.getElementById("qr-reader");
     const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Pega o usuário logado
 
@@ -311,68 +295,65 @@ function lerQRCode(modoTransferencia = false) {
     const html5QrCode = new Html5Qrcode("qr-reader");
     let leituraEfetuada = false; // Flag para garantir que só uma leitura seja registrada
 
-    
-    
-
-    html5QrCode.start(
-        { facingMode: "environment" },
-        { fps: 10, qrbox: 250 },
-        qrCodeMessage => {
-            if (!leituraEfetuada) {
-                leituraEfetuada = true; // Evitar múltiplas leituras simultâneas
-                if (modoTransferencia) {
-                    if (!procedimentosLidos.includes(qrCodeMessage)) {
-                        procedimentosLidos.push(qrCodeMessage);
-                        atualizarListaProcedimentos();
-                        alert(`Procedimento lido: ${qrCodeMessage}`);
-                    }
-                    leituraEfetuada = false; // Permitir novas leituras
-                } else {
-                    // Modo de leitura normal
-                    registrarLeitura(qrCodeMessage);
-                    html5QrCode.stop();
-                    qrReaderElement.style.display = "none";
-                }
-            }
-        },
-        errorMessage => console.log(`Erro ao ler QR Code: ${errorMessage}`)
-    ).catch(err => console.error(`Erro ao iniciar leitor: ${err}`));
-}
-
-function atualizarListaProcedimentos() {
-    const lista = document.getElementById('procedimentos-lista');
-    lista.innerHTML = '';
-    procedimentosLidos.forEach(proc => {
-        const li = document.createElement('li');
-        li.textContent = proc;
-        lista.appendChild(li);
-    });
-}
-
-function finalizarTransferencia() {
-    const loginDestinatario = document.getElementById('login-destinatario').value;
-    if (procedimentosLidos.length === 0) {
-        alert('Nenhum procedimento foi lido.');
-        return;
+    // Funções para formatar a data e ajustar o horário
+    function formatarData(data) {
+        const dia = String(data.getDate()).padStart(2, '0');
+        const mes = String(data.getMonth() + 1).padStart(2, '0');
+        const ano = data.getFullYear();
+        return `${dia}/${mes}/${ano}`;
     }
 
-    fetch('/transferencias-em-massa', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ loginDestinatario, procedimentos: procedimentosLidos })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Transferências registradas com sucesso!');
-            procedimentosLidos = [];
-            atualizarListaProcedimentos();
-            document.getElementById('finalizarLeitura').style.display = 'none';
-        } else {
-            alert(`Erro ao registrar transferências: ${data.message}`);
+    function ajustarHoraGMT3(data) {
+        const novaData = new Date(data.getTime() - 3 * 60 * 60 * 1000); // Ajuste de 3 horas para GMT -3
+        const hora = String(novaData.getHours()).padStart(2, '0');
+        const minutos = String(novaData.getMinutes()).padStart(2, '0');
+        const segundos = String(novaData.getSeconds()).padStart(2, '0');
+        return `${hora}:${minutos}:${segundos}`;
+    }
+
+    html5QrCode.start(
+        { facingMode: "environment" },  // Câmera traseira
+        {
+            fps: 10,  // Taxa de quadros
+            qrbox: { width: 250, height: 250 },  // Tamanho da caixa de leitura (quadrado central)
+            aspectRatio: 1.0  // Força o formato quadrado e a orientação vertical
+        },
+        qrCodeMessage => {
+            if (!leituraEfetuada) {
+                leituraEfetuada = true; // Marca como já lido para evitar múltiplas leituras
+
+                fetch('/leitura', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ qrCodeMessage, usuario: usuarioAtivo })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message); // Exibe mensagem de sucesso
+                        window.location.href = `/comprovante?procedimento=${data.procedimento}`;
+                    } else {
+                        alert("Erro: " + data.message); // Exibe mensagem de erro
+                    }
+                    html5QrCode.stop(); // Para o leitor de QR code
+                    qrReaderElement.style.display = "none"; // Esconder o leitor
+                })
+                .catch(error => {
+                    console.error('Erro ao registrar leitura:', error);
+                    alert('Erro ao registrar leitura. Tente novamente.');
+                    html5QrCode.stop();
+                    qrReaderElement.style.display = "none";
+                });
+            }
+        },
+        errorMessage => {
+            console.log(`Erro ao ler QR Code: ${errorMessage}`);
         }
-    })
-    .catch(error => console.error('Erro ao registrar transferências:', error));
+    ).catch(err => {
+        console.log(`Erro ao iniciar a câmera: ${err}`);
+    });
 }
 
 
@@ -735,7 +716,3 @@ function limparSolicitacoesPendentes() {
         solicitacoesDiv.innerHTML = ''; // Limpa o conteúdo da div
     }
 }
-
-
-
-
