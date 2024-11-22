@@ -300,6 +300,7 @@ function lerQRCode(modoTransferencia = false) {
         return;
     }
 
+    
     qrReaderElement.style.display = "flex"; // Mostrar o leitor de QR code
     qrReaderElement.style.justifyContent = "center"; // Centralizar o leitor
     qrReaderElement.style.alignItems = "center"; // Centralizar verticalmente
@@ -336,6 +337,7 @@ function lerQRCode(modoTransferencia = false) {
         qrCodeMessage => {
             if (!leituraEfetuada) {
                 leituraEfetuada = true; // Marca como já lido para evitar múltiplas leituras
+                alert('entrou no qrcodemessage.');
 
                 if (modoTransferencia) {
                     alert('entrou no if.');
