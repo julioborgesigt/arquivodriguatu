@@ -677,27 +677,46 @@ app.post('/converterProcedimento', (req, res) => {
 });
 
 
+app.post('/transferencias-em-massa', (req, res) => {
+    const { loginDestinatario, procedimentos } = req.body;
+    const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
-app.get('/obterTipoAntigo', (req, res) => {
-    const { numero } = req.query;
-
-    // Carregar banco de dados
-    let banco;
-    try {
-        banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
-    } catch (error) {
-        return res.status(500).json({ success: false, message: "Erro ao carregar banco de dados." });
+    if (!banco.usuarios.find(user => user.username === loginDestinatario)) {
+        return res.status(400).json({ success: false, message: 'Login do destinatário não encontrado.' });
     }
 
-    // Buscar o procedimento correspondente
-    const procedimento = banco.procedimentos.find(p => p.numero.includes(numero));
-    if (procedimento) {
-        const tipoAntigo = procedimento.numero.split('-')[0]; // Extrair o tipo atual do número
-        res.json({ success: true, tipoAntigo });
-    } else {
-        res.json({ success: false, message: "Procedimento não encontrado." });
+
+    // Extrair o número do procedimento da URL do QR code
+    const urlParams = new URLSearchParams(new URL(qrCodeMessage).search);
+    const numeroProcedimento = urlParams.get('procedimento');
+
+    // Verificar se o número do procedimento está no novo formato
+    const regex = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
+    if (!regex.test(numeroProcedimento)) {
+        return res.status(400).json({ success: false, message: "Formato inválido para o número do procedimento." });
     }
+
+
+    //const regexProcedimento = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
+    const procedimentosValidos = procedimentos.filter(proc => regex.test(proc));
+    if (procedimentosValidos.length !== procedimentos.length) {
+        return res.status(400).json({ success: false, message: 'Alguns procedimentos estão no formato inválido.' });
+    }
+
+    procedimentosValidos.forEach(numeroProcedimento => {
+        banco.solicitacoes.push({
+            id: Math.random().toString(36).substr(2, 9),
+            loginRemetente: req.body.usuarioAtivo,
+            loginDestinatario,
+            numeroProcedimento,
+            status: "pendente"
+        });
+    });
+
+    fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
+    res.json({ success: true, message: 'Transferências registradas com sucesso!' });
 });
+
 
 
 // Rota para verificar se existe uma solicitação pendente para um procedimento
@@ -721,61 +740,8 @@ app.get('/verificarSolicitacaoPendente', (req, res) => {
 });
 
 
-app.post('/transferencias-em-massa', (req, res) => {
-    const { loginDestinatario, procedimentos } = req.body;
-    const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
-    if (!banco.usuarios.find(user => user.username === loginDestinatario)) {
-        return res.status(400).json({ success: false, message: 'Login do destinatário não encontrado.' });
-    }
 
-    const regexProcedimento = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
-    const procedimentosValidos = procedimentos.filter(proc => regexProcedimento.test(proc));
-    if (procedimentosValidos.length !== procedimentos.length) {
-        return res.status(400).json({ success: false, message: 'Alguns procedimentos estão no formato inválido.' });
-    }
-
-    procedimentosValidos.forEach(numeroProcedimento => {
-        banco.solicitacoes.push({
-            id: Math.random().toString(36).substr(2, 9),
-            loginRemetente: req.body.usuarioAtivo,
-            loginDestinatario,
-            numeroProcedimento,
-            status: "pendente"
-        });
-    });
-
-    fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
-    res.json({ success: true, message: 'Transferências registradas com sucesso!' });
-});
-
-app.post('/transferencias-em-massa', (req, res) => {
-    const { loginDestinatario, procedimentos } = req.body;
-    const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
-
-    if (!banco.usuarios.find(user => user.username === loginDestinatario)) {
-        return res.status(400).json({ success: false, message: 'Login do destinatário não encontrado.' });
-    }
-
-    const regexProcedimento = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
-    const procedimentosValidos = procedimentos.filter(proc => regexProcedimento.test(proc));
-    if (procedimentosValidos.length !== procedimentos.length) {
-        return res.status(400).json({ success: false, message: 'Alguns procedimentos estão no formato inválido.' });
-    }
-
-    procedimentosValidos.forEach(numeroProcedimento => {
-        banco.solicitacoes.push({
-            id: Math.random().toString(36).substr(2, 9),
-            loginRemetente: req.body.usuarioAtivo,
-            loginDestinatario,
-            numeroProcedimento,
-            status: "pendente"
-        });
-    });
-
-    fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
-    res.json({ success: true, message: 'Transferências registradas com sucesso!' });
-});
 
 
 
