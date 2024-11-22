@@ -291,7 +291,7 @@ function iniciarLeituraTransferencia() {
 }
 
 
-function lerQRCode(modoTransferencia = false) {
+function lerQRCode() {
     const qrReaderElement = document.getElementById("qr-reader");
     const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Pega o usuário logado
 
@@ -336,40 +336,31 @@ function lerQRCode(modoTransferencia = false) {
         qrCodeMessage => {
             if (!leituraEfetuada) {
                 leituraEfetuada = true; // Marca como já lido para evitar múltiplas leituras
-                if (modoTransferencia) {
-                    if (!procedimentosLidos.includes(qrCodeMessage)) {
-                        procedimentosLidos.push(qrCodeMessage);
-                        atualizarListaProcedimentos();
-                        alert(`Procedimento lido: ${qrCodeMessage}`);
+
+                fetch('/leitura', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ qrCodeMessage, usuario: usuarioAtivo })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message); // Exibe mensagem de sucesso
+                        window.location.href = `/comprovante?procedimento=${data.procedimento}`;
+                    } else {
+                        alert("Erro: " + data.message); // Exibe mensagem de erro
                     }
-                    leituraEfetuada = false; // Permitir novas leituras
-                } else {
-                    fetch('/leitura', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ qrCodeMessage, usuario: usuarioAtivo })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert(data.message); // Exibe mensagem de sucesso
-                            window.location.href = `/comprovante?procedimento=${data.procedimento}`;
-                        } else {
-                            alert("Erro: " + data.message); // Exibe mensagem de erro
-                        }
-                        html5QrCode.stop(); // Para o leitor de QR code
-                        qrReaderElement.style.display = "none"; // Esconder o leitor
-                    })
-                    .catch(error => {
-                        console.error('Erro ao registrar leitura:', error);
-                        alert('Erro ao registrar leitura. Tente novamente.');
-                        html5QrCode.stop();
-                        qrReaderElement.style.display = "none";
-                    });
-                }
-                
+                    html5QrCode.stop(); // Para o leitor de QR code
+                    qrReaderElement.style.display = "none"; // Esconder o leitor
+                })
+                .catch(error => {
+                    console.error('Erro ao registrar leitura:', error);
+                    alert('Erro ao registrar leitura. Tente novamente.');
+                    html5QrCode.stop();
+                    qrReaderElement.style.display = "none";
+                });
             }
         },
         errorMessage => {
@@ -379,6 +370,8 @@ function lerQRCode(modoTransferencia = false) {
         console.log(`Erro ao iniciar a câmera: ${err}`);
     });
 }
+
+
 
 
 function atualizarListaProcedimentos() {
