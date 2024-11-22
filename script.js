@@ -338,6 +338,7 @@ function lerQRCode(modoTransferencia = false) {
                 leituraEfetuada = true; // Marca como já lido para evitar múltiplas leituras
 
                 if (modoTransferencia) {
+                    alert('entrou no if.');
                     fetch('/leitura', {
                         method: 'POST',
                         headers: {
@@ -364,6 +365,7 @@ function lerQRCode(modoTransferencia = false) {
                     });
                     leituraEfetuada = false; // Permitir novas leituras
                 } else {
+                    alert('entrou no else.');
                     fetch('/leitura', {
                         method: 'POST',
                         headers: {
