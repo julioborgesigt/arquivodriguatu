@@ -18,7 +18,7 @@ body {
     align-items: center;
     width: 90%;
     height: 50%;
-    max-width: 90vh;
+    min-width: 90vh;
     min-height: 90vh; /* Garante que ocupe no mínimo 90% da altura da viewport */
     background: rgba(255, 255, 255, 0.8); /* Fundo translúcido */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
