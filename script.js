@@ -274,6 +274,21 @@ function generateQRCode(text) {
     return qr.createDataURL();
 }
 
+let procedimentosLidos = [];
+
+function iniciarLeituraTransferencia() {
+    const loginDestinatario = document.getElementById('login-destinatario').value;
+    if (!loginDestinatario) {
+        alert('Por favor, insira o login do destinatário.');
+        return;
+    }
+
+    procedimentosLidos = []; // Reiniciar a lista de procedimentos
+    document.getElementById('procedimentos-lista').innerHTML = ''; // Limpar a lista exibida
+    document.getElementById('finalizarLeitura').style.display = 'block'; // Mostrar botão de finalizar
+
+    lerQRCode(true); // Iniciar o leitor em modo transferência
+}
 
 
 function lerQRCode() {
