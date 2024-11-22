@@ -291,7 +291,7 @@ function iniciarLeituraTransferencia() {
 }
 
 
-function lerQRCode() {
+function lerQRCode(modoTransferencia = false) {
     const qrReaderElement = document.getElementById("qr-reader");
     const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Pega o usuário logado
 
