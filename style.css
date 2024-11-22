@@ -16,7 +16,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 90%;
+    height: 90%;
     max-width: 500px;
     min-height: 90vh; /* Garante que ocupe no mínimo 90% da altura da viewport */
     background: rgba(255, 255, 255, 0.8); /* Fundo translúcido */
