@@ -294,10 +294,25 @@ function iniciarLeituraTransferencia() {
 
 function lerQRCode(modoTransferencia = false) {
     const qrReaderElement = document.getElementById("qr-reader");
-    qrReaderElement.style.display = "flex";
+    const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Pega o usuário logado
+
+    if (!usuarioAtivo) {
+        alert("Usuário não está logado. Por favor, faça o login novamente.");
+        return;
+    }
+
+    qrReaderElement.style.display = "flex"; // Mostrar o leitor de QR code
+    qrReaderElement.style.justifyContent = "center"; // Centralizar o leitor
+    qrReaderElement.style.alignItems = "center"; // Centralizar verticalmente
+    qrReaderElement.style.height = "100vh"; // Ocupa toda a altura da tela
+    qrReaderElement.style.width = "100vw"; // Ocupa toda a largura da tela
+    qrReaderElement.style.backgroundColor = "#000"; // Fundo preto para destaque
 
     const html5QrCode = new Html5Qrcode("qr-reader");
-    let leituraEfetuada = false;
+    let leituraEfetuada = false; // Flag para garantir que só uma leitura seja registrada
+
+    
+    
 
     html5QrCode.start(
         { facingMode: "environment" },
