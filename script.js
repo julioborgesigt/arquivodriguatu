@@ -328,10 +328,10 @@ function lerQRCode(modoTransferencia = false) {
                         alert(`Número do procedimento extraído: ${numeroProcedimento}`); // Mostra o alerta
                         if (modoTransferencia) {
                             alert('entrou no if.');
-                            if (!procedimentosLidos.includes(qrCodeMessage)) {
-                                procedimentosLidos.push(qrCodeMessage);
+                            if (!procedimentosLidos.includes(numeroProcedimento)) {
+                                procedimentosLidos.push(numeroProcedimento);
                                 atualizarListaProcedimentos();
-                                alert(`Procedimento lido: ${qrCodeMessage}`);
+                                alert(`Procedimento lido: ${numeroProcedimento}`);
                             }
                             leituraEfetuada = false; // Permitir novas leituras
                         } else {
