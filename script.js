@@ -324,22 +324,6 @@ function lerQRCode(modoTransferencia = false) {
     const html5QrCode = new Html5Qrcode("qr-reader");
     let leituraEfetuada = false; // Flag para garantir que só uma leitura seja registrada
 
-    // Funções para formatar a data e ajustar o horário
-    function formatarData(data) {
-        const dia = String(data.getDate()).padStart(2, '0');
-        const mes = String(data.getMonth() + 1).padStart(2, '0');
-        const ano = data.getFullYear();
-        return `${dia}/${mes}/${ano}`;
-    }
-
-    function ajustarHoraGMT3(data) {
-        const novaData = new Date(data.getTime() - 3 * 60 * 60 * 1000); // Ajuste de 3 horas para GMT -3
-        const hora = String(novaData.getHours()).padStart(2, '0');
-        const minutos = String(novaData.getMinutes()).padStart(2, '0');
-        const segundos = String(novaData.getSeconds()).padStart(2, '0');
-        return `${hora}:${minutos}:${segundos}`;
-    }
-
     html5QrCode.start(
         { facingMode: "environment" },  // Câmera traseira
         { fps: 10, qrbox: { width: 250, height: 250 }, aspectRatio: 1.0 }, // Tamanho da caixa de leitura
@@ -373,45 +357,45 @@ function lerQRCode(modoTransferencia = false) {
                                             );
 
                                             if (!continuar) {
-                                                pararLeitorQRCode(html5QrCode); // Para o leitor
-                                                //finalizarTransferencia(); // Finaliza as transferências
+                                                // Finalizar transferências diretamente aqui
+                                                const loginDestinatario = document.getElementById('login-destinatario').value;
+
+                                                if (!loginDestinatario) {
+                                                    alert('Por favor, insira o login do destinatário.');
+                                                    leituraEfetuada = false; // Permitir nova leitura
+                                                    return;
+                                                }
+
                                                 if (procedimentosLidos.length === 0) {
                                                     alert('Nenhum procedimento foi lido.');
-                                                    //pararLeitorQRCode(html5QrCode);
                                                     location.reload(true);
                                                     return;
                                                 }
-                                            
+
                                                 fetch('/transferencias-em-massa', {
                                                     method: 'POST',
                                                     headers: { 'Content-Type': 'application/json' },
-                                                    body: JSON.stringify({ 
-                                                        loginDestinatario, 
-                                                        loginRemetente: usuarioAtivo, 
-                                                        procedimentos: procedimentosLidos 
+                                                    body: JSON.stringify({
+                                                        loginDestinatario,
+                                                        loginRemetente: usuarioAtivo,
+                                                        procedimentos: procedimentosLidos
                                                     })
                                                 })
-                                                .then(response => response.json())
-                                                .then(data => {
-                                                    if (data.success) {
-                                                        alert('Transferências registradas com sucesso!');
-                                            
-                                            
-                                                        // Encerrar o leitor de QR Code
-                                                        //pararLeitorQRCode(html5QrCode);
-                                                        procedimentosLidos = []; // Limpar a lista de procedimentos
-                                                        atualizarListaProcedimentos(); // Atualizar a interface
-                                                        document.getElementById('finalizarLeitura').style.display = 'none'; // Esconder botão
-                                                        const qrReaderLimiter = document.getElementById('qr-readerlimiter');
-                                                        qrReaderLimiter.style.display = 'none'; // Oculta o leitor
-                                                        location.reload(true);
-                                                    } else {
-                                                        alert(`Erro ao registrar transferências: ${data.message}`);
-                                                    }
-                                                })
-                                                .catch(error => console.error('Erro ao registrar transferências:', error));
-
-
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        if (data.success) {
+                                                            alert('Transferências registradas com sucesso!');
+                                                            procedimentosLidos = []; // Limpar a lista de procedimentos
+                                                            atualizarListaProcedimentos(); // Atualizar a interface
+                                                            document.getElementById('finalizarLeitura').style.display = 'none'; // Esconder botão
+                                                            const qrReaderLimiter = document.getElementById('qr-readerlimiter');
+                                                            qrReaderLimiter.style.display = 'none'; // Oculta o leitor
+                                                            location.reload(true);
+                                                        } else {
+                                                            alert(`Erro ao registrar transferências: ${data.message}`);
+                                                        }
+                                                    })
+                                                    .catch(error => console.error('Erro ao registrar transferências:', error));
                                             }
                                         }
                                     }
@@ -435,13 +419,11 @@ function lerQRCode(modoTransferencia = false) {
                                 .then(data => {
                                     if (data.success) {
                                         alert(data.message); // Exibe mensagem de sucesso
-                                        //window.location.href = `/comprovante?procedimento=${data.procedimento}`;
                                     } else {
                                         alert("Erro: " + data.message); // Exibe mensagem de erro
                                     }
                                     pararLeitorQRCode(html5QrCode); // Para o leitor
                                     window.history.back();
-
                                 })
                                 .catch(error => {
                                     console.error('Erro ao registrar leitura:', error);
@@ -470,6 +452,8 @@ function lerQRCode(modoTransferencia = false) {
         console.log(`Erro ao iniciar a câmera: ${err}`);
     });
 }
+
+
 
 
 
