@@ -328,6 +328,7 @@ button:hover {
 @media (max-width: 768px) {
     #qr-readerlimiter {
         height: 50vh; /* Ocupa 50% da altura da tela em dispositivos móveis */
+        width: 100vh; /* Ocupa 50% da largura da tela em dispositivos móveis */
     }
 }
 
