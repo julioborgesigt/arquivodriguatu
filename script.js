@@ -399,6 +399,7 @@ function finalizarTransferencia() {
         return;
     }
 
+    
     fetch('/transferencias-em-massa', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
