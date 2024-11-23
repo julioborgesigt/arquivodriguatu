@@ -352,6 +352,8 @@ function lerQRCode(modoTransferencia = false) {
                                     } else {
 
                                         alert('entrou no else.');
+                                        leituraEfetuada = true; // Marca como já lido para evitar múltiplas leituras
+
                                         fetch('/leitura', {
                                             method: 'POST',
                                             headers: {
