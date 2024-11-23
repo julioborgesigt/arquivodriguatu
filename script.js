@@ -362,7 +362,7 @@ function lerQRCode(modoTransferencia = false) {
                                 headers: {
                                     'Content-Type': 'application/json',
                                 },
-                                body: JSON.stringify({ qrCodeMessage, usuario: usuarioAtivo })
+                                body: JSON.stringify({ numeroProcedimento, usuario: usuarioAtivo })
                             })
                                 .then(response => response.json())
                                 .then(data => {
@@ -397,6 +397,8 @@ function lerQRCode(modoTransferencia = false) {
         errorMessage => console.log(`Erro ao ler QR Code: ${errorMessage}`)
     ).catch(err => console.error(`Erro ao iniciar leitor: ${err}`));
 }
+
+
 
 
 
