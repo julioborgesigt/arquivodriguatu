@@ -312,8 +312,8 @@ button:hover {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;  /* Ocupa toda a largura da tela */
-    height: 30vh;  /* Ocupa toda a altura da tela */
+    width: 50vw;  /* Ocupa toda a largura da tela */
+    height: 50vh;  /* Ocupa toda a altura da tela */
     background-color: rgba(0, 0, 0, 0.8);  /* Fundo preto com transparência */
     z-index: 9999;  /* Garantir que o leitor fique acima de outros elementos */
     justify-content: center;
