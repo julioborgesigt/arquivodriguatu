@@ -196,8 +196,8 @@ app.post('/register', (req, res) => {
 
 // Rota de leitura do QR Code
 app.post('/leitura', (req, res) => {
-    alert("entrou na rota de leitura")
-    const { numeroProcedimento, usuario } = req.body; // Receber o usuário logado junto com o QR code
+
+    const { qrCodeMessage, usuario } = req.body; // Receber o usuário logado junto com o QR code
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
     // Captura a hora atual
@@ -212,9 +212,9 @@ app.post('/leitura', (req, res) => {
     console.log(horaAjustada);
 
     // Extrair o número do procedimento da URL do QR code
-    //const urlParams = new URLSearchParams(new URL(qrCodeMessage).search);
-    //const numeroProcedimento = url.searchParams.get("procedimento");
-    //alert("numeroProcedimento da rota leitura", numeroProcedimento)
+    const urlParams = new URLSearchParams(new URL(qrCodeMessage).search);
+    const numeroProcedimento = urlParams.get('procedimento');
+    alert("numeroProcedimento da rota leitura", numeroProcedimento)
 
     if (!numeroProcedimento) {
         return res.status(400).json({ success: false, message: "Número do procedimento não encontrado na URL." });
