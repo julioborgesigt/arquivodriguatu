@@ -425,11 +425,15 @@ function finalizarTransferencia() {
         return;
     }
 
+    /*
+
     // Verificar pendências para cada procedimento
     const verificarPendencias = procedimentosLidos.map(proc =>
         fetch(`/verificarSolicitacaoPendente?procedimento=${proc}`)
             .then(response => response.json())
     );
+    */
+
 
     Promise.all(verificarPendencias)
         .then(results => {
