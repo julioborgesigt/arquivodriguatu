@@ -345,7 +345,7 @@ function lerQRCode(modoTransferencia = false) {
                                             if (!continuar) {
                                                 pararLeitorQRCode(html5QrCode); // Para o leitor
                                                 finalizarTransferencia(); // Finaliza as transferências
-                                                registrarLeitura(numeroProcedimento);
+                                                
                                             }
                                         }
                                     } else {
