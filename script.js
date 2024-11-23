@@ -324,6 +324,8 @@ function lerQRCode(modoTransferencia = false) {
                     const numeroProcedimento = url.searchParams.get("procedimento");
                     
                     if (numeroProcedimento) {
+
+                        alert(`Número do procedimento extraído: ${numeroProcedimento}`); // Mostra o alerta
                         if (modoTransferencia) {
                             alert('entrou no if.');
                             if (!procedimentosLidos.includes(qrCodeMessage)) {
