@@ -320,8 +320,7 @@ function lerQRCode(modoTransferencia = false) {
                 try {
                     const url = new URL(qrCodeMessage);
                     const numeroProcedimento = url.searchParams.get("procedimento");
-                    alert('este é o qrcode lido antes: ' , qrCodeMessage);
-                            alert('este é o numeroProcedimento lido antes: ' , numeroProcedimento);
+                   
 
                     if (numeroProcedimento) {
                         if (modoTransferencia) {
@@ -360,8 +359,8 @@ function lerQRCode(modoTransferencia = false) {
                         } else {
                             // Modo regular: registrar leitura
                             alert('entrou no else da rotina ler qrcode.');
-                            alert('este é o qrcode lido: ' , qrCodeMessage);
-                            alert('este é o numeroProcedimento lido: ' , numeroProcedimento);
+                            alert(`qrCodeMessage lido no else: ${qrCodeMessage}`);
+                            alert(`Número do procedimento lido no else: ${numeroProcedimento}`);
                             fetch('/leitura', {
                                 method: 'POST',
                                 headers: {
