@@ -420,11 +420,12 @@ function finalizarTransferencia() {
         if (data.success) {
             alert('Transferências registradas com sucesso!');
             // Encerrar o leitor de QR Code
-            pararLeitorQRCode(html5QrCode);
+            
             procedimentosLidos = [];
             atualizarListaProcedimentos();
             document.getElementById('finalizarLeitura').style.display = 'none';
             alert('vai ser chamado a função parar!');
+            pararLeitorQRCode(html5QrCode);
         } else {
             alert(`Erro ao registrar transferências1: ${data.message}`);
         }
