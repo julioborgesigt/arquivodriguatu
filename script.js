@@ -375,7 +375,7 @@ function lerQRCode(modoTransferencia = false) {
                                 .then(data => {
                                     if (data.pendente) {
                                         alert(`O procedimento ${numeroProcedimento} possui transferência pendente e não pode ser registrado.`);
-                                        pararLeitorQRCode(html5QrCode); // Para o leitor
+                                        location.reload(true);
                                     } else {
                                         // Registrar a leitura se não houver pendência
                                         fetch('/leitura', {
