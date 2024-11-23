@@ -486,7 +486,7 @@ function finalizarTransferencia() {
         alert('Nenhum procedimento foi lido.');
         //pararLeitorQRCode(html5QrCode);
         location.reload(true);
-        //return;
+        return;
     }
 
     fetch('/transferencias-em-massa', {
