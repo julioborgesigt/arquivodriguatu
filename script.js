@@ -286,6 +286,8 @@ function iniciarLeituraTransferencia() {
     procedimentosLidos = []; // Reiniciar a lista de procedimentos
     document.getElementById('procedimentos-lista').innerHTML = ''; // Limpar a lista exibida
     document.getElementById('finalizarLeitura').style.display = 'block'; // Mostrar botão de finalizar
+    const qrReaderLimiter = document.getElementById('qr-readerlimiter');
+    qrReaderLimiter.style.display = 'flex'; // Exibe o leitor
 
     lerQRCode(true); // Iniciar o leitor em modo transferência
 }
@@ -505,6 +507,8 @@ function finalizarTransferencia() {
             procedimentosLidos = []; // Limpar a lista de procedimentos
             atualizarListaProcedimentos(); // Atualizar a interface
             document.getElementById('finalizarLeitura').style.display = 'none'; // Esconder botão
+            const qrReaderLimiter = document.getElementById('qr-readerlimiter');
+            qrReaderLimiter.style.display = 'none'; // Oculta o leitor
         } else {
             alert(`Erro ao registrar transferências: ${data.message}`);
         }
