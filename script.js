@@ -393,6 +393,7 @@ function atualizarListaProcedimentos() {
 
 function finalizarTransferencia() {
     const loginDestinatario = document.getElementById('login-destinatario').value;
+    const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Usuário logado
     if (procedimentosLidos.length === 0) {
         alert('Nenhum procedimento foi lido.');
         return;
@@ -401,7 +402,7 @@ function finalizarTransferencia() {
     fetch('/transferencias-em-massa', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ loginDestinatario, procedimentos: procedimentosLidos })
+        body: JSON.stringify({ loginDestinatario, procedimentos: procedimentosLidos, usuarioAtivo })
     })
     .then(response => response.json())
     .then(data => {
