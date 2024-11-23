@@ -688,41 +688,20 @@ app.post('/converterProcedimento', (req, res) => {
    // alert('antes da verificação');
 
    app.post('/transferencias-em-massa', (req, res) => {
-    const { loginDestinatario, procedimentos, usuarioAtivo } = req.body;
+    const { loginDestinatario, loginRemetente, procedimentos } = req.body;
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
     if (!banco.usuarios.find(user => user.username === loginDestinatario)) {
         return res.status(400).json({ success: false, message: 'Login do destinatário não encontrado.' });
     }
 
-
-
-    //const urlParams = new URLSearchParams(new URL(qrCodeMessage).search);
-    //const regexProcedimento = urlParams.get('procedimento');
-
-
-
-    
-
-
-
-
-    const regexProcedimento = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
-
-    const procedimentosValidos = procedimentos.filter(proc => regexProcedimento.test(proc));
-    if (procedimentosValidos.length !== procedimentos.length) {
-        return res.status(400).json({ success: false, message: 'Alguns procedimentos estão no formato inválido.' });
-    }
-
-
-
-    procedimentosValidos.forEach(numeroProcedimento => {
+    procedimentos.forEach(numeroProcedimento => {
         banco.solicitacoes.push({
             id: Math.random().toString(36).substr(2, 9),
-            loginRemetente: usuarioAtivo,
+            loginRemetente,
             loginDestinatario,
             numeroProcedimento,
-            status: "pendente"
+            status: 'pendente'
         });
     });
 
