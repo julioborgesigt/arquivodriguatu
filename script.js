@@ -379,7 +379,9 @@ function lerQRCode(modoTransferencia = false) {
 
 function pararLeitorQRCode() {
     if (qrCodeLeitor) {
+        alert('foi chamada a função parar!');
         qrCodeLeitor.stop()
+        
             .then(() => {
                 alert("Leitor de QR Code parado com sucesso.");
                 const qrReaderElement = document.getElementById("qr-reader");
@@ -428,6 +430,7 @@ function finalizarTransferencia() {
             procedimentosLidos = [];
             atualizarListaProcedimentos();
             document.getElementById('finalizarLeitura').style.display = 'none';
+            alert('vai ser chamado a função parar!');
         } else {
             alert(`Erro ao registrar transferências1: ${data.message}`);
         }
