@@ -385,7 +385,7 @@ function pararLeitorQRCode() {
             .then(() => {
                 const qrReaderElement = document.getElementById("qr-reader");
                 qrReaderElement.style.display = "none"; // Oculta o leitor
-                console.log("Leitor de QR Code parado com sucesso.");
+                alert("Leitor de QR Code parado com sucesso.");
             })
             .catch(err => console.error("Erro ao parar o leitor de QR Code:", err));
     }
