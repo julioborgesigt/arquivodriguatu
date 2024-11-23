@@ -319,6 +319,8 @@ button:hover {
 
 /* Ajustar o tamanho do leitor dentro do limite */
 #qr-reader {
+    display: none;  /* Oculto até ser ativado */
+
     width: 100%; /* Ajustar à largura da div limitadora */
     height: 100%; /* Ajustar à altura da div limitadora */
     object-fit: contain; /* Manter proporções da câmera */
