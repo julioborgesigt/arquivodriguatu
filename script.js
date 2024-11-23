@@ -345,6 +345,7 @@ function lerQRCode(modoTransferencia = false) {
                                             if (!continuar) {
                                                 pararLeitorQRCode(html5QrCode); // Para o leitor
                                                 finalizarTransferencia(); // Finaliza as transferências
+                                                registrarLeitura(numeroProcedimento);
                                             }
                                         }
                                     } else {
@@ -453,7 +454,7 @@ function finalizarTransferencia() {
             .then(data => {
                 if (data.success) {
                     alert('Transferências registradas com sucesso!');
-                    pararLeitorQRCode(); // Para o leitor de QR code
+                    //pararLeitorQRCode(); // Para o leitor de QR code
                     procedimentosLidos = []; // Limpar a lista de procedimentos
                     atualizarListaProcedimentos(); // Atualizar a interface
                     document.getElementById('finalizarLeitura').style.display = 'none'; // Esconder botão
