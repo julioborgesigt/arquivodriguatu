@@ -197,7 +197,7 @@ app.post('/register', (req, res) => {
 // Rota de leitura do QR Code
 app.post('/leitura', (req, res) => {
 
-    const { qrCodeMessage, usuario } = req.body; // Receber o usuário logado junto com o QR code
+    const { numeroProcedimento, usuario } = req.body; // Receber o usuário logado junto com o QR code
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
     // Captura a hora atual
