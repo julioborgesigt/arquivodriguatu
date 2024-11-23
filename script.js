@@ -375,7 +375,7 @@ function pararLeitorQRCode(html5QrCode) {
     if (html5QrCode) {
         html5QrCode.stop()
             .then(() => {
-                console.log("Leitor de QR Code parado com sucesso.");
+                alert("Leitor de QR Code parado com sucesso.");
                 const qrReaderElement = document.getElementById("qr-reader");
                 qrReaderElement.style.display = "none"; // Ocultar o leitor
             })
@@ -385,6 +385,7 @@ function pararLeitorQRCode(html5QrCode) {
             });
     } else {
         console.warn("Leitor de QR Code não foi inicializado ou já foi parado.");
+        alert("Leitor de QR Code não foi inicializado ou já foi parado.");
     }
 }
 
@@ -418,7 +419,7 @@ function finalizarTransferencia() {
         if (data.success) {
             alert('Transferências registradas com sucesso!');
             // Encerrar o leitor de QR Code
-            pararLeitorQRCode();
+            pararLeitorQRCode(html5QrCode);
             procedimentosLidos = [];
             atualizarListaProcedimentos();
             document.getElementById('finalizarLeitura').style.display = 'none';
