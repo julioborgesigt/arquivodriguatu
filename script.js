@@ -320,7 +320,6 @@ function lerQRCode(modoTransferencia = false) {
                 try {
                     const url = new URL(qrCodeMessage);
                     const numeroProcedimento = url.searchParams.get("procedimento");
-                   
 
                     if (numeroProcedimento) {
                         if (modoTransferencia) {
@@ -348,7 +347,6 @@ function lerQRCode(modoTransferencia = false) {
                                                 finalizarTransferencia(); // Finaliza as transferências
                                             }
                                         }
-                                        
                                     }
                                     leituraEfetuada = false; // Permitir nova leitura
                                 })
@@ -359,9 +357,6 @@ function lerQRCode(modoTransferencia = false) {
                                 });
                         } else {
                             // Modo regular: registrar leitura
-                            alert('entrou no else da rotina ler qrcode.');
-                            alert(`qrCodeMessage lido no else: ${qrCodeMessage}`);
-                            alert(`Número do procedimento lido no else: ${numeroProcedimento}`);
                             fetch('/leitura', {
                                 method: 'POST',
                                 headers: {
@@ -402,6 +397,7 @@ function lerQRCode(modoTransferencia = false) {
         errorMessage => console.log(`Erro ao ler QR Code: ${errorMessage}`)
     ).catch(err => console.error(`Erro ao iniciar leitor: ${err}`));
 }
+
 
 
 
