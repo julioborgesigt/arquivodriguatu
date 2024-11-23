@@ -320,6 +320,8 @@ function lerQRCode(modoTransferencia = false) {
                 try {
                     const url = new URL(qrCodeMessage);
                     const numeroProcedimento = url.searchParams.get("procedimento");
+                    alert('este é o qrcode lido antes: ' , qrCodeMessage);
+                            alert('este é o numeroProcedimento lido antes: ' , numeroProcedimento);
 
                     if (numeroProcedimento) {
                         if (modoTransferencia) {
