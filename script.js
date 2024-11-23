@@ -362,12 +362,12 @@ function lerQRCode(modoTransferencia = false) {
                             alert('entrou no else da rotina ler qrcode.');
                             alert(`qrCodeMessage lido no else: ${qrCodeMessage}`);
                             alert(`Número do procedimento lido no else: ${numeroProcedimento}`);
-                            fetch('/leitura', {
+                            fetch(`/leitura?procedimento=${numeroProcedimento}`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
                                 },
-                                body: JSON.stringify({ qrCodeMessage, usuario: usuarioAtivo })
+                                body: JSON.stringify({ numeroProcedimento, usuario: usuarioAtivo })
                             })
                                 .then(response => response.json())
                                 .then(data => {
