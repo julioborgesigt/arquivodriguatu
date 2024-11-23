@@ -309,6 +309,23 @@ function lerQRCode(modoTransferencia = false) {
 
     const html5QrCode = new Html5Qrcode("qr-reader");
     let leituraEfetuada = false;
+    
+    // Funções para formatar a data e ajustar o horário
+    function formatarData(data) {
+        const dia = String(data.getDate()).padStart(2, '0');
+        const mes = String(data.getMonth() + 1).padStart(2, '0');
+        const ano = data.getFullYear();
+        return `${dia}/${mes}/${ano}`;
+    }
+
+    function ajustarHoraGMT3(data) {
+        const novaData = new Date(data.getTime() - 3 * 60 * 60 * 1000); // Ajuste de 3 horas para GMT -3
+        const hora = String(novaData.getHours()).padStart(2, '0');
+        const minutos = String(novaData.getMinutes()).padStart(2, '0');
+        const segundos = String(novaData.getSeconds()).padStart(2, '0');
+        return `${hora}:${minutos}:${segundos}`;
+    }
+
 
     html5QrCode.start(
         { facingMode: "environment" },
