@@ -317,14 +317,12 @@ function lerQRCode(modoTransferencia = false) {
         qrCodeMessage => {
             if (!leituraEfetuada) {
                 leituraEfetuada = true; // Evitar múltiplas leituras simultâneas
-                
-                // Extração do número do procedimento
+
                 try {
                     const url = new URL(qrCodeMessage);
                     const numeroProcedimento = url.searchParams.get("procedimento");
-                    
-                    if (numeroProcedimento) {
 
+                    if (numeroProcedimento) {
                         alert(`Número do procedimento extraído: ${numeroProcedimento}`); // Mostra o alerta
                         if (modoTransferencia) {
                             alert('entrou no if.');
@@ -336,8 +334,7 @@ function lerQRCode(modoTransferencia = false) {
                             leituraEfetuada = false; // Permitir novas leituras
                         } else {
                             registrarLeitura(numeroProcedimento);
-                            html5QrCode.stop();
-                            qrReaderElement.style.display = "none";
+                            pararLeitorQRCode(html5QrCode); // Chama a nova função
                         }
                     } else {
                         alert('entrou no else.');
@@ -356,17 +353,14 @@ function lerQRCode(modoTransferencia = false) {
                             } else {
                                 alert("Erro: " + data.message); // Exibe mensagem de erro
                             }
-                            html5QrCode.stop(); // Para o leitor de QR code
-                            qrReaderElement.style.display = "none"; // Esconder o leitor
+                            pararLeitorQRCode(html5QrCode); // Chama a nova função
                         })
                         .catch(error => {
                             console.error('Erro ao registrar leitura:', error);
                             alert('Erro ao registrar leitura. Tente novamente.');
-                            html5QrCode.stop();
-                            qrReaderElement.style.display = "none";
+                            pararLeitorQRCode(html5QrCode); // Chama a nova função
                         });
                     }
-    
                 } catch (error) {
                     console.error("Erro ao processar QR code:", error);
                     alert("Erro ao processar QR code. Certifique-se de que a URL está correta.");
@@ -377,26 +371,23 @@ function lerQRCode(modoTransferencia = false) {
     ).catch(err => console.error(`Erro ao iniciar leitor: ${err}`));
 }
 
-function pararLeitorQRCode() {
-    alert('foi chamada a função parar!1');
-    if (qrCodeLeitor) {
-        alert('foi chamada a função parar!');
-        qrCodeLeitor.stop()
-        
+function pararLeitorQRCode(html5QrCode) {
+    if (html5QrCode) {
+        html5QrCode.stop()
             .then(() => {
-                alert("Leitor de QR Code parado com sucesso.");
+                console.log("Leitor de QR Code parado com sucesso.");
                 const qrReaderElement = document.getElementById("qr-reader");
                 qrReaderElement.style.display = "none"; // Ocultar o leitor
-                qrCodeLeitor = null; // Liberar a instância para reutilização
             })
             .catch(err => {
                 console.error("Erro ao parar o leitor de QR Code:", err);
                 alert("Erro ao encerrar o leitor. Tente novamente.");
             });
     } else {
-        alert("Nenhum leitor ativo para ser parado.");
+        console.warn("Leitor de QR Code não foi inicializado ou já foi parado.");
     }
 }
+
 
 
 function atualizarListaProcedimentos() {
