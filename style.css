@@ -308,7 +308,7 @@ button:hover {
 
 /* Limitar o tamanho da div "qr-readerlimiter" */
 #qr-readerlimiter {
-    
+    display: none;  /* Oculto até ser ativado */
     width: 50%; /* 100% da largura da página */
     height: 30vh; /* 30% da altura da página (usando unidade viewport-height) */
     display: flex; /* Centralizar o conteúdo */
@@ -320,7 +320,7 @@ button:hover {
 
 /* Ajustar o tamanho do leitor dentro do limite */
 #qr-reader {
-    
+    display: none;  /* Oculto até ser ativado */
 
     width: 100%; /* Ajustar à largura da div limitadora */
     height: 100%; /* Ajustar à altura da div limitadora */
@@ -332,16 +332,17 @@ button:hover {
     display: flex; /* Exibir o leitor quando ativado */
 }
 
+/* Classe para exibir o leitor de QR code */
+#qr-reader.active {
+    display: flex; /* Exibir o leitor quando ativado */
+}
+
 /* Configuração específica para dispositivos móveis */
 @media (max-width: 768px) {
     #qr-readerlimiter {
-        display: none;  /* Oculto até ser ativado */
+        
         height: 50vh; /* Ocupa 50% da altura da tela em dispositivos móveis */
         width: 40vh; /* Ocupa 50% da largura da tela em dispositivos móveis */
-    }
-
-    #qr-readerlimiter.active {
-        display: flex; /* Exibir o leitor quando ativado */
     }
 }
 
