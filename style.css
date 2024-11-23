@@ -305,6 +305,7 @@ button:hover {
 
 
 
+
 /* Limitar o tamanho da div "qr-readerlimiter" */
 #qr-readerlimiter {
     width: 50%; /* 100% da largura da página */
@@ -325,8 +326,7 @@ button:hover {
 
 /* Configuração específica para dispositivos móveis */
 @media (max-width: 768px) {
-    #qr-reader {
-        
+    #qr-readerlimiter {
         height: 50vh; /* Ocupa 50% da altura da tela em dispositivos móveis */
         width: 40vh; /* Ocupa 50% da largura da tela em dispositivos móveis */
     }
