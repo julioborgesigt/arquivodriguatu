@@ -408,11 +408,20 @@ function finalizarTransferencia() {
     .then(data => {
         if (data.success) {
             alert('Transferências registradas com sucesso!');
-            procedimentosLidos = [];
-            atualizarListaProcedimentos();
-            document.getElementById('finalizarLeitura').style.display = 'none';
+
+            // Encerrar o leitor de QR Code
+            const qrReaderElement = document.getElementById("qr-reader");
+            const html5QrCode = new Html5Qrcode("qr-reader");
+            html5QrCode.stop()
+                .then(() => {
+                    qrReaderElement.style.display = "none"; // Ocultar o leitor
+                    procedimentosLidos = []; // Limpar a lista de procedimentos
+                    atualizarListaProcedimentos(); // Atualizar a interface
+                    document.getElementById('finalizarLeitura').style.display = 'none'; // Esconder botão
+                })
+                .catch(err => console.error('Erro ao encerrar o leitor:', err));
         } else {
-            alert(`Erro ao registrar transferências1: ${data.message}`);
+            alert(`Erro ao registrar transferências: ${data.message}`);
         }
     })
     .catch(error => console.error('Erro ao registrar transferências2:', error));
