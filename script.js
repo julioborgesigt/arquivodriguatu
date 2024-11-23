@@ -504,12 +504,13 @@ function finalizarTransferencia() {
 
 
             // Encerrar o leitor de QR Code
-            pararLeitorQRCode(html5QrCode);
+            //pararLeitorQRCode(html5QrCode);
             procedimentosLidos = []; // Limpar a lista de procedimentos
             atualizarListaProcedimentos(); // Atualizar a interface
             document.getElementById('finalizarLeitura').style.display = 'none'; // Esconder botão
             const qrReaderLimiter = document.getElementById('qr-readerlimiter');
             qrReaderLimiter.style.display = 'none'; // Oculta o leitor
+            location.reload(true);
         } else {
             alert(`Erro ao registrar transferências: ${data.message}`);
         }
