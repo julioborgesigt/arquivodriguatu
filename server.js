@@ -684,7 +684,7 @@ app.post('/converterProcedimento', (req, res) => {
    // alert('antes da verificação');
 
    app.post('/transferencias-em-massa', (req, res) => {
-    const { loginDestinatario, procedimentos } = req.body;
+    const { loginDestinatario, procedimentos, usuarioAtivo } = req.body;
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
     if (!banco.usuarios.find(user => user.username === loginDestinatario)) {
@@ -715,7 +715,7 @@ app.post('/converterProcedimento', (req, res) => {
     procedimentosValidos.forEach(numeroProcedimento => {
         banco.solicitacoes.push({
             id: Math.random().toString(36).substr(2, 9),
-            loginRemetente: req.body.usuarioAtivo,
+            loginRemetente: usuarioAtivo,
             loginDestinatario,
             numeroProcedimento,
             status: "pendente"
