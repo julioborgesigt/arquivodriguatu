@@ -303,34 +303,45 @@ button:hover {
 
 
 
-/* Estilos para o leitor de QR Code */
-#qr-reader {
+
+
+
+/* Limitar o tamanho da div "qr-readerlimiter" */
+#qr-readerlimiter {
     display: none;  /* Oculto até ser ativado */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;  /* Ocupa toda a largura da tela */
-    height: 50vh;  /* Ocupa metade da altura da tela */
-    background-color: rgba(0, 0, 0, 0.8);  /* Fundo preto com transparência */
-    z-index: 9999;  /* Garantir que o leitor fique acima de outros elementos */
-    justify-content: center;
-    align-items: center;
+    width: 50%; /* 100% da largura da página */
+    height: 30vh; /* 30% da altura da página (usando unidade viewport-height) */
+    display: flex; /* Centralizar o conteúdo */
+    justify-content: center; /* Centralizar horizontalmente */
+    align-items: center; /* Centralizar verticalmente */
+    background-color: #000; /* Fundo preto para contraste */
+    overflow: hidden; /* Impedir que o conteúdo exceda os limites */
 }
 
-/* Ajuste do vídeo dentro do leitor */
-#qr-reader video {
-    width: 100% !important;  /* Garante que o vídeo ocupe a área inteira */
-    height: 100% !important;  /* Garante que o vídeo ocupe a área inteira */
+/* Ajustar o tamanho do leitor dentro do limite */
+#qr-reader {
+    
+
+    width: 100%; /* Ajustar à largura da div limitadora */
+    height: 100%; /* Ajustar à altura da div limitadora */
+    object-fit: contain; /* Manter proporções da câmera */
 }
 
-/* Estilos responsivos para dispositivos móveis */
+/* Classe para exibir o leitor de QR code */
+#qr-readerlimiter.active {
+    display: flex; /* Exibir o leitor quando ativado */
+}
+
+/* Configuração específica para dispositivos móveis */
 @media (max-width: 768px) {
-    #qr-reader {
-        width: 40vw;  /* Ocupa 40% da largura da viewport */
-        height: 40vh; /* Ocupa 40% da altura da viewport */
-        top: 30%;     /* Centraliza verticalmente */
-        left: 30%;    /* Centraliza horizontalmente */
-        border-radius: 10px; /* Bordas arredondadas para uma aparência elegante */
+    #qr-readerlimiter {
+        display: none;  /* Oculto até ser ativado */
+        height: 50vh; /* Ocupa 50% da altura da tela em dispositivos móveis */
+        width: 40vh; /* Ocupa 50% da largura da tela em dispositivos móveis */
+    }
+
+    #qr-readerlimiter.active {
+        display: flex; /* Exibir o leitor quando ativado */
     }
 }
 
