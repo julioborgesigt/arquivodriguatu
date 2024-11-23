@@ -303,7 +303,6 @@ function iniciarLeituraTransferencia() {
 
 
 
-
 function lerQRCode(modoTransferencia = false) {
     const qrReaderElement = document.getElementById("qr-reader");
     qrReaderElement.style.display = "flex";
@@ -317,7 +316,7 @@ function lerQRCode(modoTransferencia = false) {
         qrCodeMessage => {
             if (!leituraEfetuada) {
                 leituraEfetuada = true; // Evitar múltiplas leituras simultâneas
-                
+
                 try {
                     const url = new URL(qrCodeMessage);
                     const numeroProcedimento = url.searchParams.get("procedimento");
@@ -335,11 +334,22 @@ function lerQRCode(modoTransferencia = false) {
                                         if (!procedimentosLidos.includes(numeroProcedimento)) {
                                             procedimentosLidos.push(numeroProcedimento);
                                             atualizarListaProcedimentos();
+
+                                            // Alerta com opções para o usuário
+                                            const continuar = confirm(
+                                                "Deseja ler outro código ou finalizar as leituras?\n\n" +
+                                                "OK: Ler outro código\n" +
+                                                "Cancelar: Finalizar leituras"
+                                            );
+
+                                            if (!continuar) {
+                                                pararLeitorQRCode(html5QrCode); // Para o leitor
+                                                finalizarTransferencia(); // Finaliza as transferências
+                                            }
                                         }
                                     } else {
                                         registrarLeitura(numeroProcedimento);
-                                        html5QrCode.stop();
-                                        qrReaderElement.style.display = "none";
+                                        pararLeitorQRCode(html5QrCode); // Para o leitor
                                     }
                                 }
                                 leituraEfetuada = false; // Permitir nova leitura
@@ -363,6 +373,7 @@ function lerQRCode(modoTransferencia = false) {
         errorMessage => console.log(`Erro ao ler QR Code: ${errorMessage}`)
     ).catch(err => console.error(`Erro ao iniciar leitor: ${err}`));
 }
+
 
 
 
