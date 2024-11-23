@@ -349,8 +349,29 @@ function lerQRCode(modoTransferencia = false) {
                                             }
                                         }
                                     } else {
-                                        registrarLeitura(numeroProcedimento);
-                                        pararLeitorQRCode(html5QrCode); // Para o leitor
+
+
+                                        fetch('/leitura', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify({ qrCodeMessage, usuario: usuarioAtivo })
+                                        })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.success) {
+                                                alert(data.message); // Exibe mensagem de sucesso
+                                                window.location.href = `/comprovante?procedimento=${data.procedimento}`;
+                                            } else {
+                                                alert("Erro: " + data.message); // Exibe mensagem de erro
+                                            }
+                                            html5QrCode.stop(); // Para o leitor de QR code
+                                            qrReaderElement.style.display = "none"; // Esconder o leitor
+                                        })
+                        
+                                        //registrarLeitura(numeroProcedimento);
+                                       // pararLeitorQRCode(html5QrCode); // Para o leitor
                                     }
                                 }
                                 leituraEfetuada = false; // Permitir nova leitura
