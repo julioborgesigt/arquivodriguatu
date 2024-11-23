@@ -201,15 +201,15 @@ app.post('/leitura', (req, res) => {
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
     // Captura a hora atual
-    let dataAtual = new Date();
+    //let dataAtual = new Date();
 
     // Subtrai 3 horas do horário atual
-    dataAtual.setHours(dataAtual.getHours() - 3);
+   // dataAtual.setHours(dataAtual.getHours() - 3);
 
     // Formata a hora no formato HH:MM:SS
-    const horaAjustada = dataAtual.toTimeString().split(' ')[0]; // Agora a hora está ajustada para GMT -3
+    //const horaAjustada = dataAtual.toTimeString().split(' ')[0]; // Agora a hora está ajustada para GMT -3
 
-    console.log(horaAjustada);
+    //console.log(horaAjustada);
 
     // Extrair o número do procedimento da URL do QR code
     //const urlParams = new URLSearchParams(new URL(qrCodeMessage).search);
@@ -227,8 +227,8 @@ app.post('/leitura', (req, res) => {
         // Adicionar a leitura ao procedimento
         procedimento.leituras.push({
             usuario, // Usar o nome do usuário logado
-            data: new Date().toISOString().split('T')[0], // Data no formato YYYY-MM-DD
-            hora: horaAjustada // Hora ajustada para GMT -3
+            //data: new Date().toISOString().split('T')[0], // Data no formato YYYY-MM-DD
+           // hora: horaAjustada // Hora ajustada para GMT -3
         });
 
         // Salvar o banco de dados atualizado
