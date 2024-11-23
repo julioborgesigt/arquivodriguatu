@@ -331,6 +331,7 @@ function lerQRCode(modoTransferencia = false) {
                                 } else {
                                     alert(`Número do procedimento lido: ${numeroProcedimento}`);
                                     if (modoTransferencia) {
+                                        alert("entrou no if do leitor qr");
                                         if (!procedimentosLidos.includes(numeroProcedimento)) {
                                             procedimentosLidos.push(numeroProcedimento);
                                             atualizarListaProcedimentos();
@@ -350,7 +351,7 @@ function lerQRCode(modoTransferencia = false) {
                                         }
                                     } else {
 
-
+                                        alert("entrou no else do leitor qr");
                                         fetch('/leitura', {
                                             method: 'POST',
                                             headers: {
