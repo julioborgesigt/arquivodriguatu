@@ -321,8 +321,8 @@ button:hover {
 }
 
 #qr-reader video {
-    width: 100% !important;  /* Garante que o vídeo ocupe a área inteira */
-    height: 100% !important;  /* Garante que o vídeo ocupe a área inteira */
+    width: 50% !important;  /* Garante que o vídeo ocupe a área inteira */
+    height: 50% !important;  /* Garante que o vídeo ocupe a área inteira */
 }
 
 
