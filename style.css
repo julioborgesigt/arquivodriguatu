@@ -328,7 +328,7 @@ button:hover {
 
 
 #qr-readerlimiter{
-    display: flex;
+    display: block;
     flex-direction: column;
     align-items: center;
     width: 100%;
