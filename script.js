@@ -348,6 +348,7 @@ function lerQRCode(modoTransferencia = false) {
                                                 finalizarTransferencia(); // Finaliza as transferências
                                             }
                                         }
+                                        
                                     }
                                     leituraEfetuada = false; // Permitir nova leitura
                                 })
