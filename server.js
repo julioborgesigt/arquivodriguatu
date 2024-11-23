@@ -698,19 +698,19 @@ app.post('/converterProcedimento', (req, res) => {
 
 
 
-    alert('antes da verificação');
+    
 
 
 
 
     const regexProcedimento = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
-    alert('este é o regexProcedimento', regexProcedimento);
+
     const procedimentosValidos = procedimentos.filter(proc => regexProcedimento.test(proc));
     if (procedimentosValidos.length !== procedimentos.length) {
         return res.status(400).json({ success: false, message: 'Alguns procedimentos estão no formato inválido.' });
     }
 
-    alert('depois da verificação');
+
 
     procedimentosValidos.forEach(numeroProcedimento => {
         banco.solicitacoes.push({
