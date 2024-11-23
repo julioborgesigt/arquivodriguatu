@@ -327,6 +327,11 @@ button:hover {
     object-fit: contain; /* Manter proporções da câmera */
 }
 
+/* Classe para exibir o leitor de QR code */
+#qr-readerlimiter.active {
+    display: flex; /* Exibir o leitor quando ativado */
+}
+
 /* Configuração específica para dispositivos móveis */
 @media (max-width: 768px) {
     #qr-readerlimiter {
