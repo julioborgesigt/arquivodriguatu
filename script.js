@@ -377,17 +377,21 @@ function lerQRCode(modoTransferencia = false) {
     ).catch(err => console.error(`Erro ao iniciar leitor: ${err}`));
 }
 
-
 function pararLeitorQRCode() {
-    alert("foi chamada a função parar leitor qrcode")
     if (qrCodeLeitor) {
         qrCodeLeitor.stop()
             .then(() => {
-                const qrReaderElement = document.getElementById("qr-reader");
-                qrReaderElement.style.display = "none"; // Oculta o leitor
                 alert("Leitor de QR Code parado com sucesso.");
+                const qrReaderElement = document.getElementById("qr-reader");
+                qrReaderElement.style.display = "none"; // Ocultar o leitor
+                qrCodeLeitor = null; // Liberar a instância para reutilização
             })
-            .catch(err => console.error("Erro ao parar o leitor de QR Code:", err));
+            .catch(err => {
+                console.error("Erro ao parar o leitor de QR Code:", err);
+                alert("Erro ao encerrar o leitor. Tente novamente.");
+            });
+    } else {
+        alert("Nenhum leitor ativo para ser parado.");
     }
 }
 
