@@ -306,6 +306,8 @@ function iniciarLeituraTransferencia() {
 function lerQRCode() {
     const qrReaderElement = document.getElementById("qr-reader");
     const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Pega o usuário logado
+    const url = new URL(qrCodeMessage);
+                    const numeroProcedimento = url.searchParams.get("procedimento");
 
     if (!usuarioAtivo) {
         alert("Usuário não está logado. Por favor, faça o login novamente.");
