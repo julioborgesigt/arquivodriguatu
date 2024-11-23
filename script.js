@@ -378,7 +378,17 @@ function lerQRCode(modoTransferencia = false) {
 }
 
 
-
+function pararLeitorQRCode() {
+    if (qrCodeLeitor) {
+        qrCodeLeitor.stop()
+            .then(() => {
+                const qrReaderElement = document.getElementById("qr-reader");
+                qrReaderElement.style.display = "none"; // Oculta o leitor
+                console.log("Leitor de QR Code parado com sucesso.");
+            })
+            .catch(err => console.error("Erro ao parar o leitor de QR Code:", err));
+    }
+}
 
 
 function atualizarListaProcedimentos() {
@@ -399,7 +409,6 @@ function finalizarTransferencia() {
         return;
     }
 
-    
     fetch('/transferencias-em-massa', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -409,20 +418,13 @@ function finalizarTransferencia() {
     .then(data => {
         if (data.success) {
             alert('Transferências registradas com sucesso!');
-
             // Encerrar o leitor de QR Code
-            const qrReaderElement = document.getElementById("qr-reader");
-            const html5QrCode = new Html5Qrcode("qr-reader");
-            html5QrCode.stop()
-                .then(() => {
-                    qrReaderElement.style.display = "none"; // Ocultar o leitor
-                    procedimentosLidos = []; // Limpar a lista de procedimentos
-                    atualizarListaProcedimentos(); // Atualizar a interface
-                    document.getElementById('finalizarLeitura').style.display = 'none'; // Esconder botão
-                })
-                .catch(err => console.error('Erro ao encerrar o leitor:', err));
+            pararLeitorQRCode();
+            procedimentosLidos = [];
+            atualizarListaProcedimentos();
+            document.getElementById('finalizarLeitura').style.display = 'none';
         } else {
-            alert(`Erro ao registrar transferências: ${data.message}`);
+            alert(`Erro ao registrar transferências1: ${data.message}`);
         }
     })
     .catch(error => console.error('Erro ao registrar transferências2:', error));
