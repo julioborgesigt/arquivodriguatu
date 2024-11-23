@@ -502,9 +502,9 @@ function finalizarTransferencia() {
         if (data.success) {
             alert('Transferências registradas com sucesso!');
 
-            
+
             // Encerrar o leitor de QR Code
-            pararLeitorQRCode();
+            pararLeitorQRCode(html5QrCode);
             procedimentosLidos = []; // Limpar a lista de procedimentos
             atualizarListaProcedimentos(); // Atualizar a interface
             document.getElementById('finalizarLeitura').style.display = 'none'; // Esconder botão
