@@ -351,7 +351,7 @@ function lerQRCode(modoTransferencia = false) {
                                         }
                                     } else {
 
-                                        alert("entrou no else do leitor qr");
+                                        alert('entrou no else.');
                                         fetch('/leitura', {
                                             method: 'POST',
                                             headers: {
@@ -370,7 +370,12 @@ function lerQRCode(modoTransferencia = false) {
                                             html5QrCode.stop(); // Para o leitor de QR code
                                             qrReaderElement.style.display = "none"; // Esconder o leitor
                                         })
-                        
+                                        .catch(error => {
+                                            console.error('Erro ao registrar leitura:', error);
+                                            alert('Erro ao registrar leitura. Tente novamente.');
+                                            html5QrCode.stop();
+                                            qrReaderElement.style.display = "none";
+                                        });
                                         //registrarLeitura(numeroProcedimento);
                                        // pararLeitorQRCode(html5QrCode); // Para o leitor
                                     }
