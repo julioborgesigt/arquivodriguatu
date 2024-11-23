@@ -372,6 +372,7 @@ function lerQRCode(modoTransferencia = false) {
 }
 
 function pararLeitorQRCode(html5QrCode) {
+    alert("entrou na funçao parar leitor.");
     if (html5QrCode) {
         html5QrCode.stop()
             .then(() => {
