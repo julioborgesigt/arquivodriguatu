@@ -326,6 +326,25 @@ button:hover {
 }
 
 
+/* Estilos para o leitor de QR Code */
+#qr-readert {
+    display: none;  /* Oculto até ser ativado */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50vw;  /* Ocupa toda a largura da tela */
+    height: 50vh;  /* Ocupa toda a altura da tela */
+    background-color: rgba(0, 0, 0, 0.8);  /* Fundo preto com transparência */
+    z-index: 9999;  /* Garantir que o leitor fique acima de outros elementos */
+    justify-content: center;
+    align-items: center;
+}
+
+#qr-readert video {
+    width: 50% !important;  /* Garante que o vídeo ocupe a área inteira */
+    height: 50% !important;  /* Garante que o vídeo ocupe a área inteira */
+}
+
 
 /* Botões inferiores fixos */
 .bottom-nav {
