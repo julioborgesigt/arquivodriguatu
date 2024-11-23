@@ -484,7 +484,7 @@ function finalizarTransferencia() {
     
     if (procedimentosLidos.length === 0) {
         alert('Nenhum procedimento foi lido.');
-        pararLeitorQRCode(html5QrCode);
+        //pararLeitorQRCode(html5QrCode);
         location.reload(true);
         //return;
     }
