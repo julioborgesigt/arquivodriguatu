@@ -1,9 +1,21 @@
-function lerQRCode(modoTransferencia = false) {
+function lerQRCode() {
     const qrReaderElement = document.getElementById("qr-reader");
-    qrReaderElement.style.display = "flex";
+    const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Pega o usuário logado
+
+    if (!usuarioAtivo) {
+        alert("Usuário não está logado. Por favor, faça o login novamente.");
+        return;
+    }
+
+    qrReaderElement.style.display = "flex"; // Mostrar o leitor de QR code
+    qrReaderElement.style.justifyContent = "center"; // Centralizar o leitor
+    qrReaderElement.style.alignItems = "center"; // Centralizar verticalmente
+    qrReaderElement.style.height = "100vh"; // Ocupa toda a altura da tela
+    qrReaderElement.style.width = "100vw"; // Ocupa toda a largura da tela
+    qrReaderElement.style.backgroundColor = "#000"; // Fundo preto para destaque
 
     const html5QrCode = new Html5Qrcode("qr-reader");
-    let leituraEfetuada = false;
+    let leituraEfetuada = false; // Flag para garantir que só uma leitura seja registrada
 
     // Funções para formatar a data e ajustar o horário
     function formatarData(data) {
@@ -21,96 +33,47 @@ function lerQRCode(modoTransferencia = false) {
         return `${hora}:${minutos}:${segundos}`;
     }
 
-
     html5QrCode.start(
-        { facingMode: "environment" },
-        { fps: 10, qrbox: 250 },
+        { facingMode: "environment" },  // Câmera traseira
+        {
+            fps: 10,  // Taxa de quadros
+            qrbox: { width: 250, height: 250 },  // Tamanho da caixa de leitura (quadrado central)
+            aspectRatio: 1.0  // Força o formato quadrado e a orientação vertical
+        },
         qrCodeMessage => {
             if (!leituraEfetuada) {
-                leituraEfetuada = true; // Evitar múltiplas leituras simultâneas
+                leituraEfetuada = true; // Marca como já lido para evitar múltiplas leituras
 
-                try {
-                    const url = new URL(qrCodeMessage);
-                    const numeroProcedimento = url.searchParams.get("procedimento");
-
-                    if (numeroProcedimento) {
-                        // Verificar pendência do procedimento
-                        fetch(`/verificarSolicitacaoPendente?procedimento=${numeroProcedimento}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.pendente) {
-                                    alert(`O procedimento ${numeroProcedimento} possui transferência pendente e será desconsiderado.`);
-                                } else {
-                                    alert(`Número do procedimento lido: ${numeroProcedimento}`);
-                                    if (modoTransferencia) {
-                                        alert("entrou no if do leitor qr");
-                                        if (!procedimentosLidos.includes(numeroProcedimento)) {
-                                            procedimentosLidos.push(numeroProcedimento);
-                                            atualizarListaProcedimentos();
-
-                                            // Alerta com opções para o usuário
-                                            const continuar = confirm(
-                                                "Deseja ler outro código ou finalizar as leituras?\n\n" +
-                                                "OK: Ler outro código\n" +
-                                                "Cancelar: Finalizar leituras"
-                                            );
-
-                                            if (!continuar) {
-                                                pararLeitorQRCode(html5QrCode); // Para o leitor
-                                                finalizarTransferencia(); // Finaliza as transferências
-                                                
-                                            }
-                                        }
-                                    } else {
-
-                                        alert('entrou no else.');
-                                        leituraEfetuada = true; // Marca como já lido para evitar múltiplas leituras
-
-                                        fetch('/leitura', {
-                                            method: 'POST',
-                                            headers: {
-                                                'Content-Type': 'application/json',
-                                            },
-                                            body: JSON.stringify({ qrCodeMessage, usuario: usuarioAtivo })
-                                        })
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            if (data.success) {
-                                                alert(data.message); // Exibe mensagem de sucesso
-                                                window.location.href = `/comprovante?procedimento=${data.procedimento}`;
-                                            } else {
-                                                alert("Erro: " + data.message); // Exibe mensagem de erro
-                                            }
-                                            html5QrCode.stop(); // Para o leitor de QR code
-                                            qrReaderElement.style.display = "none"; // Esconder o leitor
-                                        })
-                                        .catch(error => {
-                                            console.error('Erro ao registrar leitura:', error);
-                                            alert('Erro ao registrar leitura. Tente novamente.');
-                                            html5QrCode.stop();
-                                            qrReaderElement.style.display = "none";
-                                        });
-                                       
-                                    }
-                                }
-                                leituraEfetuada = false; // Permitir nova leitura
-                            })
-                            .catch(error => {
-                                console.error('Erro ao verificar pendência:', error);
-                                alert('Erro ao verificar pendência. Tente novamente.');
-                                leituraEfetuada = false; // Permitir nova leitura
-                            });
+                fetch('/leitura', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ qrCodeMessage, usuario: usuarioAtivo })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message); // Exibe mensagem de sucesso
+                        window.location.href = `/comprovante?procedimento=${data.procedimento}`;
                     } else {
-                        alert("Nenhum número de procedimento encontrado. Por favor, tente novamente.");
-                        leituraEfetuada = false; // Permitir nova leitura
+                        alert("Erro: " + data.message); // Exibe mensagem de erro
                     }
-                } catch (error) {
-                    console.error("Erro ao processar QR code:", error);
-                    alert("Erro ao processar QR code. Certifique-se de que a URL está correta.");
-                    leituraEfetuada = false; // Permitir nova leitura
-                }
+                    html5QrCode.stop(); // Para o leitor de QR code
+                    qrReaderElement.style.display = "none"; // Esconder o leitor
+                })
+                .catch(error => {
+                    console.error('Erro ao registrar leitura:', error);
+                    alert('Erro ao registrar leitura. Tente novamente.');
+                    html5QrCode.stop();
+                    qrReaderElement.style.display = "none";
+                });
             }
         },
-        errorMessage => console.log(`Erro ao ler QR Code: ${errorMessage}`)
-    ).catch(err => console.error(`Erro ao iniciar leitor: ${err}`));
+        errorMessage => {
+            console.log(`Erro ao ler QR Code: ${errorMessage}`);
+        }
+    ).catch(err => {
+        console.log(`Erro ao iniciar a câmera: ${err}`);
+    });
 }

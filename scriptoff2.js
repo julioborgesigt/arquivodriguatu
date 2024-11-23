@@ -1,7 +1,6 @@
 function lerQRCode(modoTransferencia = false) {
     const qrReaderElement = document.getElementById("qr-reader");
     qrReaderElement.style.display = "flex";
-    const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Usuário logado
 
     const html5QrCode = new Html5Qrcode("qr-reader");
     let leituraEfetuada = false;
@@ -16,6 +15,7 @@ function lerQRCode(modoTransferencia = false) {
                 try {
                     const url = new URL(qrCodeMessage);
                     const numeroProcedimento = url.searchParams.get("procedimento");
+                   
 
                     if (numeroProcedimento) {
                         if (modoTransferencia) {
@@ -43,6 +43,7 @@ function lerQRCode(modoTransferencia = false) {
                                                 finalizarTransferencia(); // Finaliza as transferências
                                             }
                                         }
+                                        
                                     }
                                     leituraEfetuada = false; // Permitir nova leitura
                                 })
@@ -53,6 +54,9 @@ function lerQRCode(modoTransferencia = false) {
                                 });
                         } else {
                             // Modo regular: registrar leitura
+                            alert('entrou no else da rotina ler qrcode.');
+                            alert(`qrCodeMessage lido no else: ${qrCodeMessage}`);
+                            alert(`Número do procedimento lido no else: ${numeroProcedimento}`);
                             fetch('/leitura', {
                                 method: 'POST',
                                 headers: {
