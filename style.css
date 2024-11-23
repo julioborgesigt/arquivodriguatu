@@ -314,10 +314,6 @@ button:hover {
     object-fit: contain; /* Manter proporções da câmera */
 }
 
-#qr-reader video {
-    width: 100% !important;  /* Garante que o vídeo ocupe a área inteira */
-    height: 100% !important;  /* Garante que o vídeo ocupe a área inteira */
-}
 
 
 
