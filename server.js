@@ -213,6 +213,7 @@ app.post('/leitura', (req, res) => {
     // Extrair o número do procedimento da URL do QR code
     const urlParams = new URLSearchParams(new URL(qrCodeMessage).search);
     const numeroProcedimento = urlParams.get('procedimento');
+    alert("numeroProcedimento da rota leitura", numeroProcedimento)
 
     if (!numeroProcedimento) {
         return res.status(400).json({ success: false, message: "Número do procedimento não encontrado na URL." });

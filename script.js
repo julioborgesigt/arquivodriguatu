@@ -362,7 +362,7 @@ function lerQRCode(modoTransferencia = false) {
                                 headers: {
                                     'Content-Type': 'application/json',
                                 },
-                                body: JSON.stringify({ numeroProcedimento, usuario: usuarioAtivo })
+                                body: JSON.stringify({ qrCodeMessage, usuario: usuarioAtivo })
                             })
                                 .then(response => response.json())
                                 .then(data => {
