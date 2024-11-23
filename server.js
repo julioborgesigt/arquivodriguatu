@@ -715,25 +715,20 @@ app.post('/converterProcedimento', (req, res) => {
 
 
 
-// Rota para verificar se existe uma solicitação pendente para um procedimento
 app.get('/verificarSolicitacaoPendente', (req, res) => {
     const { procedimento } = req.query;
+    const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
-    // Carregar banco de dados
-    let banco;
-    try {
-        banco = JSON.parse(fs.readFileSync(bancoFilePath, 'utf8'));
-    } catch (error) {
-        return res.status(500).json({ success: false, message: "Erro ao carregar banco de dados." });
+    // Verifica se há uma solicitação pendente para o procedimento
+    const solicitacao = banco.solicitacoes.find(s => s.numeroProcedimento === procedimento && s.status === 'pendente');
+
+    if (solicitacao) {
+        res.json({ pendente: true });
+    } else {
+        res.json({ pendente: false });
     }
-
-    // Verificar se há uma solicitação pendente para o procedimento
-    const solicitacaoPendente = banco.solicitacoes.some(
-        (s) => s.numeroProcedimento === procedimento && s.status === 'pendente'
-    );
-
-    res.json({ pendente: solicitacaoPendente });
 });
+
 
 
 

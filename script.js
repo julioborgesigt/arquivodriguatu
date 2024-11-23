@@ -336,19 +336,20 @@ function lerQRCode(modoTransferencia = false) {
                     const numeroProcedimento = url.searchParams.get("procedimento");
 
                     if (numeroProcedimento) {
-                        if (modoTransferencia) {
-                            // Modo de transferência: verificar pendências
-                            fetch(`/verificarSolicitacaoPendente?procedimento=${numeroProcedimento}`)
-                                .then(response => response.json())
-                                .then(data => {
-                                    if (data.pendente) {
-                                        alert(`O procedimento ${numeroProcedimento} possui transferência pendente e será desconsiderado.`);
-                                    } else {
-                                        alert(`Número do procedimento lido: ${numeroProcedimento}`);
-                                        if (!procedimentosLidos.includes(numeroProcedimento)) {
-                                            procedimentosLidos.push(numeroProcedimento);
-                                            atualizarListaProcedimentos();
+                        // Verificar se existe uma solicitação pendente para o procedimento (aplica-se aos dois modos)
+                        fetch(`/verificarSolicitacaoPendente?procedimento=${numeroProcedimento}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.pendente) {
+                                    alert(`O procedimento ${numeroProcedimento} possui transferência pendente e será desconsiderado.`);
+                                } else {
+                                    alert(`Número do procedimento lido: ${numeroProcedimento}`);
+                                    if (!procedimentosLidos.includes(numeroProcedimento)) {
+                                        procedimentosLidos.push(numeroProcedimento);
+                                        atualizarListaProcedimentos();
 
+                                        // Se for modo de transferência, pergunta se o usuário quer finalizar ou continuar
+                                        if (modoTransferencia) {
                                             const continuar = confirm(
                                                 "Deseja ler outro código ou finalizar as leituras?\n\n" +
                                                 "OK: Ler outro código\n" +
@@ -361,41 +362,14 @@ function lerQRCode(modoTransferencia = false) {
                                             }
                                         }
                                     }
-                                    leituraEfetuada = false; // Permitir nova leitura
-                                })
-                                .catch(error => {
-                                    console.error('Erro ao verificar pendência:', error);
-                                    alert('Erro ao verificar pendência. Tente novamente.');
-                                    leituraEfetuada = false; // Permitir nova leitura
-                                });
-                        } else {
-                            // Modo regular: registrar leitura
-                            fetch('/leitura', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({ qrCodeMessage, usuario: usuarioAtivo })
+                                }
+                                leituraEfetuada = false; // Permitir nova leitura
                             })
-                                .then(response => response.json())
-                                .then(data => {
-                                    if (data.success) {
-                                        alert(data.message); // Exibe mensagem de sucesso
-                                    } else {
-                                        alert("Erro: " + data.message); // Exibe mensagem de erro
-                                    }
-                                    pararLeitorQRCode(html5QrCode); // Para o leitor
-                                    window.history.back();
-                                })
-                                .catch(error => {
-                                    console.error('Erro ao registrar leitura:', error);
-                                    alert('Erro ao registrar leitura. Tente novamente.');
-                                    pararLeitorQRCode(html5QrCode); // Para o leitor
-                                })
-                                .finally(() => {
-                                    leituraEfetuada = false; // Permitir nova leitura
-                                });
-                        }
+                            .catch(error => {
+                                console.error('Erro ao verificar pendência:', error);
+                                alert('Erro ao verificar pendência. Tente novamente.');
+                                leituraEfetuada = false; // Permitir nova leitura
+                            });
                     } else {
                         alert("Nenhum número de procedimento encontrado. Por favor, tente novamente.");
                         leituraEfetuada = false; // Permitir nova leitura
@@ -414,6 +388,7 @@ function lerQRCode(modoTransferencia = false) {
         console.log(`Erro ao iniciar a câmera: ${err}`);
     });
 }
+
 
 
 
