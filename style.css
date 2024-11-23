@@ -335,6 +335,12 @@ button:hover {
     overflow: hidden; /* Impedir que o conteúdo exceda os limites */
 }
 
+/* Ajustar o tamanho do leitor dentro do limite */
+#qr-reader {
+    width: 100%; /* Ajustar à largura da div limitadora */
+    height: 100%; /* Ajustar à altura da div limitadora */
+    object-fit: contain; /* Manter proporções da câmera */
+}
 
 /* Configuração específica para dispositivos móveis */
 @media (max-width: 768px) {
