@@ -401,6 +401,8 @@ function lerQRCode(modoTransferencia = false) {
                                         alert("Erro: " + data.message); // Exibe mensagem de erro
                                     }
                                     pararLeitorQRCode(html5QrCode); // Para o leitor
+                                    window.history.back();
+
                                 })
                                 .catch(error => {
                                     console.error('Erro ao registrar leitura:', error);
