@@ -374,7 +374,44 @@ function lerQRCode(modoTransferencia = false) {
 
                                             if (!continuar) {
                                                 pararLeitorQRCode(html5QrCode); // Para o leitor
-                                                finalizarTransferencia(); // Finaliza as transferências
+                                                //finalizarTransferencia(); // Finaliza as transferências
+                                                if (procedimentosLidos.length === 0) {
+                                                    alert('Nenhum procedimento foi lido.');
+                                                    //pararLeitorQRCode(html5QrCode);
+                                                    location.reload(true);
+                                                    return;
+                                                }
+                                            
+                                                fetch('/transferencias-em-massa', {
+                                                    method: 'POST',
+                                                    headers: { 'Content-Type': 'application/json' },
+                                                    body: JSON.stringify({ 
+                                                        loginDestinatario, 
+                                                        loginRemetente: usuarioAtivo, 
+                                                        procedimentos: procedimentosLidos 
+                                                    })
+                                                })
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    if (data.success) {
+                                                        alert('Transferências registradas com sucesso!');
+                                            
+                                            
+                                                        // Encerrar o leitor de QR Code
+                                                        //pararLeitorQRCode(html5QrCode);
+                                                        procedimentosLidos = []; // Limpar a lista de procedimentos
+                                                        atualizarListaProcedimentos(); // Atualizar a interface
+                                                        document.getElementById('finalizarLeitura').style.display = 'none'; // Esconder botão
+                                                        const qrReaderLimiter = document.getElementById('qr-readerlimiter');
+                                                        qrReaderLimiter.style.display = 'none'; // Oculta o leitor
+                                                        location.reload(true);
+                                                    } else {
+                                                        alert(`Erro ao registrar transferências: ${data.message}`);
+                                                    }
+                                                })
+                                                .catch(error => console.error('Erro ao registrar transferências:', error));
+
+
                                             }
                                         }
                                     }
