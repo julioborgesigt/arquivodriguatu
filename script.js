@@ -379,6 +379,7 @@ function lerQRCode(modoTransferencia = false) {
 
 
 function pararLeitorQRCode() {
+    alert("foi chamada a função parar leitor qrcode")
     if (qrCodeLeitor) {
         qrCodeLeitor.stop()
             .then(() => {
