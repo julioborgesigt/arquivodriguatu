@@ -357,6 +357,7 @@ function lerQRCode(modoTransferencia = false) {
                                 });
                         } else {
                             // Modo regular: registrar leitura
+                            alert('entrou no else da rotina ler qrcode.');
                             fetch('/leitura', {
                                 method: 'POST',
                                 headers: {
