@@ -484,10 +484,11 @@ function finalizarTransferencia() {
     
     if (procedimentosLidos.length === 0) {
         alert('Nenhum procedimento foi lido.');
+        pararLeitorQRCode(html5QrCode);
         location.reload(true);
         //return;
     }
-    
+
     fetch('/transferencias-em-massa', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
