@@ -396,7 +396,7 @@ function lerQRCode(modoTransferencia = false) {
                                 .then(data => {
                                     if (data.success) {
                                         alert(data.message); // Exibe mensagem de sucesso
-                                        window.location.href = `/comprovante?procedimento=${data.procedimento}`;
+                                        //window.location.href = `/comprovante?procedimento=${data.procedimento}`;
                                     } else {
                                         alert("Erro: " + data.message); // Exibe mensagem de erro
                                     }
