@@ -420,11 +420,15 @@ function finalizarTransferencia() {
         return;
     }
 
+
+    /*
     if (procedimentosLidos.length === 0) {
         alert('Nenhum procedimento foi lido.');
         return;
     }
+    */
 
+    
     fetch('/transferencias-em-massa', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
