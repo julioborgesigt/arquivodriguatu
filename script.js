@@ -425,7 +425,7 @@ function finalizarTransferencia() {
             atualizarListaProcedimentos();
             document.getElementById('finalizarLeitura').style.display = 'none';
             alert('vai ser chamado a função parar!');
-            pararLeitorQRCode(html5QrCode);
+            pararLeitorQRCode();
         } else {
             alert(`Erro ao registrar transferências1: ${data.message}`);
         }
