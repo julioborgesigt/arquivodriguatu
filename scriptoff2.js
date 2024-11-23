@@ -1,6 +1,7 @@
 function lerQRCode(modoTransferencia = false) {
     const qrReaderElement = document.getElementById("qr-reader");
     qrReaderElement.style.display = "flex";
+    const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Usuário logado
 
     const html5QrCode = new Html5Qrcode("qr-reader");
     let leituraEfetuada = false;
