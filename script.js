@@ -425,51 +425,32 @@ function finalizarTransferencia() {
         return;
     }
 
-    /*
-
-    // Verificar pendências para cada procedimento
-    const verificarPendencias = procedimentosLidos.map(proc =>
-        fetch(`/verificarSolicitacaoPendente?procedimento=${proc}`)
-            .then(response => response.json())
-    );
-    */
-
-
-    Promise.all(verificarPendencias)
-        .then(results => {
-            const procedimentosComPendencia = procedimentosLidos.filter((_, index) => results[index].pendente);
-
-            if (procedimentosComPendencia.length > 0) {
-                alert(`Os seguintes procedimentos possuem transferências pendentes: ${procedimentosComPendencia.join(', ')}`);
-                return;
-            }
-
-            // Enviar transferências apenas para os procedimentos sem pendência
-            fetch('/transferencias-em-massa', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    loginDestinatario, 
-                    usuarioAtivo, 
-                    procedimentos: procedimentosLidos 
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Transferências registradas com sucesso!');
-                    //pararLeitorQRCode(); // Para o leitor de QR code
-                    procedimentosLidos = []; // Limpar a lista de procedimentos
-                    atualizarListaProcedimentos(); // Atualizar a interface
-                    document.getElementById('finalizarLeitura').style.display = 'none'; // Esconder botão
-                } else {
-                    alert(`Erro ao registrar transferências: ${data.message}`);
-                }
-            })
-            .catch(error => console.error('Erro ao registrar transferências:', error));
+    fetch('/transferencias-em-massa', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            loginDestinatario, 
+            loginRemetente: usuarioAtivo, 
+            procedimentos: procedimentosLidos 
         })
-        .catch(error => console.error('Erro ao verificar pendências:', error));
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Transferências registradas com sucesso!');
+
+            // Encerrar o leitor de QR Code
+            //pararLeitorQRCode();
+            procedimentosLidos = []; // Limpar a lista de procedimentos
+            atualizarListaProcedimentos(); // Atualizar a interface
+            document.getElementById('finalizarLeitura').style.display = 'none'; // Esconder botão
+        } else {
+            alert(`Erro ao registrar transferências: ${data.message}`);
+        }
+    })
+    .catch(error => console.error('Erro ao registrar transferências:', error));
 }
+
 
 
 function lerQRCodePage() {
