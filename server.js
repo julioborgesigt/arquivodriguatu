@@ -703,12 +703,12 @@ app.post('/converterProcedimento', (req, res) => {
 
 
 
-    //const regexProcedimento = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
+    const regexProcedimento = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
 
-   // const procedimentosValidos = procedimentos.filter(proc => regexProcedimento.test(proc));
-   // if (procedimentosValidos.length !== procedimentos.length) {
-   //     return res.status(400).json({ success: false, message: 'Alguns procedimentos estão no formato inválido.' });
-   // }
+    const procedimentosValidos = procedimentos.filter(proc => regexProcedimento.test(proc));
+    if (procedimentosValidos.length !== procedimentos.length) {
+        return res.status(400).json({ success: false, message: 'Alguns procedimentos estão no formato inválido.' });
+    }
 
 
 
