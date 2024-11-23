@@ -308,7 +308,7 @@ button:hover {
 
 /* Limitar o tamanho da div "qr-readerlimiter" */
 #qr-readerlimiter {
-    display: none;  /* Oculto até ser ativado */
+    
     width: 50%; /* 100% da largura da página */
     height: 30vh; /* 30% da altura da página (usando unidade viewport-height) */
     display: flex; /* Centralizar o conteúdo */
