@@ -62,31 +62,45 @@ function lerQRCode(modoTransferencia = false) {
                                     leituraEfetuada = false; // Permitir nova leitura
                                 });
                         } else {
-                            
-                            // Modo regular: registrar leitura
-                            fetch('/leitura', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({ qrCodeMessage, usuario: usuarioAtivo })
-                            })
+                            // Modo regular: verificar pendência de transferência antes de registrar leitura
+                            fetch(`/verificarSolicitacaoPendente?procedimento=${numeroProcedimento}`)
                                 .then(response => response.json())
                                 .then(data => {
-                                    if (data.success) {
-                                        alert(data.message); // Exibe mensagem de sucesso
+                                    if (data.pendente) {
+                                        alert(`O procedimento ${numeroProcedimento} possui transferência pendente e não pode ser registrado.`);
+                                        location.reload(true);
                                     } else {
-                                        alert("Erro: " + data.message); // Exibe mensagem de erro
+                                        // Registrar a leitura se não houver pendência
+                                        fetch('/leitura', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify({ qrCodeMessage, usuario: usuarioAtivo })
+                                        })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                if (data.success) {
+                                                    alert(data.message); // Exibe mensagem de sucesso
+                                                } else {
+                                                    alert("Erro: " + data.message); // Exibe mensagem de erro
+                                                }
+                                                pararLeitorQRCode(html5QrCode); // Para o leitor
+                                                window.history.back();
+                                            })
+                                            .catch(error => {
+                                                console.error('Erro ao registrar leitura:', error);
+                                                alert('Erro ao registrar leitura. Tente novamente.');
+                                                pararLeitorQRCode(html5QrCode); // Para o leitor
+                                            })
+                                            .finally(() => {
+                                                leituraEfetuada = false; // Permitir nova leitura
+                                            });
                                     }
-                                    pararLeitorQRCode(html5QrCode); // Para o leitor
-                                    window.history.back();
                                 })
                                 .catch(error => {
-                                    console.error('Erro ao registrar leitura:', error);
-                                    alert('Erro ao registrar leitura. Tente novamente.');
-                                    pararLeitorQRCode(html5QrCode); // Para o leitor
-                                })
-                                .finally(() => {
+                                    console.error('Erro ao verificar pendência:', error);
+                                    alert('Erro ao verificar pendência. Tente novamente.');
                                     leituraEfetuada = false; // Permitir nova leitura
                                 });
                         }

@@ -110,12 +110,37 @@
 
 
                     <div id="lerQrcode-form" class="formulario">
-                        <h3>Ler QR Code</h3>
-                        <form>
-                            <!-- Conteúdo específico de Ler QR Code -->
-                            <button type="button" onclick="window.location.href='leitor_qrcode.html'">Ler QR Code</button>
+
+
+                        <div class="receber-container">
+
+                            <h3>Receber com QR Code</h3>
+                            <form>
+                                <!-- Conteúdo específico de Ler QR Code -->
+                                <button type="button" onclick="window.location.href='leitor_qrcode.html'">Ler QR Code</button>
+                                
+                            </form>
+
+
+                        </div>
+
+                        <div class="solicitacoes-container">
+
+                            <h2>Solicitações de transferência pendentes</h2>
+                            <div id="solicitacoes-pendentes"></div>
                             
-                        </form>
+                    
+                            
+                            <button class="btn-form" type="button" onclick="verificarSolicitacoes()">Verificar Solicitações</button>
+                            
+                            <div id="solicitacoes-pendentes">
+                                <!-- As solicitações pendentes serão carregadas aqui -->
+                            </div>
+                        
+
+                        </div>
+
+                        
                     </div>
             
 
@@ -191,9 +216,6 @@
 
 
 
-
-
-
                             <div class="transferir-container">
 
                                 
@@ -223,21 +245,7 @@
                             </div>
 
 
-                            <div class="solicitacoes-container">
-
-                                <h2>Solicitações de transferência pendentes</h2>
-                                <div id="solicitacoes-pendentes"></div>
-                                
-                        
-                                
-                                <button class="btn-form" type="button" onclick="verificarSolicitacoes()">Verificar Solicitações</button>
-                                
-                                <div id="solicitacoes-pendentes">
-                                    <!-- As solicitações pendentes serão carregadas aqui -->
-                                </div>
                             
-
-                            </div>
 
 
                         </form>
@@ -285,9 +293,12 @@
             <!-- Barra inferior de navegação -->
             <div class="bottom-nav">
                 <button onclick="mostrarFormulario('gerarPDF-form')"><i class="fas fa-file-pdf">📄</i>Gerar</button>
-                <button onclick="window.location.href='/leitor_qrcode.html'"><i class="fas fa-file-pdf">📷</i>Ler Qr</button>
+
+               <!--  <button onclick="window.location.href='/leitor_qrcode.html'"><i class="fas fa-file-pdf">📥</i>Ler Qr</button> -->
+
+               <button onclick="mostrarFormulario('lerQrcode-form')"><i class="fas fa-file-pdf">📥</i>Receber</button>
                 <button onclick="mostrarFormulario('consultarMovimentacao-form')"><i class="fas fa-file-pdf">🔍</i>Cons.</button>
-                <button onclick="mostrarFormulario('transferirProcesso-form')"><i class="fas fa-file-pdf">🔄</i>Transf.</button>
+                <button onclick="mostrarFormulario('transferirProcesso-form')"><i class="fas fa-file-pdf">📤</i>Enviar</button>
                 <button onclick="mostrarFormulario('converter-form')"><i class="fas fa-file-pdf">🔄</i>Conver.</button>
             </div>
     
