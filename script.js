@@ -375,7 +375,7 @@ function lerQRCode(modoTransferencia = false) {
                                 .then(data => {
                                     if (data.pendente) {
                                         alert(`O procedimento ${numeroProcedimento} possui transferência pendente e não pode ser registrado.`);
-                                        location.reload(true);
+                                        leituraEfetuada = false; // Permitir nova leitura
                                     } else {
                                         // Registrar a leitura se não houver pendência
                                         fetch('/leitura', {
@@ -392,8 +392,20 @@ function lerQRCode(modoTransferencia = false) {
                                                 } else {
                                                     alert("Erro: " + data.message); // Exibe mensagem de erro
                                                 }
-                                                pararLeitorQRCode(html5QrCode); // Para o leitor
-                                                window.history.back();
+
+                                                // Perguntar ao usuário se deseja continuar ou encerrar
+                                                const continuar = confirm(
+                                                    "Deseja ler outro código ou encerrar as leituras?\n\n" +
+                                                    "OK: Ler outro código\n" +
+                                                    "Cancelar: Encerrar leituras"
+                                                );
+
+                                                if (continuar) {
+                                                    leituraEfetuada = false; // Permitir nova leitura
+                                                } else {
+                                                    pararLeitorQRCode(html5QrCode); // Para o leitor
+                                                    window.history.back(); // Retorna à página anterior
+                                                }
                                             })
                                             .catch(error => {
                                                 console.error('Erro ao registrar leitura:', error);
@@ -429,6 +441,7 @@ function lerQRCode(modoTransferencia = false) {
         console.log(`Erro ao iniciar a câmera: ${err}`);
     });
 }
+
 
 
 
