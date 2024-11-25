@@ -579,7 +579,7 @@ function solicitarTransferencia() {
     const loginDestinatario = document.getElementById('login-transferencia').value;
     const tipoProcedimento = document.getElementById('tipo-transferencia').value; // Pega o tipo de procedimento
     const numeroProcedimento = document.getElementById('procedimento-transferencia').value;
-    const observacaoProcedimento = document.getElementById('observacao-transferencia').value;
+    const observacoesProcedimento = document.getElementById('observacoes-transferencia').value;
     const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Usuário logado
 
     // Combinar o tipo de procedimento com o número inserido
@@ -605,7 +605,7 @@ function solicitarTransferencia() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ loginDestinatario, numeroProcedimento: numeroCompleto, usuarioAtivo, observacaoProcedimento })
+                body: JSON.stringify({ loginDestinatario, numeroProcedimento: numeroCompleto, usuarioAtivo, observacoesProcedimento })
             })
                 .then(response => response.json())
                 .then(data => {

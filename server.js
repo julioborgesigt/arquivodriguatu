@@ -485,7 +485,7 @@ app.post('/solicitar-transferencia', (req, res) => {
         loginRemetente: usuarioAtivo,
         loginDestinatario,
         numeroProcedimento,
-        observacaoProcedimento,
+        observacoesProcedimento,
         status: "pendente"
     });
 
