@@ -715,7 +715,7 @@ app.post('/converterProcedimento', (req, res) => {
    app.post('/transferencias-em-massa', (req, res) => {
     const { loginDestinatario, loginRemetente, procedimentos } = req.body;
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
-    const usuarioAtivo = req.session.usuarioAtivo; // Obtém o usuário da sessão
+    
 
     if (!banco.usuarios.find(user => user.username === loginDestinatario)) {
         return res.status(400).json({ success: false, message: 'Login do destinatário não encontrado.' });
@@ -724,7 +724,7 @@ app.post('/converterProcedimento', (req, res) => {
     procedimentos.forEach(numeroProcedimento => {
         banco.solicitacoes.push({
             id: Math.random().toString(36).substr(2, 9),
-            loginRemetente: usuarioAtivo,
+            loginRemetente,
             loginDestinatario,
             numeroProcedimento,
             status: 'pendente'
