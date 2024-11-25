@@ -565,7 +565,7 @@ app.post('/responder-transferencia/:id', (req, res) => {
             usuario: solicitacao.loginDestinatario,
             data: new Date().toISOString().split('T')[0], // Data no formato YYYY-MM-DD
             hora: horaAjustada, // Hora ajustada para GMT -3
-            observacoesProcedimento
+            
         });
 
         console.log(`Leitura adicionada para o login ${solicitacao.loginDestinatario}`);
