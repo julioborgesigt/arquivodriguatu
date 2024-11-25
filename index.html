@@ -179,6 +179,8 @@
                                     <label for="login-pesquisa">Número do Login:</label>
                                     <input type="text" id="login-pesquisa" placeholder="Digite o número do login">
                                     <button class="btn-form" type="button" onclick="pesquisarPorLogin()">Pesquisar</button>
+                                    <!-- Botão para pesquisar meus processos -->
+                                    <button class="btn-form" type="button" onclick="pesquisarPorLogin(localStorage.getItem('usuarioAtivo'))">Pesquisar Meus Processos</button>
                                 </div>
 
                                     <div id="resultado-pesquisa">

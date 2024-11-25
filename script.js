@@ -570,13 +570,15 @@ function lerQRCodePage() {
     window.location.href = "/leitor_qrcode.html";
 }
 
-// Função para pesquisar processos pelo login
-function pesquisarPorLogin() {
-    const loginPesquisa = document.getElementById('login-pesquisa').value;
-    
+function pesquisarPorLogin(loginPesquisa = null) {
+    // Se o login não foi fornecido como parâmetro, use o valor do campo input
     if (!loginPesquisa) {
-        alert('Por favor, insira o número de login para pesquisar.');
-        return;
+        loginPesquisa = document.getElementById('login-pesquisa').value;
+
+        if (!loginPesquisa) {
+            alert('Por favor, insira o número de login para pesquisar.');
+            return;
+        }
     }
 
     // Buscar os dados no banco.json
@@ -611,6 +613,7 @@ function pesquisarPorLogin() {
             alert('Erro ao buscar processos. Tente novamente.');
         });
 }
+
 
 
 
