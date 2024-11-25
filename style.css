@@ -508,20 +508,42 @@ button:hover {
     border-radius: 5px;
 }
 
+
+
+
+
+
+
+
+
+
+
 /* Lista de usuários */
+/* Estilo geral do menu de usuários deslizante */
 .usuarios-lista {
-    border: 1px solid #ccc;
-    max-height: 200px;
-    overflow-y: auto;
+    position: fixed; /* Fica fixo na tela */
+    top: 0;
+    right: 0;
+    width: 300px; /* Tamanho do menu */
+    height: 100vh; /* Ocupa toda a altura da tela */
     background-color: #fff;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+    transform: translateX(100%); /* Inicialmente fora da tela */
+    transition: transform 0.3s ease; /* Efeito de transição suave */
+    z-index: 999; /* Garante que o menu apareça acima de outros elementos */
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto; /* Permite rolagem se a lista for grande */
 }
 
+/* Quando o menu estiver visível */
+.usuarios-lista.show {
+    transform: translateX(0); /* Move o menu para a tela */
+}
+
+/* Estilo da lista de usuários */
 .usuario-item {
-    padding: 8px;
+    padding: 10px;
     cursor: pointer;
     border-bottom: 1px solid #ddd;
 }
@@ -532,4 +554,21 @@ button:hover {
 
 .usuario-item:hover {
     background-color: #f0f0f0;
+}
+
+/* Fechar o menu ao clicar fora (escurecer o fundo) */
+.usuarios-lista-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Fundo escurecido */
+    z-index: 998; /* Fica atrás do menu */
+    display: none;
+}
+
+/* Exibir o fundo escuro quando o menu estiver aberto */
+.usuarios-lista-overlay.show {
+    display: block;
 }

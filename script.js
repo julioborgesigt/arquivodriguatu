@@ -646,7 +646,16 @@ function pesquisarPorLogin(loginPesquisa = null) {
 
 function exibirUsuarios(campoId) {
     const listaUsuariosDiv = document.getElementById("lista-usuarios");
-    listaUsuariosDiv.style.display = "block"; // Exibir a lista de usuários
+    const overlay = document.createElement('div');
+    overlay.className = 'usuarios-lista-overlay';
+    
+    // Adiciona a overlay no body para escurecer o fundo
+    document.body.appendChild(overlay);
+    
+    // Exibir o menu de usuários
+    listaUsuariosDiv.style.display = 'block';
+    listaUsuariosDiv.classList.add('show');
+    overlay.classList.add('show');
 
     // Fazer requisição para buscar os usuários cadastrados
     fetch('/usuarios')
@@ -662,7 +671,7 @@ function exibirUsuarios(campoId) {
                     usuarioItem.textContent = `${usuario.name} (${usuario.username})`;
                     usuarioItem.onclick = () => {
                         document.getElementById(campoId).value = usuario.username; // Inserir login no campo correto
-                        listaUsuariosDiv.style.display = "none"; // Esconder a lista após seleção
+                        fecharMenu(); // Fechar o menu após a seleção
                     };
                     listaUsuariosDiv.appendChild(usuarioItem);
                 });
@@ -674,7 +683,23 @@ function exibirUsuarios(campoId) {
             console.error('Erro ao buscar usuários:', error);
             listaUsuariosDiv.innerHTML = `<p>Erro ao carregar a lista de usuários.</p>`;
         });
+
+    // Função para fechar o menu
+    overlay.onclick = fecharMenu;
 }
+
+function fecharMenu() {
+    const listaUsuariosDiv = document.getElementById("lista-usuarios");
+    const overlay = document.querySelector('.usuarios-lista-overlay');
+
+    listaUsuariosDiv.classList.remove('show');
+    overlay.classList.remove('show');
+    setTimeout(() => {
+        listaUsuariosDiv.style.display = 'none';
+        overlay.remove();
+    }, 300); // Esperar o tempo da animação
+}
+
 
 
 // Função para solicitar a transferência de processo para outro login
