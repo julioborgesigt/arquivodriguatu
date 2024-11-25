@@ -358,7 +358,8 @@ function lerQRCode(modoTransferencia = false) {
 
                                             if (!continuar) {
                                                 pararLeitorQRCode(html5QrCode); // Para o leitor
-                                                finalizarTransferencia(usuarioAtivo); // Passa o remetente ao finalizar
+                                                //alert("seu usuario ativo", usuarioAtivo)
+                                                finalizarTransferencia(); // Passa o remetente ao finalizar
                                             }
                                         }
                                     }
@@ -372,6 +373,7 @@ function lerQRCode(modoTransferencia = false) {
                         } else {
                             // Modo regular: verificar pendência de transferência antes de registrar leitura
                             fetch(`/verificarSolicitacaoPendente?procedimento=${numeroProcedimento}`)
+                                //alert("seu usuario ativo", usuarioAtivo)
                                 .then(response => response.json())
                                 .then(data => {
                                     if (data.pendente) {
@@ -384,7 +386,7 @@ function lerQRCode(modoTransferencia = false) {
                                             headers: {
                                                 'Content-Type': 'application/json',
                                             },
-                                            body: JSON.stringify({ qrCodeMessage, usuarioAtivo })
+                                            body: JSON.stringify({ qrCodeMessage })
                                         })
                                             .then(response => response.json())
                                             .then(data => {
@@ -579,7 +581,7 @@ function solicitarTransferencia() {
     const loginDestinatario = document.getElementById('login-transferencia').value;
     const tipoProcedimento = document.getElementById('tipo-transferencia').value; // Pega o tipo de procedimento
     const numeroProcedimento = document.getElementById('procedimento-transferencia').value;
-    const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Usuário logado
+   
 
     // Combinar o tipo de procedimento com o número inserido
     const numeroCompleto = `${tipoProcedimento}-${numeroProcedimento}`;
@@ -604,7 +606,7 @@ function solicitarTransferencia() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ loginDestinatario, numeroProcedimento: numeroCompleto, usuarioAtivo })
+                body: JSON.stringify({ loginDestinatario, numeroProcedimento: numeroCompleto })
             })
                 .then(response => response.json())
                 .then(data => {

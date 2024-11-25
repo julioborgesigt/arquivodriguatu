@@ -194,9 +194,33 @@ app.post('/register', (req, res) => {
 });
 
 
+const session = require('express-session');
+
+app.use(session({
+    secret: 'chave-secreta-segura', // Substitua por uma chave secreta forte
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Use secure: true em produção com HTTPS
+}));
+
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    // Validar login (sua lógica atual)
+    if (username === "usuarioValido" && password === "senhaValida") {
+        req.session.usuarioAtivo = username; // Armazena na sessão
+        res.json({ success: true, message: "Login realizado com sucesso" });
+    } else {
+        res.status(401).json({ success: false, message: "Usuário ou senha incorretos" });
+    }
+});
+
+
+
 app.post('/leitura', (req, res) => {
     console.log("Entrou na rota /leitura");
-    const { qrCodeMessage, usuarioAtivo } = req.body; // Receber o usuário logado junto com o QR code
+    const { qrCodeMessage } = req.body; // Receber o usuário logado junto com o QR code
+    const usuarioAtivo = req.session.usuarioAtivo; // Obtém o usuário da sessão
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
     // Captura a hora atual e ajusta para GMT-3
@@ -453,7 +477,8 @@ let lock = false;
 
 // Rota para solicitar transferência
 app.post('/solicitar-transferencia', (req, res) => {
-    const { loginDestinatario, numeroProcedimento, usuarioAtivo } = req.body;
+    const { loginDestinatario, numeroProcedimento } = req.body;
+    const usuarioAtivo = req.session.usuarioAtivo; // Obtém o usuário da sessão
 
     // Ler o banco de dados existente
     let banco;
