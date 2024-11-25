@@ -233,7 +233,7 @@ function gerarPDF() {
 
 // Função para consultar movimentação
 function consultarMovimentacao() {
-    const tipoProcedimento = document.getElementById("consulta-tipo-procedimento").value; // Pega o tipo
+    const tipoProcedimento = document.getElementById("consulta-tipo-procedimento").value;
     const numeroProcedimento = document.getElementById("consulta-procedimento").value;
 
     // Combinar tipo e número
@@ -251,9 +251,17 @@ function consultarMovimentacao() {
             if (data.success) {
                 let html = `<h3>Movimentações para o procedimento ${numeroCompleto}:</h3><ul>`;
                 data.leituras.forEach(leitura => {
-                    html += `<li>${leitura.usuario}, Data: ${leitura.data}, Hora: ${leitura.hora}, Obs.: ${leitura.observacoesProcedimento}</li>`;
+                    html += `<li>${leitura.usuario}, Data: ${leitura.data}, Hora: ${leitura.hora}</li>`;
                 });
                 html += `</ul>`;
+
+                // Adicionar observações ao resultado
+                if (data.observacoes) {
+                    html += `<p><strong>Observações:</strong> ${data.observacoes}</p>`;
+                } else {
+                    html += `<p><strong>Observações:</strong> Nenhuma observação registrada.</p>`;
+                }
+
                 resultadoDiv.innerHTML = html;
             } else {
                 resultadoDiv.innerHTML = `<p>${data.message}</p>`;
@@ -264,6 +272,7 @@ function consultarMovimentacao() {
             document.getElementById('resultado-consulta').innerHTML = `<p>Erro ao consultar movimentação. Tente novamente.</p>`;
         });
 }
+
 
 
 // Função para gerar QR Code

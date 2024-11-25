@@ -17,12 +17,30 @@
         {
             "numero": "BO-479-00001/2024",
             "usuario": "00000000",
-            "leituras": []
+            "leituras": [
+
+                {
+                    "usuario": "30115910",
+                    "data": "2024-11-24",
+                    "hora": "07:30:20"
+                }
+            
+
+            ]
         },
         {
             "numero": "BO-479-00002/2024",
             "usuario": "00000000",
-            "leituras": []
+            "leituras": [
+
+                {
+                    "usuario": "30115910",
+                    "data": "2024-11-24",
+                    "hora": "07:30:20"
+                }
+            
+
+            ]
         }
     ],
     "solicitacoes": [
@@ -31,6 +49,7 @@
             "loginRemetente": "00000000",
             "loginDestinatario": "30115910",
             "numeroProcedimento": "BO-479-00001/2024",
+            "observacoesProcedimento": "oi teste",
             "status": "pendente"
         },
         {
@@ -38,6 +57,7 @@
             "loginRemetente": "00000000",
             "loginDestinatario": "30115910",
             "numeroProcedimento": "BO-479-00002/2024",
+            "observacoesProcedimento": "oi teste",
             "status": "pendente"
         }
     ]

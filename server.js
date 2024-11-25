@@ -345,12 +345,11 @@ app.get('/dados', (req, res) => {
 });
 
 
-// Rota para consultar movimentação
 app.get('/consultaMovimentacao', (req, res) => {
     const { procedimento } = req.query;
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
-    // Verificar se o número do procedimento está no novo formato
+    // Verificar se o número do procedimento está no formato válido
     const regex = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
     if (!regex.test(procedimento)) {
         return res.status(400).json({ success: false, message: "Formato inválido para o número do procedimento." });
@@ -359,12 +358,20 @@ app.get('/consultaMovimentacao', (req, res) => {
     // Procurar o procedimento correspondente no banco de dados
     const procedimentoEncontrado = banco.procedimentos.find(p => p.numero === procedimento);
 
+    // Encontrar a solicitação correspondente para obter as observações
+    const solicitacao = banco.solicitacoes.find(s => s.numeroProcedimento === procedimento);
+
     if (procedimentoEncontrado) {
-        res.json({ success: true, leituras: procedimentoEncontrado.leituras });
+        res.json({
+            success: true,
+            leituras: procedimentoEncontrado.leituras,
+            observacoes: solicitacao ? solicitacao.observacoesProcedimento : null // Inclui observações, se existirem
+        });
     } else {
         res.json({ success: false, message: "Procedimento não encontrado." });
     }
 });
+
 
 
 
