@@ -384,7 +384,7 @@ function lerQRCode(modoTransferencia = false) {
                                     if (data.pendente) {
                                         alert(`O procedimento ${numeroProcedimento} possui transferência pendente e será desconsiderado.`);
                                     } else {
-                                        alert(`Número do procedimento lido: ${numeroProcedimento}`);
+                                        //alert(`Número do procedimento lido: ${numeroProcedimento}`);
                                         if (!procedimentosLidos.includes(numeroProcedimento)) {
                                             procedimentosLidos.push(numeroProcedimento);
                                             atualizarListaProcedimentos();
@@ -405,7 +405,7 @@ function lerQRCode(modoTransferencia = false) {
                                 })
                                 .catch(error => {
                                     console.error('Erro ao verificar pendência:', error);
-                                    alert('Erro ao verificar pendência. Tente novamente.');
+                                    //alert('Erro ao verificar pendência. Tente novamente.');
                                     leituraEfetuada = false; // Permitir nova leitura
                                 });
                         } else {
@@ -493,7 +493,7 @@ function lerQRCode(modoTransferencia = false) {
 
 
 function pararLeitorQRCode(html5QrCode) {
-    alert("entrou na funçao parar leitor.");
+    //alert("entrou na funçao parar leitor.");
     if (html5QrCode) {
         html5QrCode.stop()
             .then(() => {
