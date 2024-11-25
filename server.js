@@ -358,19 +358,20 @@ app.get('/consultaMovimentacao', (req, res) => {
     // Procurar o procedimento correspondente no banco de dados
     const procedimentoEncontrado = banco.procedimentos.find(p => p.numero === procedimento);
 
-    // Encontrar a solicitação correspondente para obter as observações
+    // Garantir que estamos buscando observações relacionadas ao procedimento correto
     const solicitacao = banco.solicitacoes.find(s => s.numeroProcedimento === procedimento);
 
     if (procedimentoEncontrado) {
         res.json({
             success: true,
             leituras: procedimentoEncontrado.leituras,
-            observacoes: solicitacao ? solicitacao.observacoesProcedimento : null // Inclui observações, se existirem
+            observacoes: solicitacao ? solicitacao.observacoesProcedimento : "Nenhuma observação registrada." // Inclui observações ou mensagem padrão
         });
     } else {
         res.json({ success: false, message: "Procedimento não encontrado." });
     }
 });
+
 
 
 

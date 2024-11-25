@@ -232,33 +232,48 @@ function gerarPDF() {
 }
 
 // Função para consultar movimentação
-app.get('/consultaMovimentacao', (req, res) => {
-    const { procedimento } = req.query;
-    const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
+function consultarMovimentacao() {
+    const tipoProcedimento = document.getElementById("consulta-tipo-procedimento").value;
+    const numeroProcedimento = document.getElementById("consulta-procedimento").value;
 
-    // Verificar se o número do procedimento está no formato válido
-    const regex = /^[A-Z]{2}-\d{3}-\d{5}\/\d{4}$/;
-    if (!regex.test(procedimento)) {
-        return res.status(400).json({ success: false, message: "Formato inválido para o número do procedimento." });
+    // Combinar tipo e número
+    const numeroCompleto = `${tipoProcedimento}-${numeroProcedimento}`;
+
+    if (!validarProcedimento(numeroCompleto)) {
+        alert("O número do procedimento deve estar no formato xx-xxx-xxxxx/xxxx.");
+        return;
     }
 
-    // Procurar o procedimento correspondente no banco de dados
-    const procedimentoEncontrado = banco.procedimentos.find(p => p.numero === procedimento);
+    fetch(`/consultaMovimentacao?procedimento=${numeroCompleto}`)
+        .then(response => response.json())
+        .then(data => {
+            const resultadoDiv = document.getElementById('resultado-consulta');
+            if (data.success) {
+                let html = `<h3>Movimentações para o procedimento ${numeroCompleto}:</h3><ul>`;
+                data.leituras.forEach(leitura => {
+                    html += `<li>${leitura.usuario}, Data: ${leitura.data}, Hora: ${leitura.hora}</li>`;
+                });
+                html += `</ul>`;
+                
 
-    // Garantir que estamos buscando observações relacionadas ao procedimento correto
-    const solicitacao = banco.solicitacoes.find(s => s.numeroProcedimento === procedimento);
+                // Adicionar observações ao resultado
+                if (data.observacoes) {
+                    html += `<p><strong>Observações:</strong> ${data.observacoes}</p>`;
+                } else {
+                    html += `<p><strong>Observações:</strong> Nenhuma observação registrada.</p>`;
+                }
 
-    if (procedimentoEncontrado) {
-        res.json({
-            success: true,
-            leituras: procedimentoEncontrado.leituras,
-            observacoes: solicitacao ? solicitacao.observacoesProcedimento : "Nenhuma observação registrada." // Inclui observações ou mensagem padrão
+                resultadoDiv.innerHTML = html;
+            } else {
+                resultadoDiv.innerHTML = `<p>${data.message}</p>`;
+            }
+
+        })
+        .catch(error => {
+            console.error('Erro ao consultar movimentação:', error);
+            document.getElementById('resultado-consulta').innerHTML = `<p>Erro ao consultar movimentação. Tente novamente.</p>`;
         });
-    } else {
-        res.json({ success: false, message: "Procedimento não encontrado." });
-    }
-});
-
+}
 
 
 
