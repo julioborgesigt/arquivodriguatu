@@ -353,6 +353,8 @@ button:hover {
 
 
 
+
+
 /* Botões inferiores fixos */
 .bottom-nav {
     display: flex;
@@ -401,4 +403,61 @@ button:hover {
     input, button {
         font-size: 14px;
     }
+}
+
+
+/* Estilo para tabelas responsivas */
+.responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+}
+
+.responsive-table th,
+.responsive-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+.responsive-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.responsive-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.responsive-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .responsive-table {
+        font-size: 14px;
+    }
+
+    .responsive-table th,
+    .responsive-table td {
+        padding: 8px;
+    }
+}
+
+.observacoes {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #e9f7f9;
+    border-left: 5px solid #17a2b8;
+    font-size: 16px;
+}
+
+.error-message {
+    padding: 10px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
 }

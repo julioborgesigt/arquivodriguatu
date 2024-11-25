@@ -249,24 +249,59 @@ function consultarMovimentacao() {
         .then(data => {
             const resultadoDiv = document.getElementById('resultado-consulta');
             if (data.success) {
-                let html = `<h3>Movimentações para o procedimento ${numeroCompleto}:</h3><ul>`;
-                data.leituras.forEach(leitura => {
-                    html += `<li>${leitura.usuario}, Data: ${leitura.data}, Hora: ${leitura.hora}, Obs.: ${leitura.observacoesProcedimento}</li>`;
-                });
-                html += `</ul>`;
-                
-
-                // Adicionar observações ao resultado
-                if (data.observacoes) {
-                    html += `<p><strong>Observações:</strong> ${data.observacoes}</p>`;
+                // Cabeçalho do procedimento
+                let html = `<h3>Movimentações para o procedimento ${numeroCompleto}:</h3>`;
+            
+                // Verificar se há movimentações
+                if (data.leituras.length > 0) {
+                    // Cria a tabela
+                    html += `
+                        <table class="responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Usuário</th>
+                                    <th>Data</th>
+                                    <th>Hora</th>
+                                    <th>Obs.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+            
+                    // Adiciona cada leitura como uma linha
+                    data.leituras.forEach(leitura => {
+                        html += `
+                            <tr>
+                                <td>${leitura.usuario}</td>
+                                <td>${leitura.data}</td>
+                                <td>${leitura.hora}</td>
+                                <td>${leitura.observacoesProcedimento || "N/A"}</td>
+                            </tr>
+                        `;
+                    });
+            
+                    html += `</tbody></table>`;
                 } else {
-                    html += `<p><strong>Observações:</strong> Nenhuma observação registrada.</p>`;
+                    html += `<p><em>Nenhuma movimentação registrada para este procedimento.</em></p>`;
                 }
-
+            
+                // Adiciona observações gerais
+                html += `
+                    <div class="observacoes">
+                        <strong>Observações:</strong> 
+                        ${data.observacoes || "Nenhuma observação registrada."}
+                    </div>
+                `;
+            
                 resultadoDiv.innerHTML = html;
             } else {
-                resultadoDiv.innerHTML = `<p>${data.message}</p>`;
+                resultadoDiv.innerHTML = `
+                    <div class="error-message">
+                        <strong>Erro:</strong> ${data.message}
+                    </div>
+                `;
             }
+            
 
         })
         .catch(error => {
