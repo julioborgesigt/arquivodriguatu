@@ -14,22 +14,68 @@ body {
 /* Container auth-container */
 #auth-container {
     width: 100%;
-    max-width: 240px;
-    padding-left: 10px;
-    padding-right: 14px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 20px;
     background: rgba(255, 255, 255, 0.5);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 15px;
     text-align: center;
     box-sizing: border-box;
     color: #0c0c0ca4;
-
-    
-
-    
 }
+
+#auth-container h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+#auth-form label {
+    display: block;
+    font-size: 14px;
+    margin: 8px 0 4px;
+}
+
+#auth-form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+#auth-form button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#auth-form button:hover {
+    background-color: #ddd;
+}
+
+#auth-form button[type="button"]:first-child {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#auth-form button[type="button"]:nth-child(2) {
+    background-color: #2196F3;
+    color: white;
+}
+
+#auth-form button[type="button"]:nth-child(3) {
+    background-color: #f44336;
+    color: white;
+}
+
 
 /* Container Principal */
 #main-container{

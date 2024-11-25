@@ -25,19 +25,31 @@
 
     <div>
         <!-- Formulário de Login/Cadastro -->
-        <div id="auth-container">
-                <h2>Login ou Cadastro</h2>
-            <form id="auth-form">
+            <div id="auth-container">
+                <h2 id="form-title">Login</h2>
+                <form id="auth-form">
                     <label for="username">Usuário:</label>
                     <input type="text" id="username" name="username" required>
+                    
                     <label for="password">Senha:</label>
                     <input type="password" id="password" name="password" required>
-                    <button type="button" onclick="login()">Entrar</button>
-                    <button type="button" onclick="register()">Cadastrar</button>
-                    <!-- Botão Administrador -->
+
+                    <!-- Botões para alternar entre Login e Cadastro -->
+                    <div id="login-buttons">
+                        <button type="button" onclick="login()">Entrar</button>
+                        <button type="button" onclick="mostrarCadastro()">Cadastrar</button>
+                    </div>
+
+                    <div id="register-buttons" style="display: none;">
+                        <button type="button" onclick="register()">Cadastrar</button>
+                        <button type="button" onclick="mostrarLogin()">Voltar</button>
+                    </div>
+                    
+                    <!-- Botão para administrador (visível em ambas as telas) -->
                     <button type="button" id="admin-btn" onclick="window.location.href='/login_admin.html'">Administrador</button>
-            </form>
-        </div>
+                </form>
+            </div>
+
 
         <!-- Interface após login -->
         <div id="app-container" style="display: none;">

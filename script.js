@@ -33,6 +33,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+function mostrarCadastro() {
+    // Mudar título e alternar botões
+    document.getElementById("form-title").textContent = "Cadastro";
+    document.getElementById("login-buttons").style.display = "none";
+    document.getElementById("register-buttons").style.display = "block";
+}
+
+function mostrarLogin() {
+    // Mudar título e alternar botões
+    document.getElementById("form-title").textContent = "Login";
+    document.getElementById("register-buttons").style.display = "none";
+    document.getElementById("login-buttons").style.display = "block";
+}
+
+
+
+
 
 // Função para realizar o login
 function login() {
