@@ -724,7 +724,7 @@ app.post('/converterProcedimento', (req, res) => {
         banco.solicitacoes.push({
             id: Math.random().toString(36).substr(2, 9),
             loginRemetente,
-            loginDestinatario,
+            loginDestinatario: usuarioAtivo,
             numeroProcedimento,
             status: 'pendente'
         });
