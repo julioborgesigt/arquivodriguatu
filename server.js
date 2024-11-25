@@ -171,7 +171,7 @@ app.post('/login-admin', (req, res) => {
 
 // Rota de cadastro (register)
 app.post('/register', (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, name } = req.body;
 
     // Validar que a senha tem exatamente 6 dígitos numéricos
     if (!/^\d{6}$/.test(password)) {
@@ -186,6 +186,7 @@ app.post('/register', (req, res) => {
     if (usuario) {
         // Usuário está pré-cadastrado, agora cadastrar a senha
         usuario.password = password; // Define a nova senha
+        usuario.name = name;
         fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
         res.json({ success: true, message: "Senha cadastrada com sucesso!" });
     } else {
