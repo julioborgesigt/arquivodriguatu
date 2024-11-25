@@ -453,7 +453,7 @@ let lock = false;
 
 // Rota para solicitar transferência
 app.post('/solicitar-transferencia', (req, res) => {
-    const { loginDestinatario, numeroProcedimento, usuarioAtivo } = req.body;
+    const { loginDestinatario, numeroProcedimento, usuarioAtivo, observacaoProcedimento } = req.body;
 
     // Ler o banco de dados existente
     let banco;
@@ -485,6 +485,7 @@ app.post('/solicitar-transferencia', (req, res) => {
         loginRemetente: usuarioAtivo,
         loginDestinatario,
         numeroProcedimento,
+        observacaoProcedimento,
         status: "pendente"
     });
 
