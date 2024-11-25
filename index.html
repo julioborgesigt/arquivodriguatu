@@ -66,7 +66,7 @@
 
             <div id="main-container">
                         
-                <h2>Bem-vindo, <span id="name"></span></h2>
+                <h2>Bem-vindo, <span id="user-name"></span></h2>
                 
                 
                     <form id="botoesadm-form">
@@ -238,11 +238,8 @@
 
 
                             <div class="transferir-container">
-
-                                
-                                
                                 <h2>Transferir procedimento</h2>
-                             
+                            
                                 <div class="select-container">
                                     <label for="tipo-transferencia">Tipo de Procedimento:</label>
                                     <select id="tipo-transferencia" name="tipo-transferencia" required>
@@ -252,23 +249,27 @@
                                         <option value="IP">IP</option>
                                     </select>
                                 </div>
-                    
-                    
+                            
                                 <label for="login-transferencia">Número do Login do Destinatário:</label>
-                                <input type="text" id="login-transferencia" placeholder="Digite o número de login">
-                    
-                    
+                                <input type="text" id="login-transferencia" placeholder="Clique no botão para selecionar um login">
+                            
+                                <!-- Botão para exibir a lista de usuários -->
+                                <button type="button" onclick="exibirUsuarios()">Selecionar Login</button>
+                                
+                                <!-- Lista de usuários -->
+                                <div id="lista-usuarios" class="usuarios-lista" style="display: none;">
+                                    <!-- Será preenchido dinamicamente com a lista de usuários -->
+                                </div>
+                            
                                 <label for="procedimento-transferencia">Número do Processo:</label>
                                 <input type="text" id="procedimento-transferencia" placeholder="xxx-xxxxx/xxxx">
-
-                                <label for="observacoes-transferencia">Observações:</label>
-                                <input type="text" id="observacoes-transferencia" placeholder="digita aqui as observações">
-
-
-                                <button class="btn-form" type="button" onclick="solicitarTransferencia()">Solicitar Transferência</button>
                             
-
+                                <label for="observacoes-transferencia">Observações:</label>
+                                <input type="text" id="observacoes-transferencia" placeholder="Digite aqui as observações">
+                            
+                                <button class="btn-form" type="button" onclick="solicitarTransferencia()">Solicitar Transferência</button>
                             </div>
+                            
 
 
                             

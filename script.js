@@ -644,6 +644,37 @@ function pesquisarPorLogin(loginPesquisa = null) {
         });
 }
 
+function exibirUsuarios() {
+    const listaUsuariosDiv = document.getElementById("lista-usuarios");
+    listaUsuariosDiv.style.display = "block"; // Exibir a lista de usuários
+
+    // Fazer requisição para buscar os usuários cadastrados
+    fetch('/usuarios')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const usuarios = data.usuarios; // Assumindo que o backend retorna uma lista de usuários
+                listaUsuariosDiv.innerHTML = ''; // Limpar a lista antes de popular
+
+                usuarios.forEach(usuario => {
+                    const usuarioItem = document.createElement('div');
+                    usuarioItem.className = 'usuario-item';
+                    usuarioItem.textContent = `${usuario.name} (${usuario.username})`;
+                    usuarioItem.onclick = () => {
+                        document.getElementById("login-transferencia").value = usuario.username;
+                        listaUsuariosDiv.style.display = "none"; // Esconder a lista após seleção
+                    };
+                    listaUsuariosDiv.appendChild(usuarioItem);
+                });
+            } else {
+                listaUsuariosDiv.innerHTML = `<p>Nenhum usuário encontrado.</p>`;
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao buscar usuários:', error);
+            listaUsuariosDiv.innerHTML = `<p>Erro ao carregar a lista de usuários.</p>`;
+        });
+}
 
 
 
