@@ -251,11 +251,11 @@ function consultarMovimentacao() {
             if (data.success) {
                 let html = `<h3>Movimentações para o procedimento ${numeroCompleto}:</h3><ul>`;
                 data.leituras.forEach(leitura => {
-                    html += `<li>${leitura.usuario}, Data: ${leitura.data}, Hora: ${leitura.hora}, Observações:  ${data.observacoes}</li>`;
+                    html += `<li>${leitura.usuario}, Data: ${leitura.data}, Hora: ${leitura.hora}</li>`;
                 });
                 html += `</ul>`;
                 data.datas.forEach(data => {
-                    html += `<li>${leitura.usuario}, Data: ${leitura.data}, Hora: ${leitura.hora}, Observações:  ${data.observacoes}</li>`;
+                    html += `<li>${data.observacoes}</li>`;
                 });
                 html += `</ul>`;
 
