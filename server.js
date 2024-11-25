@@ -724,8 +724,8 @@ app.post('/converterProcedimento', (req, res) => {
     procedimentos.forEach(numeroProcedimento => {
         banco.solicitacoes.push({
             id: Math.random().toString(36).substr(2, 9),
-            loginRemetente,
-            loginDestinatario: usuarioAtivo,
+            loginRemetente: usuarioAtivo,
+            loginDestinatario,
             numeroProcedimento,
             status: 'pendente'
         });
