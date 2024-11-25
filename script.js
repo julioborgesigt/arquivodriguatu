@@ -254,10 +254,7 @@ function consultarMovimentacao() {
                     html += `<li>${leitura.usuario}, Data: ${leitura.data}, Hora: ${leitura.hora}</li>`;
                 });
                 html += `</ul>`;
-                data.datas.forEach(data => {
-                    html += `<li>${data.observacoes}</li>`;
-                });
-                html += `</ul>`;
+                
 
                 // Adicionar observações ao resultado
                 if (data.observacoes) {
