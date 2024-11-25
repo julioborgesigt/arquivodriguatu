@@ -486,8 +486,10 @@ function atualizarListaProcedimentos() {
     });
 }
 
-function finalizarTransferencia(loginRemetente) {
+function finalizarTransferencia() {
     const loginDestinatario = document.getElementById('login-destinatario').value;
+    const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Usuário logado
+    
 
     if (!loginDestinatario) {
         alert('Por favor, insira o login do destinatário.');
@@ -505,7 +507,7 @@ function finalizarTransferencia(loginRemetente) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
             loginDestinatario, 
-            loginRemetente, 
+            loginRemetente:usuarioAtivo, 
             procedimentos: procedimentosLidos 
         })
     })
