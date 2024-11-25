@@ -194,33 +194,9 @@ app.post('/register', (req, res) => {
 });
 
 
-const session = require('express-session');
-
-app.use(session({
-    secret: 'chave-secreta-segura', // Substitua por uma chave secreta forte
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false } // Use secure: true em produção com HTTPS
-}));
-
-app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-
-    // Validar login (sua lógica atual)
-    if (username === "usuarioValido" && password === "senhaValida") {
-        req.session.usuarioAtivo = username; // Armazena na sessão
-        res.json({ success: true, message: "Login realizado com sucesso" });
-    } else {
-        res.status(401).json({ success: false, message: "Usuário ou senha incorretos" });
-    }
-});
-
-
-
 app.post('/leitura', (req, res) => {
     console.log("Entrou na rota /leitura");
-    const { qrCodeMessage } = req.body; // Receber o usuário logado junto com o QR code
-    const usuarioAtivo = req.session.usuarioAtivo; // Obtém o usuário da sessão
+    const { qrCodeMessage, usuario } = req.body; // Receber o usuário logado junto com o QR code
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
     // Captura a hora atual e ajusta para GMT-3
@@ -250,7 +226,7 @@ app.post('/leitura', (req, res) => {
     if (procedimento) {
         // Adicionar a leitura ao procedimento
         procedimento.leituras.push({
-            usuarioAtivo, // Nome do usuário logado
+            usuario, // Nome do usuário logado
             data: dataAtual.toISOString().split('T')[0], // Data no formato YYYY-MM-DD
             hora: horaAjustada // Hora ajustada para GMT-3
         });
@@ -477,8 +453,7 @@ let lock = false;
 
 // Rota para solicitar transferência
 app.post('/solicitar-transferencia', (req, res) => {
-    const { loginDestinatario, numeroProcedimento } = req.body;
-    const usuarioAtivo = req.session.usuarioAtivo; // Obtém o usuário da sessão
+    const { loginDestinatario, numeroProcedimento, usuarioAtivo } = req.body;
 
     // Ler o banco de dados existente
     let banco;
@@ -715,7 +690,6 @@ app.post('/converterProcedimento', (req, res) => {
    app.post('/transferencias-em-massa', (req, res) => {
     const { loginDestinatario, loginRemetente, procedimentos } = req.body;
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
-    
 
     if (!banco.usuarios.find(user => user.username === loginDestinatario)) {
         return res.status(400).json({ success: false, message: 'Login do destinatário não encontrado.' });
@@ -734,7 +708,6 @@ app.post('/converterProcedimento', (req, res) => {
     fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
     res.json({ success: true, message: 'Transferências registradas com sucesso!' });
 });
-
 
 
 
