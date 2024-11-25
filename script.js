@@ -347,7 +347,7 @@ function generateQRCode(text) {
 let procedimentosLidos = [];
 
 function iniciarLeituraTransferencia() {
-    const loginDestinatario = document.getElementById('login-transferencia').value;
+    const loginDestinatario = document.getElementById('login-destinatario').value;
     if (!loginDestinatario) {
         alert('Por favor, insira o login do destinatário.');
         return;
@@ -644,7 +644,7 @@ function pesquisarPorLogin(loginPesquisa = null) {
         });
 }
 
-function exibirUsuarios() {
+function exibirUsuarios(campoId) {
     const listaUsuariosDiv = document.getElementById("lista-usuarios");
     listaUsuariosDiv.style.display = "block"; // Exibir a lista de usuários
 
@@ -661,7 +661,7 @@ function exibirUsuarios() {
                     usuarioItem.className = 'usuario-item';
                     usuarioItem.textContent = `${usuario.name} (${usuario.username})`;
                     usuarioItem.onclick = () => {
-                        document.getElementById("login-transferencia").value = usuario.username;
+                        document.getElementById(campoId).value = usuario.username; // Inserir login no campo correto
                         listaUsuariosDiv.style.display = "none"; // Esconder a lista após seleção
                     };
                     listaUsuariosDiv.appendChild(usuarioItem);
@@ -675,7 +675,6 @@ function exibirUsuarios() {
             listaUsuariosDiv.innerHTML = `<p>Erro ao carregar a lista de usuários.</p>`;
         });
 }
-
 
 
 // Função para solicitar a transferência de processo para outro login
