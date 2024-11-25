@@ -266,6 +266,7 @@ function consultarMovimentacao() {
             } else {
                 resultadoDiv.innerHTML = `<p>${data.message}</p>`;
             }
+            
         })
         .catch(error => {
             console.error('Erro ao consultar movimentação:', error);
