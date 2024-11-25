@@ -741,6 +741,7 @@ app.post('/converterProcedimento', (req, res) => {
 
 
 
+
 // Rota para verificar se existe uma solicitação pendente para um procedimento
 app.get('/verificarSolicitacaoPendente', (req, res) => {
     const { procedimento } = req.query;
