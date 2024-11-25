@@ -357,7 +357,7 @@ function lerQRCode(modoTransferencia = false) {
 
                                             if (!continuar) {
                                                 pararLeitorQRCode(html5QrCode); // Para o leitor
-                                                finalizarTransferencia(usuarioAtivo); // Passa o remetente ao finalizar
+                                                finalizarTransferencia(); // Passa o remetente ao finalizar
                                             }
                                         }
                                     }
@@ -483,8 +483,9 @@ function atualizarListaProcedimentos() {
     });
 }
 
-function finalizarTransferencia(loginRemetente) {
+function finalizarTransferencia() {
     const loginDestinatario = document.getElementById('login-destinatario').value;
+    const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Pega o usuário logado
 
     if (!loginDestinatario) {
         alert('Por favor, insira o login do destinatário.');
@@ -502,7 +503,7 @@ function finalizarTransferencia(loginRemetente) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
             loginDestinatario, 
-            loginRemetente, 
+            loginRemetente:usuarioAtivo, 
             procedimentos: procedimentosLidos 
         })
     })
