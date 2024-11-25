@@ -251,7 +251,7 @@ function consultarMovimentacao() {
             if (data.success) {
                 let html = `<h3>Movimentações para o procedimento ${numeroCompleto}:</h3><ul>`;
                 data.leituras.forEach(leitura => {
-                    html += `<li>${leitura.usuario}, Data: ${leitura.data}, Hora: ${leitura.hora}</li>`;
+                    html += `<li>${leitura.usuario}, Data: ${leitura.data}, Hora: ${leitura.hora}, Observações:  ${data.observacoes}</li>`;
                 });
                 html += `</ul>`;
 
@@ -266,7 +266,7 @@ function consultarMovimentacao() {
             } else {
                 resultadoDiv.innerHTML = `<p>${data.message}</p>`;
             }
-            
+
         })
         .catch(error => {
             console.error('Erro ao consultar movimentação:', error);
