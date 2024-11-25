@@ -347,7 +347,7 @@ function generateQRCode(text) {
 let procedimentosLidos = [];
 
 function iniciarLeituraTransferencia() {
-    const loginDestinatario = document.getElementById('login-destinatario').value;
+    const loginDestinatario = document.getElementById('login-transferencia').value;
     if (!loginDestinatario) {
         alert('Por favor, insira o login do destinatário.');
         return;
