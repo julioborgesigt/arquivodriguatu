@@ -365,7 +365,7 @@ app.get('/consultaMovimentacao', (req, res) => {
         res.json({
             success: true,
             leituras: procedimentoEncontrado.leituras,
-            observacoes: solicitacoes ? solicitacoes.observacoesProcedimento : null // Inclui observações, se existirem
+            observacoes: solicitacao ? solicitacao.observacoesProcedimento : null // Inclui observações, se existirem
         });
     } else {
         res.json({ success: false, message: "Procedimento não encontrado." });
