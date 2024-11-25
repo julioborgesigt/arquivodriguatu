@@ -38,6 +38,9 @@ function mostrarCadastro() {
     document.getElementById("form-title").textContent = "Cadastro";
     document.getElementById("login-buttons").style.display = "none";
     document.getElementById("register-buttons").style.display = "block";
+
+    // Exibir o campo "Nome"
+    document.getElementById("name-field").style.display = "block";
 }
 
 function mostrarLogin() {
@@ -45,8 +48,10 @@ function mostrarLogin() {
     document.getElementById("form-title").textContent = "Login";
     document.getElementById("register-buttons").style.display = "none";
     document.getElementById("login-buttons").style.display = "block";
-}
 
+    // Ocultar o campo "Nome"
+    document.getElementById("name-field").style.display = "none";
+}
 
 
 
@@ -119,6 +124,7 @@ function validarSenha(senha) {
 function register() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
+    const name = document.getElementById("name").value;
 
     // Validar formato do usuário
     if (!validarUsername(username)) {
@@ -129,6 +135,12 @@ function register() {
     // Validar formato da senha
     if (!validarSenha(password)) {
         alert("A senha deve ter exatamente 6 dígitos numéricos.");
+        return;
+    }
+
+    // Validações básicas
+    if (!username || !password || !name) {
+        alert("Por favor, preencha todos os campos!");
         return;
     }
 
@@ -143,12 +155,13 @@ function register() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify({ username, password, name })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     alert("Cadastro realizado com sucesso!");
+                    mostrarLogin(); // Volta para a tela de login
                 } else {
                     alert("Erro ao cadastrar usuário.");
                 }
