@@ -564,7 +564,8 @@ app.post('/responder-transferencia/:id', (req, res) => {
         procedimento.leituras.push({
             usuario: solicitacao.loginDestinatario,
             data: new Date().toISOString().split('T')[0], // Data no formato YYYY-MM-DD
-            hora: horaAjustada // Hora ajustada para GMT -3
+            hora: horaAjustada, // Hora ajustada para GMT -3
+            observacoesProcedimento
         });
 
         console.log(`Leitura adicionada para o login ${solicitacao.loginDestinatario}`);
