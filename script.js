@@ -285,13 +285,7 @@ function consultarMovimentacao() {
                     html += `<p><em>Nenhuma movimentação registrada para este procedimento.</em></p>`;
                 }
             
-                // Adiciona observações gerais
-                html += `
-                    <div class="observacoes">
-                        <strong>Observações:</strong> 
-                        ${data.observacoes || "Nenhuma observação registrada."}
-                    </div>
-                `;
+                
             
                 resultadoDiv.innerHTML = html;
             } else {
