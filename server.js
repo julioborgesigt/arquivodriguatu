@@ -756,3 +756,15 @@ app.get('/verificarSolicitacaoPendente', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
   });
+
+
+
+  app.get('/usuarios', (req, res) => {
+    const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
+    const usuarios = banco.usuarios.map(user => ({
+        username: user.username,
+        name: user.name || "Sem Nome" // Adicione o campo "name" no banco de dados ou use um padrão
+    }));
+
+    res.json({ success: true, usuarios });
+});
