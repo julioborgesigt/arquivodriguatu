@@ -308,6 +308,7 @@ function iniciarLeituraTransferencia() {
 function lerQRCode(modoTransferencia = false) {
     const qrReaderElement = document.getElementById("qr-reader");
     const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Pega o usuário logado
+    
 
     if (!usuarioAtivo) {
         alert("Usuário não está logado. Por favor, faça o login novamente.");
@@ -383,7 +384,7 @@ function lerQRCode(modoTransferencia = false) {
                                             headers: {
                                                 'Content-Type': 'application/json',
                                             },
-                                            body: JSON.stringify({ qrCodeMessage, usuario: usuarioAtivo })
+                                            body: JSON.stringify({ qrCodeMessage, usuarioAtivo })
                                         })
                                             .then(response => response.json())
                                             .then(data => {

@@ -196,7 +196,7 @@ app.post('/register', (req, res) => {
 
 app.post('/leitura', (req, res) => {
     console.log("Entrou na rota /leitura");
-    const { qrCodeMessage, usuario } = req.body; // Receber o usuário logado junto com o QR code
+    const { qrCodeMessage, usuarioAtivo } = req.body; // Receber o usuário logado junto com o QR code
     const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
     // Captura a hora atual e ajusta para GMT-3
@@ -226,7 +226,7 @@ app.post('/leitura', (req, res) => {
     if (procedimento) {
         // Adicionar a leitura ao procedimento
         procedimento.leituras.push({
-            usuario, // Nome do usuário logado
+            usuarioAtivo, // Nome do usuário logado
             data: dataAtual.toISOString().split('T')[0], // Data no formato YYYY-MM-DD
             hora: horaAjustada // Hora ajustada para GMT-3
         });

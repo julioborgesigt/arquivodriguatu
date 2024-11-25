@@ -1,79 +1,47 @@
-function lerQRCode() {
-    const qrReaderElement = document.getElementById("qr-reader");
-    const usuarioAtivo = localStorage.getItem('usuarioAtivo'); // Pega o usuário logado
+app.post('/leitura', (req, res) => {
+    console.log("Entrou na rota /leitura");
+    const { qrCodeMessage, usuario } = req.body; // Receber o usuário logado junto com o QR code
+    const banco = JSON.parse(fs.readFileSync('banco.json', 'utf8'));
 
-    if (!usuarioAtivo) {
-        alert("Usuário não está logado. Por favor, faça o login novamente.");
-        return;
+    // Captura a hora atual e ajusta para GMT-3
+    const dataAtual = new Date();
+    dataAtual.setHours(dataAtual.getHours() - 3);
+    const horaAjustada = dataAtual.toTimeString().split(' ')[0]; // Formato HH:MM:SS
+    console.log("Hora ajustada para GMT-3:", horaAjustada);
+
+    // Tentar extrair o número do procedimento da URL ou usar o valor diretamente
+    let numeroProcedimento;
+    try {
+        const url = new URL(qrCodeMessage);
+        numeroProcedimento = url.searchParams.get('procedimento');
+    } catch (error) {
+        numeroProcedimento = qrCodeMessage; // Caso não seja uma URL, usar o valor diretamente
     }
 
-    qrReaderElement.style.display = "flex"; // Mostrar o leitor de QR code
-    qrReaderElement.style.justifyContent = "center"; // Centralizar o leitor
-    qrReaderElement.style.alignItems = "center"; // Centralizar verticalmente
-    qrReaderElement.style.height = "100vh"; // Ocupa toda a altura da tela
-    qrReaderElement.style.width = "100vw"; // Ocupa toda a largura da tela
-    qrReaderElement.style.backgroundColor = "#000"; // Fundo preto para destaque
+    console.log("Número do procedimento:", numeroProcedimento);
 
-    const html5QrCode = new Html5Qrcode("qr-reader");
-    let leituraEfetuada = false; // Flag para garantir que só uma leitura seja registrada
-
-    // Funções para formatar a data e ajustar o horário
-    function formatarData(data) {
-        const dia = String(data.getDate()).padStart(2, '0');
-        const mes = String(data.getMonth() + 1).padStart(2, '0');
-        const ano = data.getFullYear();
-        return `${dia}/${mes}/${ano}`;
+    if (!numeroProcedimento) {
+        return res.status(400).json({ success: false, message: "Número do procedimento não encontrado na URL ou no QR code." });
     }
 
-    function ajustarHoraGMT3(data) {
-        const novaData = new Date(data.getTime() - 3 * 60 * 60 * 1000); // Ajuste de 3 horas para GMT -3
-        const hora = String(novaData.getHours()).padStart(2, '0');
-        const minutos = String(novaData.getMinutes()).padStart(2, '0');
-        const segundos = String(novaData.getSeconds()).padStart(2, '0');
-        return `${hora}:${minutos}:${segundos}`;
+    // Procurar o procedimento correspondente no banco de dados
+    const procedimento = banco.procedimentos.find(p => p.numero === numeroProcedimento);
+
+    if (procedimento) {
+        // Adicionar a leitura ao procedimento
+        procedimento.leituras.push({
+            usuario, // Nome do usuário logado
+            data: dataAtual.toISOString().split('T')[0], // Data no formato YYYY-MM-DD
+            hora: horaAjustada // Hora ajustada para GMT-3
+        });
+
+        // Salvar o banco de dados atualizado
+        fs.writeFileSync('banco.json', JSON.stringify(banco, null, 2));
+        console.log("Leitura registrada com sucesso para o procedimento:", numeroProcedimento);
+
+        res.json({ success: true, message: "Leitura registrada com sucesso!", procedimento: numeroProcedimento });
+    } else {
+        console.log("Procedimento não encontrado:", numeroProcedimento);
+        res.status(404).json({ success: false, message: "Procedimento não encontrado!" });
     }
-
-    html5QrCode.start(
-        { facingMode: "environment" },  // Câmera traseira
-        {
-            fps: 10,  // Taxa de quadros
-            qrbox: { width: 250, height: 250 },  // Tamanho da caixa de leitura (quadrado central)
-            aspectRatio: 1.0  // Força o formato quadrado e a orientação vertical
-        },
-        qrCodeMessage => {
-            if (!leituraEfetuada) {
-                leituraEfetuada = true; // Marca como já lido para evitar múltiplas leituras
-
-                fetch('/leitura', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ qrCodeMessage, usuario: usuarioAtivo })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert(data.message); // Exibe mensagem de sucesso
-                        window.location.href = `/comprovante?procedimento=${data.procedimento}`;
-                    } else {
-                        alert("Erro: " + data.message); // Exibe mensagem de erro
-                    }
-                    html5QrCode.stop(); // Para o leitor de QR code
-                    qrReaderElement.style.display = "none"; // Esconder o leitor
-                })
-                .catch(error => {
-                    console.error('Erro ao registrar leitura:', error);
-                    alert('Erro ao registrar leitura. Tente novamente.');
-                    html5QrCode.stop();
-                    qrReaderElement.style.display = "none";
-                });
-            }
-        },
-        errorMessage => {
-            console.log(`Erro ao ler QR Code: ${errorMessage}`);
-        }
-    ).catch(err => {
-        console.log(`Erro ao iniciar a câmera: ${err}`);
-    });
-}
+});
